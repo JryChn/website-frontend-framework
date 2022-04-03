@@ -1,0 +1,10 @@
+body,
+html {
+  /* define the page display style */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  min-width: 400;
+  background-color: #f1f2f6;
+}
