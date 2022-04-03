@@ -1,0 +1,18 @@
+#story {
+  height: 500px;
+  background-color: grey;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr;
+}
+
+#story-words {
+  background-color: red;
+  grid-column: 2/4;
+  grid-row: 1;
+}
+#story-container {
+  background-color: green;
+  grid-row: 2;
+  grid-column: 1/5;
+}

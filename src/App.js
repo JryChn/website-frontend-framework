@@ -17,9 +17,13 @@ export default class App extends Component {
       <div>
         <Header
           web_url={this.state.config.url}
-          header={this.state.config.header}
+          logo={this.state.config.logo}
+          header={this.state.config.section}
         ></Header>
-        <MainContent introduce={this.state.config.introduce}></MainContent>
+        <MainContent
+          introduce={this.state.config.introduce}
+          main={this.state.config.section}
+        ></MainContent>
       </div>
     );
   }

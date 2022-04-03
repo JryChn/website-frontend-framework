@@ -69,6 +69,7 @@
 #introduce-image1 > img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 #introduce-image1 {
   position: relative;
@@ -95,6 +96,7 @@
 #introduce-image2 > img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 #introduce-word2 {

@@ -1,0 +1,122 @@
+.aboutme {
+  display: flex;
+  background-color: #f5f6fa;
+  flex-flow: column nowrap;
+}
+.aboutme::before {
+  content: "";
+  display: block;
+  height: 200px;
+  background-color: #f5f6fa;
+}
+.aboutme::after {
+  content: "";
+  display: block;
+  height: 200px;
+  background-color: #f5f6fa;
+}
+#aboutme-words {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#aboutme-protaits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: wrap;
+}
+#aboutme-card-container {
+  flex: 1;
+}
+
+#aboutme-words > div {
+  width: 75%;
+  height: 80%;
+  text-align: center;
+  font-size: 1.5em;
+}
+#aboutme-words > div > h6 {
+  font-weight: lighter;
+  margin-bottom: 0;
+}
+#aboutme-words > div > h2 {
+  margin-top: 0;
+}
+
+#aboutme-protaits > section {
+  margin: 0 70px;
+  width: 260px;
+  height: 260px;
+}
+#aboutme-protaits > section > div:nth-child(1) {
+  display: block;
+  position: relative;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: linear-gradient(#be2edd, purple);
+  margin: 0 auto;
+  transform: translateY(20%);
+}
+#aboutme-protaits > section > div:nth-last-child(1) {
+  display: block;
+  text-align: center;
+  margin-top: 20%;
+  font-weight: bolder;
+  font-size: 2em;
+  color: green;
+}
+#aboutme-card {
+  position: relative;
+  width: 60%;
+  height: 440px;
+  margin: 30px auto;
+  border-radius: 3em/3em;
+  background: linear-gradient(#e056fd, #be2edd, purple);
+}
+
+#aboutme-card > * {
+  color: #eeffec;
+}
+#aboutme-card > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 3em/3em;
+  opacity: 0.1;
+}
+#aboutme-name {
+  text-align: center;
+  font-weight: 700;
+  font-size: 2em;
+  margin: 5%;
+  line-height: 80px;
+}
+#aboutme-description {
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.4em;
+  width: 70%;
+  margin: 2% auto;
+}
+
+#aboutme-protait {
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: white;
+}
+#aboutme-protait > img {
+  object-fit: cover;
+  z-index: 2;
+}
+
+#aboutme-career {
+  text-align: center;
+  margin: 3% auto;
+}
+
+/* below are object show in icon */

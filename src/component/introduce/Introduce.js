@@ -1,6 +1,5 @@
 import { Component } from "react";
 import "./Introduce.css";
-import { handleUrl } from "../../utils/utils";
 
 export default class Introduce extends Component {
   render() {
@@ -12,10 +11,10 @@ export default class Introduce extends Component {
           <h6>{this.props.introduce.words}</h6>
         </div>
         <div id="introduce-image1">
-          <img src={handleUrl(this.props.introduce.mainImage)} alt=""></img>
+          <img src={this.props.introduce.mainImage} alt=""></img>
         </div>
         <div id="introduce-image2">
-          <img src={handleUrl(this.props.introduce.subImage)} alt=""></img>
+          <img src={this.props.introduce.subImage} alt=""></img>
         </div>
         <div id="introduce-word2">
           <h6 id="introduce-word2-content">

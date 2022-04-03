@@ -1,7 +1,6 @@
 import { Component } from "react";
 import "./Header.css";
 import NavBar from "../component/navBar/NavBar";
-import { handleUrl } from "../utils/utils";
 
 const web_title = document.title;
 export default class Header extends Component {
@@ -9,15 +8,11 @@ export default class Header extends Component {
     return (
       <div id="header">
         <a href={this.props.web_url}>
-          <img
-            id="header-logo"
-            src={handleUrl(this.props.header.logo)}
-            alt={web_title}
-          />
+          <img id="header-logo" src={this.props.logo} alt={web_title} />
         </a>
         <NavBar
-          nav={this.props.header.nav.map((head) => {
-            return head.name;
+          nav={this.props.header.map((section) => {
+            return section.name;
           })}
         ></NavBar>
       </div>
