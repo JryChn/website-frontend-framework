@@ -13,13 +13,13 @@
   },
   "section": [
     {
-      "name": "Blog",
+      "name": "Example",
       "model": 1,
       "description": "Example",
       "address": ""
     },
     {
-      "name": "AboutMe",
+      "name": "Example",
       "model": 2,
       "description": "Example",
       "trait1": "Passion",
@@ -32,12 +32,12 @@
       "background": "https://source.unsplash.com/1600x900/?nature,water"
     },
     {
-      "name": "Gallary",
+      "name": "Example",
       "model": 3,
       "description": ""
     },
     {
-      "name": "Story",
+      "name": "Example",
       "model": 4,
       "description": ""
     }

@@ -4,12 +4,14 @@ import Blog from "../component/blog/Blog";
 import AboutMe from "../component/aboutme/AboutMe";
 import Gallary from "../component/gallary/Gallary";
 import Story from "../component/story/Story";
+import ScrollNav from "../component/scrollNav/ScrollNav";
 
 export default class MainContent extends Component {
   render() {
     return (
       <div>
         <Introduce introduce={this.props.introduce}></Introduce>
+        <ScrollNav nav={this.props.main}></ScrollNav>
         {this.props.main.map((section, index) => {
           switch (section.model) {
             case 1:

@@ -15,7 +15,11 @@ export default class NavBar extends Component {
     <div id="navbar">
       <ul>
         {this.props.nav.map((n, index) => {
-          return <li key={index}>{n}</li>;
+          return (
+            <li key={index} onClick={(e) => this.handleOnClick(e, index)}>
+              {n}
+            </li>
+          );
         })}
       </ul>
       <div id="navbar-contact">
@@ -42,7 +46,11 @@ export default class NavBar extends Component {
       <div id="navbar-humbeger-hidden-content">
         <ul>
           {this.props.nav.map((n, index) => {
-            return <li key={index}>{n}</li>;
+            return (
+              <li key={index} onClick={(e) => this.handleOnClick(e, index)}>
+                {n}
+              </li>
+            );
           })}
           <li>Telegram</li>
           <li>Email</li>
@@ -53,6 +61,28 @@ export default class NavBar extends Component {
     </div>
   );
 
+  handleOnClick = (e, rank) => {
+    let id;
+    switch (rank) {
+      case 0:
+        id = "blog";
+        break;
+      case 1:
+        id = "aboutme";
+        break;
+      case 2:
+        id = "gallary";
+        break;
+      default:
+        id = "story";
+    }
+    console.log(id);
+    let position = document.getElementById(id).offsetTop;
+    window.scrollTo({
+      top: position + 200,
+      behavior: "smooth",
+    });
+  };
   render() {
     return (
       <Naving
