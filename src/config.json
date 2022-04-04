@@ -34,7 +34,6 @@
     {
       "name": "Example",
       "model": 3,
-      "description": "example",
       "images": [
         "https://source.unsplash.com/1600x900/?nature,water",
         "https://source.unsplash.com/1600x900/?nature,water",
@@ -56,7 +55,12 @@
     {
       "name": "Example",
       "model": 4,
-      "description": "example"
+      "description": "example",
+      "address": ""
     }
-  ]
+  ],
+  "footer": {
+    "github": "https://github.com",
+    "telegram": "https://telegram.com"
+  }
 }

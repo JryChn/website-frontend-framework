@@ -1,7 +1,7 @@
 import { Component } from "react";
 import Header from "./layout/Header";
 import MainContent from "./layout/MainContent";
-// import Footer from "./layout/Footer";
+import Footer from "./layout/Footer";
 import config from "./config.json";
 
 export default class App extends Component {
@@ -24,6 +24,7 @@ export default class App extends Component {
           introduce={this.state.config.introduce}
           main={this.state.config.section}
         ></MainContent>
+        <Footer footer={this.state.config.footer}></Footer>
       </div>
     );
   }
