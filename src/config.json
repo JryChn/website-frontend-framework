@@ -34,12 +34,29 @@
     {
       "name": "Example",
       "model": 3,
-      "description": ""
+      "description": "example",
+      "images": [
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water",
+        "https://source.unsplash.com/1600x900/?nature,water"
+      ]
     },
     {
       "name": "Example",
       "model": 4,
-      "description": ""
+      "description": "example"
     }
   ]
 }
