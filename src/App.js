@@ -10,6 +10,7 @@ export default class App extends Component {
     this.state = {
       config: config,
     };
+    document.title = config.title;
   }
 
   render() {
@@ -19,6 +20,7 @@ export default class App extends Component {
           web_url={this.state.config.url}
           logo={this.state.config.logo}
           header={this.state.config.section}
+          title={this.state.config.title}
         ></Header>
         <MainContent
           introduce={this.state.config.introduce}
