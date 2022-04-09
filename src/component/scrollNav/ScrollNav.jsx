@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "./ScrollNav.css";
+import style from "./ScrollNav.module.scss";
 
 export default class ScrollNav extends Component {
   componentDidMount() {
@@ -26,33 +26,20 @@ export default class ScrollNav extends Component {
 
   handleItemsActive = () => {
     this.props.nav.map((sec, index) => {
-      let id;
-      switch (sec.model) {
-        case 1:
-          id = "blog";
-          break;
-        case 2:
-          id = "aboutme";
-          break;
-        case 3:
-          id = "gallary";
-          break;
-        default:
-          id = "story";
-      }
+      let id = sec.name + index;
       let top = document.getElementById(id).getBoundingClientRect().top;
       let bottom = document.getElementById(id).getBoundingClientRect().bottom;
       if (top < 0 && bottom > 0) {
-        document.getElementById("navs" + index + "id").style.borderBottom =
+        document.getElementById(sec.name + index + "id").style.borderBottom =
           "2px black solid";
         document.getElementById(
-          "navs" + index + "id"
+          sec.name + index + "id"
         ).style.transitionDuration = "0.5s";
       } else {
-        document.getElementById("navs" + index + "id").style.borderBottom =
+        document.getElementById(sec.name + index + "id").style.borderBottom =
           "none";
         document.getElementById(
-          "navs" + index + "id"
+          sec.name + index + "id"
         ).style.transitionDuration = "0.5s";
       }
     });
@@ -60,20 +47,7 @@ export default class ScrollNav extends Component {
 
   handleOnClick = (e) => {
     let target = e.target;
-    let id = target.id.replace("navs", "").replace("id", "");
-    switch (id) {
-      case "0":
-        id = "blog";
-        break;
-      case "1":
-        id = "aboutme";
-        break;
-      case "2":
-        id = "gallary";
-        break;
-      default:
-        id = "story";
-    }
+    let id = target.id.replace("id", "");
     let position = document.getElementById(id).offsetTop;
     window.scrollTo({
       top: position + 200,
@@ -83,13 +57,13 @@ export default class ScrollNav extends Component {
 
   render() {
     return (
-      <div id="scrollnav">
-        <div id="scrollnav-container">
+      <div className={style.container} id="scrollnav">
+        <div>
           <ul>
             {this.props.nav.map((navs, index) => {
               return (
                 <li
-                  id={"navs" + index + "id"}
+                  id={navs.name + index + "id"}
                   key={"navs" + index}
                   onClick={(e) => this.handleOnClick(e)}
                 >

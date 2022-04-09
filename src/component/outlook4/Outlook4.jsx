@@ -1,7 +1,7 @@
 import React from "react";
-import "./Story.css";
+import "./Outlook4.module.scss";
 
-export default class Story extends React.Component {
+export default class Outlook4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,11 +17,11 @@ export default class Story extends React.Component {
   }
   render() {
     return (
-      <div id="story" className="story">
+      <div id={this.props.content.name + this.props.index} className="story">
         <div id="story-words">
           <div>
-            <h6>{this.props.story.name}</h6>
-            <h2>{this.props.story.description}</h2>
+            <h6>{this.props.content.name}</h6>
+            <h2>{this.props.content.description}</h2>
           </div>
         </div>
         <div id="story-container">
