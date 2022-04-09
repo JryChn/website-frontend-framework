@@ -1,8 +1,9 @@
 import React from "react";
 import "./Outlook1.module.scss";
 import { handleUrl } from "../../utils/utils";
-import defaultContent from "./default.json";
 import style from "./Outlook1.module.scss";
+import { Link } from "react-router-dom";
+import defaultContent from "../../defaultBlogIndex.json";
 
 export default class Outlook1 extends React.Component {
   constructor(props) {
@@ -47,7 +48,9 @@ export default class Outlook1 extends React.Component {
           <div>
             <h6>{this.props.content.name}</h6>
             <h2>{this.props.content.description}</h2>
-            <a href="">Read More</a>
+            <Link to="/blog" state={this.state.content}>
+              Read More
+            </Link>
           </div>
         </section>
         <div>
@@ -58,9 +61,9 @@ export default class Outlook1 extends React.Component {
                 key={"outlook1-content" + index}
               >
                 <div>
-                  <a href="">
+                  <Link to={"/blog/" + content.id}>
                     <img src={content.image} alt="" />
-                  </a>
+                  </Link>
                 </div>
                 <div>
                   <h6>{content.abstract}</h6>

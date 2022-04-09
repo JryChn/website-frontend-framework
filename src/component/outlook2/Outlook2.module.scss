@@ -1,7 +1,10 @@
+@import "../../style/libiary";
 .container {
   display: flex;
   background-color: #f5f6fa;
   flex-flow: column nowrap;
+  overflow: hidden;
+
   &::before {
     content: "";
     display: block;
@@ -28,9 +31,11 @@
       > h6 {
         font-weight: lighter;
         margin-bottom: 0;
+        font-size: $sectionDesFontSize;
       }
       > h2 {
         margin-top: 0;
+        font-size: $sectionTitleFontSize;
       }
     }
   }

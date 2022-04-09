@@ -2,6 +2,8 @@ import { Component } from "react";
 import Header from "./layout/header/Header";
 import MainContent from "./layout/MainContent";
 import Footer from "./layout/footer/Footer";
+import BlogPage from "./layout/blogPage/BlogPage";
+import { Routes, Route } from "react-router-dom";
 import config from "./config.json";
 
 export default class App extends Component {
@@ -22,10 +24,34 @@ export default class App extends Component {
           header={this.state.config.section}
           title={this.state.config.title}
         ></Header>
-        <MainContent
-          introduce={this.state.config.introduce}
-          main={this.state.config.section}
-        ></MainContent>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainContent
+                introduce={this.state.config.introduce}
+                main={this.state.config.section}
+              />
+            }
+          />
+          <Route
+            path="blog"
+            element={
+              <BlogPage
+                blogs={() => {
+                  let address;
+                  this.state.config.section.map((item) => {
+                    if (item.model === 1) {
+                      address = item.address;
+                    }
+                    return address;
+                  });
+                }}
+              />
+            }
+          />
+          <Route path="story" element={<App />} />
+        </Routes>
         <Footer footer={this.state.config.footer}></Footer>
       </div>
     );

@@ -1,67 +1,67 @@
 {
-  "url": "www.google.com",
-  "title": "WebSite_frame",
-  "logo": "",
-  "introduce": {
-    "subTitle": "Example subtitle sentence",
-    "words": "The masses have never thirsted after truth. Whoever can supply them with illusions is easily their master; whoever attempts to destroy their illusions is always their victim",
-    "mainImage": "https://source.unsplash.com/random",
-    "subImage": "https://source.unsplash.com/random",
-    "quote": {
-      "content": "You don't understand! I coulda had class. I coulda been a contender. I could've been somebody, instead of a bum, which is what I am.",
-      "celebrity": "On the Waterfront, 1954"
+    "url": "https://www.google.com",
+    "title": "WebSite_frame",
+    "logo": "",
+    "introduce": {
+        "subTitle": "Example subtitle sentence",
+        "words": "The masses have never thirsted after truth. Whoever can supply them with illusions is easily their master; whoever attempts to destroy their illusions is always their victim",
+        "mainImage": "https://source.unsplash.com/random",
+        "subImage": "https://source.unsplash.com/random",
+        "quote": {
+            "content": "You don't understand! I coulda had class. I coulda been a contender. I could've been somebody, instead of a bum, which is what I am.",
+            "celebrity": "On the Waterfront, 1954"
+        }
+    },
+    "section": [
+        {
+            "name": "Example",
+            "model": 1,
+            "description": "Example",
+            "address": ""
+        },
+        {
+            "name": "Example",
+            "model": 2,
+            "description": "Example",
+            "trait1": "Passion",
+            "trait2": "Curiosity",
+            "trait3": "Paraniod",
+            "who": "Jeremy Chen",
+            "oneWords": "little small bitch dj, psy",
+            "position": "Leader",
+            "protait": "",
+            "background": "https://source.unsplash.com/1600x900/?nature,water"
+        },
+        {
+            "name": "Example",
+            "model": 3,
+            "images": [
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water",
+                "https://source.unsplash.com/1600x900/?nature,water"
+            ]
+        },
+        {
+            "name": "Example",
+            "model": 4,
+            "description": "example",
+            "address": ""
+        }
+    ],
+    "footer": {
+        "github": "https://github.com",
+        "telegram": "https://telegram.com"
     }
-  },
-  "section": [
-    {
-      "name": "Example",
-      "model": 1,
-      "description": "Example",
-      "address": ""
-    },
-    {
-      "name": "Example",
-      "model": 2,
-      "description": "Example",
-      "trait1": "Passion",
-      "trait2": "Curiosity",
-      "trait3": "Paraniod",
-      "who": "Jeremy Chen",
-      "oneWords": "little small bitch dj, psy",
-      "position": "Leader",
-      "protait": "",
-      "background": "https://source.unsplash.com/1600x900/?nature,water"
-    },
-    {
-      "name": "Example",
-      "model": 3,
-      "images": [
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water",
-        "https://source.unsplash.com/1600x900/?nature,water"
-      ]
-    },
-    {
-      "name": "Example",
-      "model": 4,
-      "description": "example",
-      "address": ""
-    }
-  ],
-  "footer": {
-    "github": "https://github.com",
-    "telegram": "https://telegram.com"
-  }
 }

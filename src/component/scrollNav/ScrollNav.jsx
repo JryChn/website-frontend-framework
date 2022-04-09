@@ -3,8 +3,18 @@ import style from "./ScrollNav.module.scss";
 
 export default class ScrollNav extends Component {
   componentDidMount() {
-    window.addEventListener("scroll", this.handleNavActive);
-    window.addEventListener("click", this.handleNavActive);
+    this.srollListener = window.addEventListener(
+      "scroll",
+      this.handleNavActive
+    );
+    this.navActiveListener = window.addEventListener(
+      "click",
+      this.handleNavActive
+    );
+  }
+  componentWillUnmount() {
+    window.removeEventListener(this.srollListener);
+    window.removeEventListener(this.navActiveListener);
   }
 
   handleNavActive = () => {

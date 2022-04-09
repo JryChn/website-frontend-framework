@@ -1,0 +1,46 @@
+.blogPage {
+  display: flex;
+  height: 3000px;
+  flex-flow: row nowrap;
+  > div {
+    flex: 1;
+    background-color: #d2dae2;
+    position: relative;
+    > ul {
+      width: 60%;
+      position: absolute;
+      top: 70px;
+      right: 20%;
+      list-style-type: none;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      > li {
+        width: 100%;
+        margin: 20px;
+        cursor: pointer;
+        > div {
+          width: 100%;
+          height: 200px;
+          border-radius: 30px;
+          > div {
+            color: white;
+            font-size: 3em;
+            position: relative;
+            > div {
+              position: absolute;
+              top: 20px;
+              left: 10%;
+            }
+            > div:first-child {
+            }
+            > div:last-child {
+              font-size: 20px;
+              top: 90px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
