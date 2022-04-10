@@ -2,6 +2,7 @@ import { Component } from "react";
 import Header from "./layout/header/Header";
 import MainContent from "./layout/MainContent";
 import Footer from "./layout/footer/Footer";
+import Page from "./layout/blogPage/Page";
 import BlogPage from "./layout/blogPage/BlogPage";
 import { Routes, Route } from "react-router-dom";
 import config from "./config.json";
@@ -26,6 +27,7 @@ export default class App extends Component {
         ></Header>
         <Routes>
           <Route
+            index
             path="/"
             element={
               <MainContent
@@ -34,23 +36,34 @@ export default class App extends Component {
               />
             }
           />
+          <Route path="blog">
+            <Route
+              index
+              element={
+                <BlogPage
+                  blogs={() => {
+                    let address;
+                    this.state.config.section.map((item) => {
+                      if (item.model === 1) {
+                        address = item.address;
+                      }
+                      return address;
+                    });
+                  }}
+                />
+              }
+            />
+            <Route path=":id" element={<Page />} />
+          </Route>
+          <Route path="story" element={<App />} />
           <Route
-            path="blog"
+            path="*"
             element={
-              <BlogPage
-                blogs={() => {
-                  let address;
-                  this.state.config.section.map((item) => {
-                    if (item.model === 1) {
-                      address = item.address;
-                    }
-                    return address;
-                  });
-                }}
-              />
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
             }
           />
-          <Route path="story" element={<App />} />
         </Routes>
         <Footer footer={this.state.config.footer}></Footer>
       </div>

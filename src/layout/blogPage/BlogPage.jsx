@@ -11,7 +11,6 @@ export default class BlogPage extends Component {
     };
   }
   render() {
-    return <Page></Page>;
     return (
       <div className={style.blogPage}>
         <div>

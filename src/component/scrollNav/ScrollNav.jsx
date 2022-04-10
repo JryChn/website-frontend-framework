@@ -18,6 +18,9 @@ export default class ScrollNav extends Component {
   }
 
   handleNavActive = () => {
+    if (document.getElementById("introduce") === null) {
+      return;
+    }
     let rect = document
       .getElementById("introduce")
       .getBoundingClientRect().bottom;
