@@ -58,7 +58,7 @@ export default class App extends Component {
           </Route>
           <Route path="story" element={<App />} />
           <Route
-            path="*"
+            path="/*"
             element={
               <main style={{ padding: "1rem" }}>
                 <p>There's nothing here!</p>
