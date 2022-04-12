@@ -25,6 +25,8 @@ export default class App extends Component {
           logo={this.state.config.logo}
           header={this.state.config.section}
           title={this.state.config.title}
+          telegram={this.state.config.footer.telegram}
+          email={this.state.config.footer.email}
         ></Header>
         <Routes>
           <Route

@@ -1,12 +1,30 @@
 import { Component, useState } from "react";
 import style from "./Header.module.scss";
 
-const moreOptions = ["Telegram", "Email", "Resume", "MyCalendar"];
-
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { isHumbeger: false };
+    this.state = {
+      isHumbeger: false,
+      moreOptions: [
+        {
+          name: "Telegram",
+          address: this.props.telegram,
+        },
+        {
+          name: "Email",
+          address: this.props.email,
+        },
+        {
+          name: "Resume",
+          address: "",
+        },
+        {
+          name: "Calendar",
+          address: "",
+        },
+      ],
+    };
     window.onresize = () => {
       this.setState({
         isHumbeger: window.innerWidth <= 900 ? true : false,
@@ -21,6 +39,7 @@ export default class Header extends Component {
           humbeger={this.props.header.map((section) => {
             return section.name;
           })}
+          moreOptions={this.state.moreOptions}
         ></Humbeger>
       );
     } else {
@@ -29,6 +48,7 @@ export default class Header extends Component {
           navItems={this.props.header.map((section) => {
             return section.name;
           })}
+          moreOptions={this.state.moreOptions}
         ></NavBar>
       );
     }
@@ -69,13 +89,23 @@ function NavBar(props) {
         <span>More</span>
         <div className={style.items}>
           <ul>
-            {moreOptions.map((item, index) => {
+            {props.moreOptions.map((item, index) => {
               return (
                 <li
-                  key={"more-items" + item + index}
-                  onClick={(e) => jumpOnClick(e, index)}
+                  key={"more-items" + item.name + index}
+                  onClick={(e) => {
+                    if (
+                      /^([0-9A-Za-z-_.]+)@([0-9a-z]+.[a-z]{2,3}(.[a-z]{2})?)$/g.test(
+                        item.address
+                      )
+                    ) {
+                      window.location.href = "mailto:" + item.address;
+                      return;
+                    }
+                    window.location.href = item.address;
+                  }}
                 >
-                  {item}
+                  {item.name}
                 </li>
               );
             })}
@@ -108,15 +138,31 @@ function Humbeger(props) {
           {props.humbeger.map((n, index) => {
             return (
               <li
-                key={"header-humbeger" + n + index}
+                key={"header-humbeger" + n.name + index}
                 onClick={(e) => jumpOnClick(e)}
               >
                 {n}
               </li>
             );
           })}
-          {moreOptions.map((n, index) => {
-            return <li key={"header-humbeger-more" + n + index}>{n}</li>;
+          {props.moreOptions.map((n, index) => {
+            return (
+              <li
+                key={"header-humbeger-more" + n.name + index}
+                onClick={(e) => {
+                  if (
+                    /^([0-9A-Za-z-_.]+)@([0-9a-z]+.[a-z]{2,3}(.[a-z]{2})?)$/g.test(
+                      n.address
+                    )
+                  ) {
+                    window.location = "mailto:" + n.address;
+                  }
+                  window.location.href = n.address;
+                }}
+              >
+                {n.name}
+              </li>
+            );
           })}
         </ul>
       </div>

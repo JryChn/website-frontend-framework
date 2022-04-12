@@ -1,5 +1,5 @@
 import React from "react";
-import "./Outlook4.module.scss";
+import style from "./Outlook4.module.scss";
 
 export default class Outlook4 extends React.Component {
   constructor(props) {
@@ -17,20 +17,21 @@ export default class Outlook4 extends React.Component {
   }
   render() {
     return (
-      <div id={this.props.content.name + this.props.index} className="story">
-        <div id="story-words">
+      <div
+        id={this.props.content.name + this.props.index}
+        className={style.container}
+      >
+        <div>
           <div>
             <h6>{this.props.content.name}</h6>
             <h2>{this.props.content.description}</h2>
           </div>
         </div>
-        <div id="story-container">
-          <div className="story-button" id="story-button-left"></div>
-          <div className="story-button" id="story-button-right"></div>
-          <div id="story-selector">
+        <div>
+          <div>
             {this.state.storys.map((story, index) => {
               return (
-                <div className="story-content" key={"story" + index}>
+                <div className={style.content} key={"story" + index}>
                   <img src={story.img} alt="" />
                 </div>
               );

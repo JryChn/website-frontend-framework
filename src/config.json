@@ -62,6 +62,7 @@
     ],
     "footer": {
         "github": "https://github.com",
-        "telegram": "https://telegram.com"
+        "telegram": "https://telegram.com",
+        "email": "test@test.com"
     }
 }
