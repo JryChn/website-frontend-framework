@@ -6,6 +6,7 @@ import Page from "./layout/blogPage/Page";
 import BlogPage from "./layout/blogPage/BlogPage";
 import { Routes, Route } from "react-router-dom";
 import config from "./config.json";
+import defaultBlogs from "./defaultBlogIndex.json";
 
 export default class App extends Component {
   constructor(props) {
@@ -53,7 +54,7 @@ export default class App extends Component {
                 />
               }
             />
-            <Route path=":id" element={<Page />} />
+            <Route path=":id" element={<Page blog={defaultBlogs} />} />
           </Route>
           <Route path="story" element={<App />} />
           <Route

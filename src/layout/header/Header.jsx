@@ -126,6 +126,7 @@ function Humbeger(props) {
 
 function jumpOnClick(e, name, index) {
   let id = name + index;
+  if (document.getElementById(id) === null) return;
   let position = document.getElementById(id).offsetTop;
   window.scrollTo({
     top: position + 200,
