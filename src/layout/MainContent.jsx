@@ -11,7 +11,7 @@ export default class MainContent extends Component {
     return (
       <div>
         <Introduce introduce={this.props.introduce}></Introduce>
-        {/* <ScrollNav nav={this.props.main}></ScrollNav> */}
+        <ScrollNav nav={this.props.main}></ScrollNav>
         {this.props.main.map((module, index) => {
           switch (module.model) {
             case 1:

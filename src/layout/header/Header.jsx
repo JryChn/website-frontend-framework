@@ -14,6 +14,7 @@ export default class Header extends Component {
     };
   }
   switchOutlook = (isHumbeger) => {
+    isHumbeger = window.innerWidth <= 900 ? true : false;
     if (isHumbeger) {
       return (
         <Humbeger

@@ -7,14 +7,9 @@ export default class ScrollNav extends Component {
       "scroll",
       this.handleNavActive
     );
-    this.navActiveListener = window.addEventListener(
-      "click",
-      this.handleNavActive
-    );
   }
   componentWillUnmount() {
-    window.removeEventListener(this.srollListener);
-    window.removeEventListener(this.navActiveListener);
+    window.removeEventListener("scroll", this.srollListener);
   }
 
   handleNavActive = () => {
@@ -55,6 +50,7 @@ export default class ScrollNav extends Component {
           sec.name + index + "id"
         ).style.transitionDuration = "0.5s";
       }
+      return null;
     });
   };
 
