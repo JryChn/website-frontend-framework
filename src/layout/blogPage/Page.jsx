@@ -33,6 +33,8 @@ export default function Page(props) {
       className={style.page}
       style={{
         backgroundImage: `url(${require("../../asset/background2.jpg")})`,
+        // backgroundImage: `url(` + props.background + `)`,
+        // backgroundSize: "cover",
       }}
     >
       <div>

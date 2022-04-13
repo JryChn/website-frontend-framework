@@ -8,7 +8,8 @@ export default class Introduce extends Component {
         className={style.container}
         id="introduce"
         style={{
-          backgroundImage: `url(${require("../../asset/background.jpg")})`,
+          // backgroundImage: `url(${require("../../asset/background.jpg")})`,
+          backgroundImage: `url(` + this.props.introduce.background + `)`,
         }}
       >
         <div>

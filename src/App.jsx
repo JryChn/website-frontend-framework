@@ -53,10 +53,35 @@ export default class App extends Component {
                       return address;
                     });
                   }}
+                  background={() => {
+                    let background;
+                    this.state.config.section.map((item) => {
+                      if (item.model === 1) {
+                        background = item.background;
+                      }
+                      return background;
+                    });
+                  }}
                 />
               }
             />
-            <Route path=":id" element={<Page blog={defaultBlogs} />} />
+            <Route
+              path=":id"
+              element={
+                <Page
+                  blog={defaultBlogs}
+                  background={() => {
+                    let background;
+                    this.state.config.section.map((item) => {
+                      if (item.model === 1) {
+                        background = item.background;
+                      }
+                      return background;
+                    });
+                  }}
+                />
+              }
+            />
           </Route>
           <Route path="story" element={<App />} />
           <Route

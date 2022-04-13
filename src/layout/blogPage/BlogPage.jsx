@@ -16,6 +16,8 @@ export default class BlogPage extends Component {
         className={style.blogPage}
         style={{
           backgroundImage: `url(${require("../../asset/background2.jpg")})`,
+          // backgroundImage: `url(` + props.background + `)`,
+          // backgroundSize: "cover",
         }}
       >
         <div>

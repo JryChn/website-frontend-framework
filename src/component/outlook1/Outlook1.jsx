@@ -45,6 +45,8 @@ export default class Outlook1 extends React.Component {
         id={this.props.content.name + this.props.index}
         style={{
           backgroundImage: `url(${require("../../asset/background2.jpg")})`,
+          // backgroundImage: `url(` + this.props.content.background + `)`,
+          // backgroundSize: "cover",
         }}
       >
         <section>
