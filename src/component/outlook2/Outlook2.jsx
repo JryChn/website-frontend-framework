@@ -11,6 +11,8 @@ export default class Outlook2 extends React.Component {
           // backgroundImage: `url(${require("../../asset/background3.jpg")})`,
           backgroundImage: `url("` + this.props.content.background + `")`,
           backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <div>
