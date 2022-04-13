@@ -9,7 +9,7 @@ export default class Outlook2 extends React.Component {
         className={style.container}
         style={{
           // backgroundImage: `url(${require("../../asset/background3.jpg")})`,
-          backgroundImage: `url("https://source.unsplash.com/1600x900/?nature,water")`,
+          backgroundImage: `url("` + this.props.content.background + `")`,
           backgroundAttachment: "fixed",
         }}
       >
@@ -56,7 +56,7 @@ export default class Outlook2 extends React.Component {
         </div>
         <div>
           <div>
-            <img src={this.props.content.background} alt="" />
+            <img src={this.props.content.protraitBackground} alt="" />
             <div>{this.props.content.who}</div>
             <div>{this.props.content.oneWords}</div>
             <div>
