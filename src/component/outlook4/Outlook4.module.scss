@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 2fr;
-  overflow-x: hidden;
+  overflow: hidden;
   > div:first-child {
     grid-column: 2/4;
     grid-row: 1;
