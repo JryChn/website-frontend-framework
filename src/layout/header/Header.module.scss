@@ -3,10 +3,15 @@ $headerHeigh: 60px;
 $headerWeight: 120px;
 
 .header {
-  display: flex;
   height: $headerHeigh;
-  background-color: rgba(0, 0, 0, 1);
+  width: 100%;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.1);
   text-align: center;
+  position: absolute;
+
+  z-index: 10;
+
   > * {
     align-self: center;
   }
@@ -34,14 +39,13 @@ $headerWeight: 120px;
         line-height: $headerHeigh;
         cursor: pointer;
         &:hover {
-          background-image: linear-gradient(to right, #1e272e, black, #1e272e);
+          background-image: linear-gradient(to right, j1e272e, black, #1e272e);
           box-shadow: inset 2px 2px 20px #1e272e;
           // font-weight: bolder;
         }
       }
     }
     > .more {
-      z-index: 10;
       color: #ecf0f1;
       align-self: center;
       font-weight: bolder;

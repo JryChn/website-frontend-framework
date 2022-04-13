@@ -29,7 +29,12 @@ export default function Page(props) {
     });
   });
   return (
-    <div className={style.page}>
+    <div
+      className={style.page}
+      style={{
+        backgroundImage: `url(${require("../../asset/background2.jpg")})`,
+      }}
+    >
       <div>
         <img src={blog.image} alt="" />
       </div>

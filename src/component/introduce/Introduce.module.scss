@@ -1,4 +1,7 @@
 .container {
+  position: relative;
+  bottom: 60px;
+  padding-top: 90px;
   overflow: hidden;
   display: flex;
   flex-flow: row wrap;

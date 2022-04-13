@@ -12,7 +12,12 @@ export default class BlogPage extends Component {
   }
   render() {
     return (
-      <div className={style.blogPage}>
+      <div
+        className={style.blogPage}
+        style={{
+          backgroundImage: `url(${require("../../asset/background2.jpg")})`,
+        }}
+      >
         <div>
           <ul>
             {this.state.blogs.map((item, index) => {

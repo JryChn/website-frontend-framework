@@ -1,10 +1,12 @@
 .blogPage {
   display: flex;
-  height: 3000px;
   flex-flow: row nowrap;
+  position: relative;
+  bottom: 60px;
+  padding-top: 100px;
   > div {
+    height: 3000px;
     flex: 1;
-    background-color: #d2dae2;
     position: relative;
     > ul {
       width: 60%;
