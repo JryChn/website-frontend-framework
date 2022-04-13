@@ -25,6 +25,7 @@ export default class Outlook3 extends Component {
         className={style.container}
         style={{
           backgroundImage: `url(${require("../../asset/background4.jpg")})`,
+          backgroundSize: "cover",
         }}
       >
         <div>
