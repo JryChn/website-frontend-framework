@@ -7,6 +7,11 @@ export default class Outlook2 extends React.Component {
       <div
         id={this.props.content.name + this.props.index}
         className={style.container}
+        style={{
+          // backgroundImage: `url(${require("../../asset/background3.jpg")})`,
+          backgroundImage: `url("https://source.unsplash.com/1600x900/?nature,water")`,
+          backgroundAttachment: "fixed",
+        }}
       >
         <div>
           <div>
@@ -16,19 +21,34 @@ export default class Outlook2 extends React.Component {
         </div>
         <div>
           <section>
-            <div></div>
+            <div>
+              <img
+                src="https://img.icons8.com/external-parzival-1997-flat-parzival-1997/64/000000/external-passion-love-story-parzival-1997-flat-parzival-1997.png"
+                alt=""
+              />
+            </div>
             <div>
               <span>{this.props.content.trait1}</span>
             </div>
           </section>
           <section>
-            <div></div>
+            <div>
+              <img
+                src="https://img.icons8.com/ios-filled/100/000000/cat-profile.png"
+                alt=""
+              />
+            </div>
             <div>
               <span>{this.props.content.trait2}</span>
             </div>
           </section>
           <section>
-            <div></div>
+            <div>
+              <img
+                src="https://img.icons8.com/external-others-pike-picture/100/000000/external-paranoia-problems-others-pike-picture.png"
+                alt=""
+              />
+            </div>
             <div>
               <span>{this.props.content.trait3}</span>
             </div>
@@ -40,7 +60,7 @@ export default class Outlook2 extends React.Component {
             <div>{this.props.content.who}</div>
             <div>{this.props.content.oneWords}</div>
             <div>
-              <img src={this.props.protait} alt=""></img>
+              <img src={this.props.content.protait} alt=""></img>
             </div>
             <div>{this.props.content.position}</div>
           </div>

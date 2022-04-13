@@ -6,12 +6,12 @@
   &::before {
     display: block;
     content: "";
-    height: 320px;
+    height: 220px;
   }
   &::after {
     content: "";
     display: block;
-    height: 320px;
+    height: 420px;
   }
   > section {
     display: flex;

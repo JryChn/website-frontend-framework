@@ -63,7 +63,10 @@
     }
   }
   > div:nth-child(2) {
+    width: 400px;
+    height: 400px;
     position: relative;
+    transform: translateY(50px);
     > img {
       width: 100%;
       height: 100%;
