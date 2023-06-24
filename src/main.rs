@@ -70,7 +70,7 @@ fn Content(cx: Scope<Test>) -> Element {
             white_space: "nowrap",
             overflow: "hidden",
             word_break: "break-all",
-            font_size: "300%",
+            font_size: "5vw",
             font_family: "monospace, 'WenQuanYi Micro Hei'",
             style { include_str!("css/test.css") }
             "{states}"
@@ -81,7 +81,9 @@ fn Content(cx: Scope<Test>) -> Element {
 fn App(cx: Scope) -> Element {
     let a = vec!["正在__建设中...".to_string(), "Under Construction...".to_string()];
     cx.render(rsx! {
-        div { width: "100%", height: "100vh", position: "relative", background_color: "#f1f1f1", Content { a: a } }
+        div { width: "100%", height: "100vh", position: "relative", background_color: "#f1f1f1",
+            min_width:"200px",
+            Content { a: a } }
     }
     )
 }
