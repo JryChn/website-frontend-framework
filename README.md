@@ -1,12 +1,14 @@
-# This is a Website frontEnd page
+# This is a Website frontEnd page framework
 
-In the project directory, you can find src/config.json
+Under construction now.
 
-It's define the words and image that web used.
+install
 
-and then run:
+`cargo install dioxus-cli`
 
-### `npm run build`
+run:
+
+### `dioxus serve`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
