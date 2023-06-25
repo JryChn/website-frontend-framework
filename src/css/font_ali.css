@@ -1,5 +1,6 @@
 @font-face {
-    font-family: "AliMama";src: url("//at.alicdn.com/wf/webfont/4SBN0FwLpeKR/k9zv2nBhDJNQ.woff2") format("woff2"),
-url("//at.alicdn.com/wf/webfont/4SBN0FwLpeKR/LiJAV0uptQIS.woff") format("woff");
+    font-family: "AliMama";
+    src: url("//at.alicdn.com/wf/webfont/4SBN0FwLpeKR/bg3qozjlfStC.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/4SBN0FwLpeKR/D7v0ScjFZ6k1.woff") format("woff");
     font-display: swap;
 }

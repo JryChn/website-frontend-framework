@@ -56,7 +56,7 @@ pub fn WelcomeContent(cx: Scope) -> Element {
             word_break: "break-all",
             font_size: "5vw",
             font_weight: "bold",
-            font_family: "AliMama, monospace",
+            font_family: "'AliMama', monospace",
             style { include_str!("../css/welcome_animation.css"),include_str!("../css/font_ali.css") }
             "{states}"
         }
