@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Kablammo
+- Font Author: Copyright 2023 The Kablammo Project Authors (https://github.com/Vectro-Type-Foundry/kablammo)
+- Font Source: http://fonts.gstatic.com/s/kablammo/v1/bWtm7fHPcgrhC-J3lcXhcQTY5Ixs6Au9YgCjjx0Rf4YDKw.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
