@@ -1,7 +1,11 @@
-pub mod welcome;
-pub mod aboutme;
-pub mod article;
-pub mod footer;
-pub mod gallery;
+pub mod homepage;
+pub mod navigation;
+pub mod aboutMe;
 pub mod story;
 pub mod header;
+pub mod footer;
+pub mod calendar;
+pub mod aboutMeContent;
+pub mod articles;
+pub mod articleList;
+pub mod article;
