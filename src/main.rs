@@ -2,7 +2,6 @@
 
 use dioxus::prelude::*;
 use dioxus_router::{Route, Router};
-use dioxus_use_window::use_browser;
 use crate::component::aboutMe::AboutMe::AboutMe;
 use crate::component::aboutMeContent::aboutmecontent::AboutMeContent;
 use crate::component::article::article::Article;
@@ -21,64 +20,48 @@ fn main() {
     // launch the web app
     dioxus_web::launch(App);
 }
-
-struct DarkMode(bool);
-
-struct ThinMode(bool);
-
 fn App(cx: Scope) -> Element {
-    let window_width = use_browser(&cx).width();
-    use_shared_state_provider(cx, || DarkMode(false));
-    use_shared_state_provider(cx, ||
-        if window_width <768{
-            ThinMode(true)
-        }else{
-            ThinMode(false)
-        }
-    );
-    cx.render(rsx! {
-        link {
-            // this is a common link for css to format style
-            href: "https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css",
-            rel: "stylesheet"
-        }
-        main { id: "djeremy",
-        Router{
-            Route{
-                to:"/",
-            SingleWelcome {
-                title: "".to_string(),
-                animation_video_url: ("".to_string(), "".to_string()),
-                content: vec!["".to_string(), "".to_string()],
+        cx.render(rsx! {
+            style { include_str!("css/tailwindout.css") }
+            main { id: "djeremy",
+                Router { 
+                    Route { to: "/",
+                        SingleWelcome {
+                            title: "djeremychen.com".into(),
+                            animation_video_url: ("day_tul".into(), "/test.mp4".into()),
+                            content: vec!["俊俏的冷枪手".into(), "无敌风火轮".into()]
+                        }
+                        Navigate {
+                            url_jumper: vec![
+    ("AboutMe".into(), "/aboutMe".into()), ("Calendar".into(), "/calendar".into()),
+    ("Articles".into(), "/articles".into()), ("Timer".into(), "/timer".into()), ("Zone"
+    .into(), "/zone".into())
+]
+                        }
+                        Articles { article_list_url: "".into() }
+                        AboutMe { about_me_video_url: "".into(), about_me_title: "".into(), about_me_description: "".into() }
+                        Timer {}
+                        Story {}
+                        Footer {}
+                    }
+                    Route { to: "/calender",
+                        Header {}
+                        Calendar {}
+                    }
+                    Route { to: "/articles",
+                        Header {}
+                        ArticleList {}
+                    }
+                    Route { to: "/aboutMe",
+                        Header {}
+                        AboutMeContent {}
+                    }
+                    Route { to: "/article/*",
+                        Header {}
+                        Article {}
+                    }
+                }
             }
-            Navigate {}
-            Articles{}
-            AboutMe {}
-            Story{}
-            Footer{}
-            }
-                Route{
-                    to:"/calender",
-                    Header{}
-                    Calendar{}
-                }
-                Route{
-                    to:"/articles",
-                    Header{}
-                    ArticleList{}
-                }
-                Route{
-                    to:"/aboutMe",
-                    Header{}
-                    AboutMeContent{}
-                }
-                Route{
-                    to:"/article/*",
-                    Header{}
-                    Article{}
-                }
         }
-        }
-    }
     )
 }

@@ -9,3 +9,4 @@ pub mod aboutMeContent;
 pub mod articles;
 pub mod articleList;
 pub mod article;
+pub mod timer;
