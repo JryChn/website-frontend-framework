@@ -16,3 +16,5 @@ charming = { version = "0.2.3", features = ["wasm"] }
 web-sys ={version = "0.3.64", features = ["DomTokenList"]}
 rand = "0.8.5"
 getrandom = { version = "0.2.10", features = ["js"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.99"

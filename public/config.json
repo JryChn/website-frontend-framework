@@ -1,0 +1,21 @@
+{
+  "encrypted_key":"",
+  "configuration_fetching_url":"",
+  "config_template":{
+    "welcome_page":{
+      "title":"Djremychen.com",
+      "subtitle_description":["","",""],
+      "animation_video_light_url":"",
+      "animation_video_dark_url":""
+    },
+    "articles_url":"",
+    "calendar_url":"",
+    "about_me_page": {
+      "about_me_intro_url":"",
+      "about_me_title":"Jeremy Chen",
+      "about_me_description":"",
+      "about_me_url": ""
+    }
+  }
+
+}
