@@ -9,7 +9,7 @@ pub struct ArticlesContext {
     article_list_url:String,
 }
 
-pub fn Articles(cx: Scope) -> Element {
+pub fn Articles(cx: Scope<ArticlesContext>) -> Element {
     let article_content = rsx!(
         div { class: "w-[333px] h-[666px]",
             div { class: "border-black border-2 w-[90%] h-[60%] rounded-xl shadow-zinc-600 shadow-lg mx-5 my-5",
@@ -29,13 +29,13 @@ pub fn Articles(cx: Scope) -> Element {
                 div { id: "article_title_box", class: "w-3/4 h-1/6 mx-auto",
                     h2 {
                         id: "article_title",
-                        class: "text-5xl font-mono font-bold text-center mb-10 dark:text-gray-50",
+                        class: "text-5xl font-mono font-bold text-center p-10 dark:text-gray-50",
                         "This is Article"
                     }
                 }
                 div {
                     id: "article_list",
-                    class: " w-3/4 my-10 mx-auto flex flex-wrap shrink-0 justify-around",
+                    class: " w-3/4 mx-auto flex flex-wrap shrink-0 justify-around",
                     article_content,
                     Link {
                         to: "/articles",
