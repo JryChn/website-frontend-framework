@@ -1,26 +1,31 @@
 #![allow(non_snake_case)]
 
+use std::ops::{Add, Deref};
 use dioxus::html::span;
 use dioxus::prelude::*;
 use dioxus_router::{Link, Router};
+use gloo_file::ObjectUrl;
+use web_sys::Blob;
 
 #[derive(Props, PartialEq)]
 pub struct ArticlesContext {
-    article_list_url:String,
+    articles_intro:Vec<(String,String,String)>
 }
 
 pub fn Articles(cx: Scope<ArticlesContext>) -> Element {
-    let article_content = rsx!(
+    let article_content = cx.props.articles_intro.iter().map(|a|{
+        rsx!(
         div { class: "w-[333px] h-[666px]",
             div { class: "border-black border-2 w-[90%] h-[60%] rounded-xl shadow-zinc-600 shadow-lg mx-5 my-5",
-                img { src: "", alt: "", class: "w-full h-full rounded-xl" }
+                img { id:"test",src: "{a.0}", alt: "", class: "w-full h-full rounded-xl" }
             }
             div { class: "w-[90%] h-[30%] mx-auto overflow-hidden overflow-ellipsis",
-                h2 { class: "font-medium text-2xl font-serif dark:text-gray-50", "" }
-                span { class: "my-4 font-sans text-gray-500 dark:text-gray-300", "" }
+                h2 { class: "font-medium text-2xl font-serif dark:text-gray-50", "{a.1}" }
+                span { class: "my-4 font-sans text-gray-500 dark:text-gray-300", "{a.2}" }
             }
         }
-    );
+    )
+    });
     cx.render(
         rsx!(
             div {

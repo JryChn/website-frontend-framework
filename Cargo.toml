@@ -10,10 +10,12 @@ dioxus = "0.3.2"
 dioxus-web = "0.3.2"
 dioxus-router = "0.3.0"
 dioxus-use-window = "0.7.0"
-reqwest = { version = "0.11", features = ["json"] }
 gloo-timers = "0.2.6"
+gloo-file = "0.2.3"
+gloo-net = "0.3.0"
+gloo-utils = {version = "0.1.7"}
+web-sys = {version = "0.3.64",features = ["DomTokenList"]}
 charming = { version = "0.2.3", features = ["wasm"] }
-web-sys ={version = "0.3.64", features = ["DomTokenList"]}
 rand = "0.8.5"
 getrandom = { version = "0.2.10", features = ["js"] }
 serde = { version = "1.0", features = ["derive"] }

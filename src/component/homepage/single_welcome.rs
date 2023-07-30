@@ -4,8 +4,7 @@ use std::time::Duration;
 
 use dioxus::prelude::*;
 use dioxus_router::Link;
-use reqwest;
-use web_sys::window;
+use gloo_utils::{document_element, window};
 
 #[derive(Props, PartialEq)]
 pub struct SingleWelcomeContext {
@@ -49,7 +48,7 @@ pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
         }
     });
     let animation_url =
-    if window().unwrap().document().unwrap().document_element().unwrap().class_list().contains("dark"){
+    if gloo_utils::document_element().class_list().contains("dark"){
         &cx.props.animation_video_url.1
     }else{
         &cx.props.animation_video_url.0
@@ -114,12 +113,8 @@ pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
                     class: "md:w-11 md:h-11 md:relative md:left-1/2 md:-translate-x-1/2 md:dark:after:block dark:md:after:w-32 dark:md:after:h-32 dark:md:after:bg-amber-200 dark:md:after:relative dark:md:after:top-1/2 dark:md:after:rounded-[50%] dark:md:after:right-1/2 dark:md:after:-translate-x-4 dark:md:after:-translate-y-2/3 dark:md:after:blur-2xl dark:md:after:opacity-80 dark:md:after:animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite] dark:stroke-gray-50 dark:fill-gray-50",
                     dangerous_inner_html: "{svg_bold}",
                     onclick: |e| {
-                        let dom = window().unwrap().document().unwrap().document_element().unwrap();
-                        if dom.class_list().contains("dark") {
-                            dom.class_list().remove_1("dark");
-                        } else {
-                            dom.class_list().add_1("dark");
-                        }
+                        let dom = gloo_utils::document_element();
+                        dom.class_list().toggle("dark");
                     }
                 }
             }

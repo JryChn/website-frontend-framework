@@ -26,7 +26,7 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                         class: "w-[90%] h-[700px] border border-black mx-auto relative",
                         video {
                             src: "{cx.props.about_me_video_url}",
-                            class: "w-full h-full brightness-75 contrast-75",
+                            class: "w-full h-full brightness-75 contrast-75 object-fill",
                             autoplay: "true",
                             muted: "true",
                             "loop": "loop",

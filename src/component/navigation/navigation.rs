@@ -1,15 +1,7 @@
 #![allow(non_snake_case)]
 
-use std::collections::HashSet;
-use std::iter::Map;
-use charming::{Chart, WasmRenderer};
-use charming::component::Legend;
-use charming::element::ItemStyle;
-use charming::series::{Pie, PieRoseType};
-use dioxus::html::div;
 use dioxus::prelude::*;
 use dioxus_router::Link;
-use web_sys::window;
 
 #[derive(Props, PartialEq)]
 pub struct NavigateContext {
@@ -30,7 +22,7 @@ pub fn Navigate(cx: Scope<NavigateContext>) -> Element {
                     div{
                         class:"w-1/3 h-1 relative border-2 border-gray-800 top-{i+3}  bg-black rounded-lg mx-auto cursor-pointer dark:bg-gray-50 dark:border-gray-50",
                             onclick:|e|{
-                                window().unwrap().document().unwrap().get_element_by_id("navigator_sidebar").unwrap().class_list().remove_1("hidden");
+                                gloo_utils::document().get_element_by_id("navigator_sidebar").unwrap().class_list().remove_1("hidden");
                             },
                     }
                     )
@@ -42,10 +34,8 @@ pub fn Navigate(cx: Scope<NavigateContext>) -> Element {
                     div {
                         dangerous_inner_html: "{sign}",
                         onclick: |e| {
-                            window()
-                                .unwrap()
-                                .document()
-                                .unwrap()
+                            gloo_utils::
+                                document()
                                 .get_element_by_id("navigator_sidebar")
                                 .unwrap()
                                 .class_list()

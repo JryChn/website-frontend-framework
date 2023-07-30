@@ -1,10 +1,8 @@
 #![allow(non_snake_case)]
 
-use std::fs;
 use dioxus::core::IntoDynNode;
 use dioxus::prelude::*;
 use dioxus_router::{Route, Router};
-use reqwest::Url;
 
 use crate::component::aboutMe::AboutMe::AboutMe;
 use crate::component::aboutMeContent::aboutmecontent::AboutMeContent;
@@ -28,12 +26,12 @@ fn main() {
 }
 
 fn App(cx: Scope) -> Element {
-    let config = use_future(cx,(), |_| async{
-        let config = reqwest::get(web_sys::window().unwrap().origin()+"/config.json").await.expect("Error when load config file").json::<CommonConfig>().await.expect("Error when parse json file");
-        if config.configuration_fetching_url.is_empty(){
+    let config = use_future(cx, (), |_| async {
+        let config = gloo_net::http::Request::get("/config.json").send().await.expect("Error when load config file").json::<CommonConfig>().await.expect("Error when parse json file");
+        if config.configuration_fetching_url.is_empty() {
             config.config_template
-        }else{
-            reqwest::get(config.configuration_fetching_url).await.expect("Failed fetching config from remote").json::<ConfigurationTemplate>().await.expect("Failed, remote json file parsing error")
+        } else {
+            gloo_net::http::Request::get(&config.configuration_fetching_url).send().await.expect("Failed fetching config from remote").json::<ConfigurationTemplate>().await.expect("Failed, remote json file parsing error")
         }
     });
     let header_url = vec![
@@ -41,10 +39,10 @@ fn App(cx: Scope) -> Element {
         ("Articles".into(), "/articles".into()), ("Timer".into(), "/timer".into()), ("Zone".into(), "/zone".into())];
     cx.render(
         match config.value() {
-            None=>{
+            None => {
                 rsx!( div { "Nothing" } )
-            },
-            Some(configuration)=> {
+            }
+            Some(configuration) => {
                 rsx! {
                     style { include_str!("css/tailwindout.css") }
                     main { id: "djeremy",
@@ -59,9 +57,10 @@ fn App(cx: Scope) -> Element {
                                     content: configuration.welcome_page.subtitle_description.clone()
                                 }
                                 Navigate { url_jumper: header_url.clone() }
-                                Articles { article_list_url: "".into() }
-                                AboutMe { about_me_video_url: "".into(), about_me_title: "".into(), about_me_description: "".into() }
-                                Timer {}
+                                Articles { articles_intro: vec![(configuration.articles_page.first_article.article_img.clone(), configuration.articles_page.first_article.article_title.clone(),configuration.articles_page.first_article.article_description_index.clone()),
+                                    (configuration.articles_page.second_article.article_img.clone(),configuration.articles_page.second_article.article_title.clone(),configuration.articles_page.second_article.article_description_index.clone()),(configuration.articles_page.third_article.article_img.clone(),configuration.articles_page.third_article.article_title.clone(),configuration.articles_page.third_article.article_description_index.clone())] }
+                                AboutMe { about_me_video_url: configuration.about_me_page.about_me_url.clone(), about_me_title: configuration.about_me_page.about_me_title.clone(), about_me_description: configuration.about_me_page.about_me_description.clone() }
+                                Timer {timer_intro: configuration.timer.timer_intro.clone()}
                                 Footer {}
                             }
                             Route { to: "/calender", Calendar {} }
@@ -80,6 +79,7 @@ fn App(cx: Scope) -> Element {
                         }
                     }
                 }
-            }}
+            }
+        }
     )
 }
