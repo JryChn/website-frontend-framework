@@ -1,5 +1,6 @@
 use dioxus::prelude::Props;
 use serde::{Deserialize, Serialize};
+use crate::model::Article::Article;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CommonConfig {
@@ -25,16 +26,9 @@ pub struct WelcomePage{
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ArticlePage{
     pub all_article_url:String,
-    pub first_article:Articles,
-    pub second_article:Articles,
-    pub third_article:Articles
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Articles{
-    pub article_img:String,
-    pub article_title:String,
-    pub article_description_index:String
+    pub first_article:Article,
+    pub second_article:Article,
+    pub third_article:Article
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -42,7 +36,7 @@ pub struct AboutMePage{
     pub about_me_intro_url:String,
     pub about_me_title:String,
     pub about_me_description:String,
-    pub about_me_url:String
+    pub about_me_video_url:String
 }
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TimerPage{

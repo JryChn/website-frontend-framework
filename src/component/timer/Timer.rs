@@ -21,7 +21,7 @@ pub fn Timer(cx: Scope<TimerContext>) -> Element {
             style { include_str!("css/timer.css") }
             div {
                 id: "timer",
-                class: "w-screen min-h-[400px] shadow-inner bg-gradient-to-br  from-pink-100 to-indigo-300 relative",
+                class: "w-screen min-h-[400px] shadow-inner bg-gradient-to-br  from-pink-100 to-indigo-300 relative overflow-hidden",
                 h2 {
                     id: "timer_title",
                     class: "text-5xl font-mono font-bold text-center mb-10 translate-y-5",

@@ -11,7 +11,7 @@ dioxus-web = "0.3.2"
 dioxus-router = "0.3.0"
 dioxus-use-window = "0.7.0"
 gloo-timers = "0.2.6"
-gloo-file = "0.2.3"
+gloo-file = {version="0.2.3", features = ["futures"]}
 gloo-net = "0.3.0"
 gloo-utils = {version = "0.1.7"}
 web-sys = {version = "0.3.64",features = ["DomTokenList"]}

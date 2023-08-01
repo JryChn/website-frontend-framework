@@ -17,7 +17,8 @@ pub fn Header(cx: Scope<HeaderContext>) -> Element {
     cx.render(
         rsx!(
             header { id: "header", class: "bg-white w-screen h-14 shadow-xl fixed top-0 z-50",
-                div {
+                Link {
+                    to:"/",
                     id: "header_title",
                     class: "inline-block absolute top-4 left-3 uppercase font-bold text-xl",
                     "{cx.props.title}"

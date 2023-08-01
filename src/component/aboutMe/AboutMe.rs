@@ -21,7 +21,8 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                         class: "text-5xl font-mono font-bold text-center p-10 dark:text-gray-50",
                         "About Me"
                     }
-                    div {
+                    Link {
+                        to: "/aboutMe",
                         id: "about_me_content",
                         class: "w-[90%] h-[700px] border border-black mx-auto relative",
                         video {
@@ -41,7 +42,6 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                             id: "about_me_description",
                             class: "absolute left-12 top-[70%] font-sans text-xl break-words w-1/3 text-gray-200",
                             "{cx.props.about_me_description}   "
-                            Link { id: "about_me_link", to: "/aboutMe", "Find Me" }
                         }
                     }
                 }

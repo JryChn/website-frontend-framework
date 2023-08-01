@@ -25,9 +25,11 @@ fn main() {
     dioxus_web::launch(App);
 }
 
+// todo: fetching img/video resourceat first to optimize performance
+// todo: using AES and base64 to encrypt/encode the request/response
 fn App(cx: Scope) -> Element {
     let config = use_future(cx, (), |_| async {
-        let config = gloo_net::http::Request::get("/config.json").send().await.expect("Error when load config file").json::<CommonConfig>().await.expect("Error when parse json file");
+        let config:CommonConfig = serde_json::from_str(include_str!("config.json")).unwrap();
         if config.configuration_fetching_url.is_empty() {
             config.config_template
         } else {
@@ -40,7 +42,7 @@ fn App(cx: Scope) -> Element {
     cx.render(
         match config.value() {
             None => {
-                rsx!( div { "Nothing" } )
+                rsx!( div { "Loading...."} )
             }
             Some(configuration) => {
                 rsx! {
@@ -57,22 +59,21 @@ fn App(cx: Scope) -> Element {
                                     content: configuration.welcome_page.subtitle_description.clone()
                                 }
                                 Navigate { url_jumper: header_url.clone() }
-                                Articles { articles_intro: vec![(configuration.articles_page.first_article.article_img.clone(), configuration.articles_page.first_article.article_title.clone(),configuration.articles_page.first_article.article_description_index.clone()),
-                                    (configuration.articles_page.second_article.article_img.clone(),configuration.articles_page.second_article.article_title.clone(),configuration.articles_page.second_article.article_description_index.clone()),(configuration.articles_page.third_article.article_img.clone(),configuration.articles_page.third_article.article_title.clone(),configuration.articles_page.third_article.article_description_index.clone())] }
-                                AboutMe { about_me_video_url: configuration.about_me_page.about_me_url.clone(), about_me_title: configuration.about_me_page.about_me_title.clone(), about_me_description: configuration.about_me_page.about_me_description.clone() }
+                                Articles { articles_intro: vec![configuration.articles_page.first_article.clone(),configuration.articles_page.second_article.clone(),configuration.articles_page.third_article.clone()] }
+                                AboutMe { about_me_video_url: configuration.about_me_page.about_me_video_url.clone(), about_me_title: configuration.about_me_page.about_me_title.clone(), about_me_description: configuration.about_me_page.about_me_description.clone() }
                                 Timer {timer_intro: configuration.timer.timer_intro.clone()}
                                 Footer {}
                             }
                             Route { to: "/calender", Calendar {} }
                             Route { to: "/articles",
                                 Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
-                                ArticleList {}
+                                ArticleList {url:configuration.articles_page.all_article_url.clone()}
                             }
                             Route { to: "/aboutMe",
                                 Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
-                                AboutMeContent {}
+                                AboutMeContent {url:configuration.about_me_page.about_me_intro_url.clone()}
                             }
-                            Route { to: "/article/*",
+                            Route { to: "/article/:id",
                                 Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
                                 Article {}
                             }
