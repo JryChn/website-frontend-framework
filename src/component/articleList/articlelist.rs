@@ -1,14 +1,14 @@
 #![allow(non_snake_case)]
 
+use charming::element::{LineStyle, ScaleLimit};
 use charming::series::{Graph, GraphData, GraphLayout};
 use charming::{Chart, WasmRenderer};
-use charming::element::{LineStyle, ScaleLimit};
 use dioxus::prelude::*;
 use dioxus_router::{Link, Router};
 
 #[derive(Props, PartialEq)]
 pub struct ArticlesListContext {
-    url:String
+    url: String,
 }
 
 pub fn ArticleList(cx: Scope<ArticlesListContext>) -> Element {

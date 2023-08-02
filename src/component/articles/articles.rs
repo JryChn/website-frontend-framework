@@ -1,12 +1,12 @@
 #![allow(non_snake_case)]
 
+use crate::model::Article::Article;
 use dioxus::prelude::*;
 use dioxus_router::Link;
-use crate::model::Article::Article;
 
 #[derive(Props, PartialEq)]
 pub struct ArticlesContext {
-    articles_intro:Vec<Article>
+    articles_intro: Vec<Article>,
 }
 
 pub fn Articles(cx: Scope<ArticlesContext>) -> Element {

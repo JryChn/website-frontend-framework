@@ -1,7 +1,9 @@
 #![allow(non_snake_case)]
 
 use dioxus::core::IntoDynNode;
+use dioxus::html::div;
 use dioxus::prelude::*;
+use std::process::id;
 use dioxus_router::{Route, Router};
 
 use crate::component::aboutMe::AboutMe::AboutMe;
@@ -29,26 +31,40 @@ fn main() {
 // todo: using AES and base64 to encrypt/encode the request/response
 fn App(cx: Scope) -> Element {
     let config = use_future(cx, (), |_| async {
-        let config:CommonConfig = serde_json::from_str(include_str!("config.json")).unwrap();
+        let config: CommonConfig = serde_json::from_str(include_str!("config.json")).expect("Error when loading config file");
         if config.configuration_fetching_url.is_empty() {
             config.config_template
         } else {
-            gloo_net::http::Request::get(&config.configuration_fetching_url).send().await.expect("Failed fetching config from remote").json::<ConfigurationTemplate>().await.expect("Failed, remote json file parsing error")
+            gloo_net::http::Request::get(&config.configuration_fetching_url)
+                .send()
+                .await
+                .expect("Failed fetching config from remote")
+                .json::<ConfigurationTemplate>()
+                .await
+                .expect("Failed, remote json file parsing error")
         }
     });
     let header_url = vec![
-        ("AboutMe".into(), "/aboutMe".into()), ("Calendar".into(), "/calendar".into()),
-        ("Articles".into(), "/articles".into()), ("Timer".into(), "/timer".into()), ("Zone".into(), "/zone".into())];
+        ("AboutMe".into(), "/aboutMe".into()),
+        ("Calendar".into(), "/calendar".into()),
+        ("Articles".into(), "/articles".into()),
+        ("Timer".into(), "/timer".into()),
+        ("Zone".into(), "/zone".into()),
+    ];
     cx.render(
         match config.value() {
             None => {
-                rsx!( div { "Loading...."} )
+                rsx!( div { class:"w-screen h-screen relative",
+                    div{ class:"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold",
+                     "Loading...."
+                    }
+                    } )
             }
             Some(configuration) => {
                 rsx! {
                     style { include_str!("css/tailwindout.css") }
                     main { id: "djeremy",
-                        Router { 
+                        Router {
                             Route { to: "/",
                                 SingleWelcome {
                                     title: configuration.welcome_page.title.clone(),
@@ -64,7 +80,11 @@ fn App(cx: Scope) -> Element {
                                 Timer {timer_intro: configuration.timer.timer_intro.clone()}
                                 Footer {}
                             }
-                            Route { to: "/calender", Calendar {} }
+                            Route { to: "/calender",
+                                Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
+                                Calendar {
+                                url: configuration.calendar_url.clone()
+                            } }
                             Route { to: "/articles",
                                 Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
                                 ArticleList {url:configuration.articles_page.all_article_url.clone()}
@@ -75,7 +95,9 @@ fn App(cx: Scope) -> Element {
                             }
                             Route { to: "/article/:id",
                                 Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
-                                Article {}
+                                Article {
+                                    url:configuration.articles_page.one_article_url.clone(),
+                                }
                             }
                         }
                     }
@@ -84,3 +106,4 @@ fn App(cx: Scope) -> Element {
         }
     )
 }
+

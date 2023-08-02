@@ -1,9 +1,9 @@
 #![allow(non_snake_case)]
 
-use charming::{Chart, WasmRenderer};
 use charming::element::{Emphasis, ItemStyle, Label, LabelPosition};
 use charming::series::Pie;
 use charming::theme::Theme;
+use charming::{Chart, WasmRenderer};
 use dioxus::prelude::*;
 
 use crate::model::AboutMe::AboutMeContent;
@@ -18,12 +18,28 @@ pub fn AboutMeContent(cx: Scope<AboutMeContentContext>) -> Element {
     // use special decoration to replace **/test/** in paragraph.
     let special_content_wrapper_start = r##"<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-3"><span class="relative text-white">"##;
     let special_content_wrapper_end = r##"</span></span>"##;
-    let fetch = use_future(cx, (&cx.props.url), |url| async move{
-        gloo_net::http::Request::get(&url).send().await.unwrap().json::<AboutMeContent>().await.expect("Error when fetching about me content")
+    let fetch = use_future(cx, (&cx.props.url), |url| async move {
+        gloo_net::http::Request::get(&url)
+            .send()
+            .await
+            .unwrap()
+            .json::<AboutMeContent>()
+            .await
     });
     cx.render(match fetch.value() {
-        None => rsx!(div{"Loading"}),
-        Some(aboutMe) => {
+        None =>
+                rsx!( div { class:"w-screen h-screen relative",
+                    div{ class:"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold",
+                     "Loading...."
+                    }
+                    } ),
+        Some(Err(_))=> rsx!(
+                div { class:"w-screen h-screen relative",
+                    div{ class:"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold",
+                     "Oops,Something error happened!"
+                    }
+                    } ),
+        Some(Ok(aboutMe)) => {
             let aboutMeContent = aboutMe.about_me.about_me_content.replace(" **/", special_content_wrapper_start);
             let aboutMeContent = aboutMeContent.replace("/** ", special_content_wrapper_end);
             let _ = aboutMe.stage.iter().map(|stage| {

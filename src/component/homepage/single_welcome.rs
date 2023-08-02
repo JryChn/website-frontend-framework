@@ -14,16 +14,13 @@ pub struct SingleWelcomeContext {
 }
 
 pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
-    let typing_words = use_state(cx, || {
-        "".to_string()
-    });
+    let typing_words = use_state(cx, || "".to_string());
     use_future(cx, (), |_| {
         to_owned![typing_words];
         let whole_str = cx.props.content.to_owned();
         async move {
             loop {
-                for i in whole_str.iter()
-                {
+                for i in whole_str.iter() {
                     let whole_str = i;
                     gloo_timers::future::sleep(Duration::from_millis(1000)).await;
                     let mut init_string = "".to_string();
@@ -47,10 +44,9 @@ pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
             }
         }
     });
-    let animation_url =
-    if gloo_utils::document_element().class_list().contains("dark"){
+    let animation_url = if gloo_utils::document_element().class_list().contains("dark") {
         &cx.props.animation_video_url.1
-    }else{
+    } else {
         &cx.props.animation_video_url.0
     };
     let svg_bold = r###"

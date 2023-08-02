@@ -6,8 +6,8 @@ use dioxus_router::Link;
 #[derive(Props, PartialEq)]
 pub struct AboutMeContext {
     about_me_video_url: String,
-    about_me_title:String,
-    about_me_description:String,
+    about_me_title: String,
+    about_me_description: String,
 }
 pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
     cx.render(
@@ -24,7 +24,7 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                     Link {
                         to: "/aboutMe",
                         id: "about_me_content",
-                        class: "w-[90%] h-[700px] border border-black mx-auto relative",
+                        class: "w-[90%] h-[700px] border border-black mx-auto relative block",
                         video {
                             src: "{cx.props.about_me_video_url}",
                             class: "w-full h-full brightness-75 contrast-75 object-fill",
@@ -40,8 +40,8 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                         }
                         span {
                             id: "about_me_description",
-                            class: "absolute left-12 top-[70%] font-sans text-xl break-words w-1/3 text-gray-200",
-                            "{cx.props.about_me_description}   "
+                            class: "block absolute left-12 top-[70%] font-sans text-xl  w-1/3 text-gray-200",
+                            "{cx.props.about_me_description}"
                         }
                     }
                 }
