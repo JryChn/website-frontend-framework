@@ -1,0 +1,50 @@
+{
+  "contact": {
+    "github": "",
+    "email": "",
+    "telegram": ""
+  },
+  "welcome": {
+    "title": "",
+    "subtitle": "",
+    "animation_url": {
+      "light": "",
+      "dark": ""
+    }
+  },
+  "articles": {
+    "api": "",
+    "article": [
+      {
+        "id": "",
+        "image": "",
+        "title": "",
+        "introduction": "",
+        "tags": [
+          ""
+        ],
+        "keywords": [
+          ""
+        ]
+      }
+    ]
+  },
+  "about_me": {
+    "api": "",
+    "name": "",
+    "description": "",
+    "video": ""
+  },
+  "timer": {
+    "api": "",
+    "posts": [
+      {
+        "image": "",
+        "content": ""
+      }
+    ]
+  },
+  "calendar": {
+    "api": ""
+  }
+}

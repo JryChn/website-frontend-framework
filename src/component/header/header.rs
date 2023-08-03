@@ -11,15 +11,15 @@ pub struct HeaderContext {
 pub fn Header(cx: Scope<HeaderContext>) -> Element {
     let header_list = cx.props.url_jumper.iter().map(|url| {
         rsx!(
-            Link { class: "hover:border-b-black hover:border-b", to: "{url.1}", "{url.0}" }
+            Link { class: "hover:border-b-black hover:border-b dark:text-gray-50", to: "{url.1}", "{url.0}" }
         )
     });
     cx.render(rsx!(
-        header { id: "header", class: "bg-white w-screen h-14 shadow-xl fixed top-0 z-50",
+        header { id: "header", class: "bg-white w-screen h-14 shadow-xl fixed top-0 z-50 dark:bg-black",
             Link {
                 to:"/",
                 id: "header_title",
-                class: "inline-block absolute top-4 left-3 uppercase font-bold text-xl",
+                class: "inline-block absolute top-4 left-3 uppercase font-bold text-xl dark:text-gray-50",
                 "{cx.props.title}"
             }
             div {

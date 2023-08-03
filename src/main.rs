@@ -18,9 +18,12 @@ use crate::component::homepage::single_welcome::SingleWelcome;
 use crate::component::navigation::navigation::Navigate;
 use crate::component::timer::Timer::Timer;
 use crate::model::config::{CommonConfig, ConfigurationTemplate};
+use crate::utils::encryptedUtils::{fetch_and_decrypt};
+use crate::utils::netUtils::parse_to_data_url;
 
 mod component;
 mod model;
+mod utils;
 
 fn main() {
     // launch the web app
@@ -32,17 +35,19 @@ fn main() {
 fn App(cx: Scope) -> Element {
     let config = use_future(cx, (), |_| async {
         let config: CommonConfig = serde_json::from_str(include_str!("config.json")).expect("Error when loading config file");
+        let mut configuration;
         if config.configuration_fetching_url.is_empty() {
-            config.config_template
+            configuration = config.config_template
         } else {
-            gloo_net::http::Request::get(&config.configuration_fetching_url)
-                .send()
-                .await
-                .expect("Failed fetching config from remote")
-                .json::<ConfigurationTemplate>()
-                .await
-                .expect("Failed, remote json file parsing error")
+            configuration =  fetch_and_decrypt::<ConfigurationTemplate>(config.configuration_fetching_url,config.encrypted_key).await;
         }
+        configuration.articles_page.first_article.article_image = parse_to_data_url(configuration.articles_page.first_article.article_image).await;
+        configuration.articles_page.second_article.article_image = parse_to_data_url(configuration.articles_page.second_article.article_image).await;
+        configuration.articles_page.third_article.article_image = parse_to_data_url(configuration.articles_page.third_article.article_image).await;
+        configuration.welcome_page.animation_video_light_url = parse_to_data_url(configuration.welcome_page.animation_video_light_url).await;
+        configuration.welcome_page.animation_video_dark_url = parse_to_data_url(configuration.welcome_page.animation_video_dark_url).await;
+        configuration.about_me_page.about_me_video_url = parse_to_data_url(configuration.about_me_page.about_me_video_url).await;
+        configuration
     });
     let header_url = vec![
         ("AboutMe".into(), "/aboutMe".into()),
@@ -99,6 +104,12 @@ fn App(cx: Scope) -> Element {
                                     url:configuration.articles_page.one_article_url.clone(),
                                 }
                             }
+                            Route { to: "/timer"
+                                Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
+                                }
+                            Route { to: "/zone"
+                                Header { title: "DJEREMY".into(), url_jumper: header_url.clone() }
+                                }
                         }
                     }
                 }

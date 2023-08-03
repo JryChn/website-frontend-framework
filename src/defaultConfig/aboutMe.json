@@ -1,0 +1,37 @@
+{
+  "image": "",
+  "description": "",
+  "stages": [
+    {
+      "category": "",
+      "value": [
+        {
+          "name": "",
+          "value": 0
+        }
+      ]
+    }
+  ],
+  "github": {
+    "site": "",
+    "commits": [
+      {
+        "date": "",
+        "times": 0
+      }
+    ]
+  },
+  "skill_radar": {
+    "languages": [
+      {
+        "name": "",
+        "dimensions": [
+          {
+            "name": "",
+            "value": 0
+          }
+        ]
+      }
+    ]
+  }
+}
