@@ -25,8 +25,9 @@ fn main() {
     dioxus_web::launch(App);
 }
 
-// todo: fetching img/video resourceat first to optimize performance
-// todo: using AES and base64 to encrypt/encode the request/response
+// todo: add keyword word-cloud
+// todo: make article more readable
+// todo: add github and radar at about me page
 fn App(cx: Scope) -> Element {
     let navigator:Vec<(String, Route)>= vec![
         ("AboutMe".to_string(), Route::AboutMeContent {}),
@@ -36,9 +37,7 @@ fn App(cx: Scope) -> Element {
         ("Zone".to_string(), Route::HomePage{}),
     ];
     use_shared_state_provider(cx,||NAV(navigator));
-    render!(
-            Router::<Route>{}
-    )
+    render!( Router::<Route> {} )
 }
 #[derive(Routable,Clone,PartialEq)]
 enum Route {

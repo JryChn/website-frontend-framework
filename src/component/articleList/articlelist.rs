@@ -1,16 +1,19 @@
 #![allow(non_snake_case)]
 
+use std::collections::{HashMap, HashSet};
 use dioxus::prelude::*;
 use dioxus_router::components::Link;
 use futures::future::{join, join_all};
-use futures::join;
 use crate::model::Article::Article;
+use crate::Route;
 use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
 use crate::utils::netUtils::parse_to_data_url;
 
 #[inline_props]
 pub fn ArticleList(cx: Scope) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
+    let mut tags :HashMap<String,u32> = HashMap::new();
+    let mut keywords : HashMap<String,u32> = HashMap::new();
     let content = use_future(cx, (), |_| async {
         let mut articles;
         let api = fetch_configuration().await.articles.api ;
@@ -26,61 +29,75 @@ pub fn ArticleList(cx: Scope) -> Element {
     });
     cx.render(
         match content.value() {
-            None => { rsx!(div{}) }
+            None => { rsx!( div {} ) }
             Some(article) => {
+                article.iter().for_each(|a|{
+                    a.tags.iter().for_each(|t|{
+                        if tags.contains_key(t){
+                            *tags.get_mut(t).unwrap() +=1;
+                        }else{
+                            tags.insert(t.clone(),1);
+                        }
+                    });
+                    a.keywords.iter().for_each(|k|{
+                        if keywords.contains_key(k){
+                            *keywords.get_mut(k).unwrap() +=1;
+                        }else{
+                            keywords.insert(k.clone(),1);
+                        }
+                    });
+                });
                 rsx!(
-            div { id: "article_list",
-                class:"bg-gray-200 w-screen min-h-[2000px] relative",
-                div { id: "article_list_box",
-                    class:"w-[90%] h-[1800px] mx-auto relative top-48",
-                 div{ id: "article_list_sidebar",
-                     class:"h-[1600px] w-[30%] black bg-gray-100 absolute right-4 top-12 shadow-lg hidden md:block",
-                        div{
-                            id:"article_list_sidebar_key_words",
-                            class:"w-11/12 h-96 mx-auto my-10",
-                            span{
-                                class:"text-gray-800 text-xl font-sans",
-                                "key words:"
-                            }
-                            div{
-                                class:"w-11/12 h-[90%]"
-                            }
-                        }
-                        div{
-                            id:"article_list_sidebar_tag",
-                            class:"w-11/12 h-96 mx-auto my-10",
-                            span{
-                                class:"text-gray-800 text-xl font-sans",
-                                "tag:"
-                            }
-                            ul{
-                                class:"w-11/12 h-4/5 p-8",
-                                li{
-                                    class:"m-3 inline-block hover:underline",
-                                    "java(10)"
+                    div {
+                        id: "article_list",
+                        class: "bg-gray-200 w-screen min-h-[2000px] relative",
+                        div {
+                            id: "article_list_box",
+                            class: "w-[90%] h-[1800px] mx-auto relative top-48",
+                            div {
+                                id: "article_list_sidebar",
+                                class: "h-[1600px] w-[30%] black bg-gray-100 absolute right-4 top-12 shadow-lg hidden md:block",
+                                div {
+                                    id: "article_list_sidebar_key_words",
+                                    class: "w-11/12 h-96 mx-auto my-10",
+                                    span { class: "text-gray-800 text-xl font-sans", "key words:" }
+                                    div { class: "w-11/12 h-[90%]" }
+                                }
+                                div {
+                                    id: "article_list_sidebar_tag",
+                                    class: "w-11/12 h-96 mx-auto my-10",
+                                    span { class: "text-gray-800 text-xl font-sans", "tag:" }
+                                    ul { class: "w-11/12 h-4/5 p-8",
+                                        tags.iter().map(|t|{
+                                            rsx!(
+                                        li { class: "m-3 inline-block hover:underline",
+                                                    "{t.0}({t.1})"
+                                        }
+                                            )
+                                        })
+                                    }
+                                }
+                                div {
+                                    id: "article_list_sidebar_recommend",
+                                    class: "w-11/12 h-96 mx-auto my-10",
+                                    span { class: "text-gray-800 text-xl font-sans", "recommend:" }
+                                    ul { class: "w-11/12 h-4/5 p-8",
+                                        article.iter().take(10).map(|a|{
+                                            rsx!{
+                                            li { class: "my-1 underline",
+                                                    Link{
+                                                        to: Route::Article {id : a.id.clone()},
+                                                        "{a.title}"
+                                                    }
+                                                }
+                                            }
+                                        })
+                                    }
                                 }
                             }
-                        }
-                        div{
-                            id:"article_list_sidebar_recommend",
-                            class:"w-11/12 h-96 mx-auto my-10",
-                            span{
-                                class:"text-gray-800 text-xl font-sans",
-                                "recommend:"
-                            }
-                            ul{
-                                class:"w-11/12 h-4/5 p-8",
-                                li{
-                                    class:"my-1 hover:underline",
-                                    "Java 的前世今生"
-                                }
-
-                            }
-                        }
-                }
-                    ul{
-                        id:"article_list_content",
-                        class:"h-[1600px] w-[90%]  md:w-[65%] absolute left-4 top-12 p-5 flex flex-col justify-start gap-5",
+                            ul {
+                                id: "article_list_content",
+                                class: "h-[1600px] w-[90%]  md:w-[65%] absolute left-4 top-12 p-5 flex flex-col justify-start gap-5",
                                 article.iter().map(|a|{
                                     rsx!{
                         Link{
@@ -104,10 +121,10 @@ pub fn ArticleList(cx: Scope) -> Element {
                             }
                         }}
                                 })
+                            }
+                        }
                     }
-                }
-            }
-        )
+                )
             }
         }
     )

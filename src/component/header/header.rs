@@ -11,11 +11,17 @@ pub fn Header(cx: Scope) -> Element {
     let navigate = use_shared_state::<NAV>(cx).unwrap().read().deref().0.clone();
     let header_list = navigate.iter().map(|url| {
         rsx!(
-            Link { class: "hover:border-b-black hover:border-b dark:text-gray-50", to: url.1.clone(), "{url.0}" }
+            Link {
+                class: "hover:border-b-black hover:border-b dark:text-gray-50",
+                to: url.1.clone(),
+                "{url.0}"
+            }
         )
     });
     cx.render(rsx!(
-        header { id: "header", class: "bg-white w-screen h-14 shadow-xl fixed top-0 z-50 dark:bg-black",
+        header {
+            id: "header",
+            class: "bg-white w-screen h-14 shadow-xl fixed top-0 z-50 dark:bg-black",
             Link {
                 to: Route::HomePage {},
                 id: "header_title",
@@ -30,7 +36,7 @@ pub fn Header(cx: Scope) -> Element {
                 }
             }
         }
-        Outlet::<Route>{}
-        footer{}
+        Outlet::<Route> {}
+        footer {}
     ))
 }

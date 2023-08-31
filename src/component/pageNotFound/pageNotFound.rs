@@ -6,7 +6,5 @@ use crate::Route;
 
 #[inline_props]
 pub fn PageNotFound(cx: Scope, route:Vec<String>) -> Element {
-    cx.render(rsx!(
-        div{"Page not Found"}
-    ))
+    cx.render(rsx!( div { "Page not Found" } ))
 }

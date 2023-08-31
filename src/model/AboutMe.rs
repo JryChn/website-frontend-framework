@@ -32,7 +32,7 @@ pub struct Commit {
 
 #[derive(Serialize, Deserialize)]
 pub struct Radar {
-    pub language: String,
+    pub languages: Vec<RadarContent>,
 }
 #[derive(Serialize, Deserialize)]
 pub struct RadarContent {

@@ -34,8 +34,7 @@ pub fn Navigate(cx: Scope) -> Element {
                     div {
                         dangerous_inner_html: "{sign}",
                         onclick: |e| {
-                            gloo_utils::
-                                document()
+                            gloo_utils::document()
                                 .get_element_by_id("navigator_sidebar")
                                 .unwrap()
                                 .class_list()
