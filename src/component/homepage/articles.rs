@@ -1,26 +1,26 @@
 #![allow(non_snake_case)]
 
-use crate::model::Article::Article;
 use dioxus::prelude::*;
-use dioxus_router::Link;
+use dioxus_router::prelude::Link;
+use crate::model::Article::Article;
+use crate::Route;
 
-#[derive(Props, PartialEq)]
-pub struct ArticlesContext {
-    articles_intro: Vec<Article>,
-}
 
-pub fn Articles(cx: Scope<ArticlesContext>) -> Element {
-    let article_content = cx.props.articles_intro.iter().map(|a|{
+#[inline_props]
+pub fn Articles(cx: Scope,articles: Vec<Article>) -> Element {
+    let article_content = articles
+        // choose_multiple(&mut rand::thread_rng(), 3)
+            .iter().map(|a| {
         rsx!(
         Link {
-                to:"/article/{a.article_id}",
+                to:Route::Article {id: a.id.clone()},
                 class: "w-[333px] h-[666px]",
             div { class: "border-black border-2 w-[90%] h-[60%] rounded-xl shadow-zinc-600 shadow-lg mx-5 my-5",
-                img { src: "{a.article_image}", alt: "", class: "w-full h-full rounded-xl" }
+                img { src: "{a.image}", alt: "", class: "w-full h-full rounded-xl" }
             }
             div { class: "w-[90%] h-[30%] mx-auto overflow-hidden overflow-ellipsis",
-                h2 { class: "font-medium text-2xl font-serif dark:text-gray-50", "{a.article_title}" }
-                span { class: "my-4 font-sans text-gray-500 dark:text-gray-300", "{a.article_intro}" }
+                h2 { class: "font-medium text-2xl font-serif dark:text-gray-50", "{a.title}" }
+                span { class: "my-4 font-sans text-gray-500 dark:text-gray-300", "{a.introduction}" }
             }
         }
     )
@@ -44,7 +44,7 @@ pub fn Articles(cx: Scope<ArticlesContext>) -> Element {
                     div{
                         class: "block w-1/3 h-12 mx-auto text-center align-middle text-xl underline dark:text-gray-50",
                     Link {
-                        to: "/articles",
+                        to: Route::ArticleList {},
                         "Read More"
                     }
                     }

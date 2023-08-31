@@ -1,23 +1,46 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
-pub struct AboutMeContent {
-    pub about_me: AboutMe,
+pub struct AboutMePage {
+    pub image:String,
+    pub description:String,
     pub stage: Vec<MyStage>,
+    pub github:Github,
+    pub skill_radar:Radar
 }
-#[derive(Serialize, Deserialize)]
-pub struct AboutMe {
-    pub about_me_image: String,
-    pub about_me_content: String,
-}
-
 #[derive(Serialize, Deserialize)]
 pub struct MyStage {
-    pub legend_title: String,
-    pub stages: Vec<Stage>,
+    pub category: String,
+    pub value: Vec<Stage>,
 }
 #[derive(Serialize, Deserialize)]
 pub struct Stage {
-    pub category: String,
+    pub name: String,
+    pub value: u32,
+}
+#[derive(Serialize, Deserialize)]
+pub struct Github {
+    pub site: String,
+    pub commits: Vec<Commit>,
+}
+#[derive(Serialize, Deserialize)]
+pub struct Commit {
+    pub date: String,
+    pub times: u32,
+}
+
+
+#[derive(Serialize, Deserialize)]
+pub struct Radar {
+    pub language: String,
+}
+#[derive(Serialize, Deserialize)]
+pub struct RadarContent {
+    pub name: String,
+    pub dimensions: Vec<Dimensions>,
+}
+#[derive(Serialize, Deserialize)]
+pub struct Dimensions {
+    pub name: String,
     pub value: u32,
 }

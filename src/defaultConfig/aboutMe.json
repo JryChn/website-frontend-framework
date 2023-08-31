@@ -1,19 +1,35 @@
 {
-  "image": "",
-  "description": "",
+  "image": "https://api.unsplash.com/search/photos?query=human\n",
+  "description": "當認識新朋友、參加活動，或者面試時，常會有要請我們/** 自我介紹 **/的時刻，但我們往往容易會被字面上的意思拉著走，開始徐徐地介紹自己的資訊：叫什麼名字、住哪、讀哪、在哪工作、血型、星座、興趣⋯等等。語畢，準備換下一位時，台下的人也差不多把你忘了。因為這樣的自我介紹特別常見，也特別容易讓人遺忘。一個好的自我介紹？是能夠讓聽者對你的/** 某個特點有印象 **/，並且能/** 連結到你的人本 **/",
   "stages": [
     {
-      "category": "",
+      "category": "Music",
       "value": [
         {
-          "name": "",
-          "value": 0
+          "name": "Guitar",
+          "value": 30
+        },
+        {
+          "name": "Piano",
+          "value": 120
+        },
+        {
+          "name": "K-box",
+          "value": 18
+        },
+        {
+          "name": "Horn",
+          "value": 74
+        },
+        {
+          "name": "Voice",
+          "value": 89
         }
       ]
     }
   ],
   "github": {
-    "site": "",
+    "site": "https://github.com",
     "commits": [
       {
         "date": "",
@@ -24,11 +40,52 @@
   "skill_radar": {
     "languages": [
       {
-        "name": "",
+        "name": "英语",
         "dimensions": [
           {
-            "name": "",
-            "value": 0
+            "name": "语法",
+            "value": 70
+          },
+          {
+            "name": "发音",
+            "value": 43
+          },
+          {
+            "name": "句子",
+            "value": 12
+          },
+          {
+            "name": "听力",
+            "value": 88
+          },
+          {
+            "name": "读写",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "name": "Java",
+        "dimensions": [
+          {
+            "name": "Spring",
+            "value": 12
+          },
+          {
+            "name": "JVM",
+            "value": 51
+          },
+          {
+            "name": "shell",
+            "value": 91
+          },
+          {
+            "name": "reactive",
+            "value": 71
+          },
+          {
+            "name": "another",
+            "value": 12
           }
         ]
       }

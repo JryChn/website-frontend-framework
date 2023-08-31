@@ -1,13 +1,14 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_router::Link;
+use dioxus_router::prelude::Link;
+use crate::Route;
 
 #[derive(Props, PartialEq)]
 pub struct AboutMeContext {
-    about_me_video_url: String,
-    about_me_title: String,
-    about_me_description: String,
+     name: String,
+     description: String,
+     video: String,
 }
 pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
     cx.render(
@@ -22,11 +23,11 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                         "About Me"
                     }
                     Link {
-                        to: "/aboutMe",
+                        to: Route::AboutMeContent {},
                         id: "about_me_content",
                         class: "w-[90%] h-[700px] border border-black mx-auto relative block",
                         video {
-                            src: "{cx.props.about_me_video_url}",
+                            src: "{cx.props.video}",
                             class: "w-full h-full brightness-75 contrast-75 object-fill",
                             autoplay: "true",
                             muted: "true",
@@ -36,12 +37,12 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                         h3 {
                             id: "about_me_title",
                             class: "absolute left-12 top-[60%] font-bold font-mono text-3xl text-zinc-200",
-                            "{cx.props.about_me_title}"
+                            "{cx.props.name}"
                         }
                         span {
                             id: "about_me_description",
                             class: "block absolute left-12 top-[70%] font-sans text-xl  w-1/3 text-gray-200",
-                            "{cx.props.about_me_description}"
+                            "{cx.props.description}"
                         }
                     }
                 }

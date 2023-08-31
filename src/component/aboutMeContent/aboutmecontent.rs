@@ -5,26 +5,33 @@ use charming::series::Pie;
 use charming::theme::Theme;
 use charming::{Chart, WasmRenderer};
 use dioxus::prelude::*;
+use crate::component::homepage::about_me::AboutMeContext;
+use crate::model;
+use crate::model::config::AboutMePage;
 
-use crate::model::AboutMe::AboutMeContent;
 
-#[derive(Props, PartialEq)]
-pub struct AboutMeContentContext {
-    url: String,
-}
+use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
+use crate::utils::netUtils::parse_to_data_url;
 
-pub fn AboutMeContent(cx: Scope<AboutMeContentContext>) -> Element {
+
+#[inline_props]
+pub fn AboutMeContent(cx: Scope) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
     // use special decoration to replace **/test/** in paragraph.
     let special_content_wrapper_start = r##"<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-3"><span class="relative text-white">"##;
     let special_content_wrapper_end = r##"</span></span>"##;
-    let fetch = use_future(cx, (&cx.props.url), |url| async move {
-        gloo_net::http::Request::get(&url)
-            .send()
-            .await
-            .unwrap()
-            .json::<AboutMeContent>()
-            .await
+    let fetch = use_future(cx, (), |_| async  {
+        let mut content :model::AboutMe::AboutMePage;
+        let url = fetch_configuration().await.about_me.api;
+        if url.is_empty() {
+            content = serde_json::from_str(include_str!("../../defaultConfig/aboutMe.json")).unwrap()
+        }else{
+            content =  fetch_and_decrypt(url.as_str()).await;
+
+        }
+        content.image = parse_to_data_url(content.image.clone()).await;
+        content
+
     });
     cx.render(match fetch.value() {
         None =>
@@ -33,24 +40,18 @@ pub fn AboutMeContent(cx: Scope<AboutMeContentContext>) -> Element {
                      "Loading...."
                     }
                     } ),
-        Some(Err(_))=> rsx!(
-                div { class:"w-screen h-screen relative",
-                    div{ class:"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold",
-                     "Oops,Something error happened!"
-                    }
-                    } ),
-        Some(Ok(aboutMe)) => {
-            let aboutMeContent = aboutMe.about_me.about_me_content.replace(" **/", special_content_wrapper_start);
+        Some(aboutMe)=> {
+            let aboutMeContent = aboutMe.description.replace(" **/", special_content_wrapper_start);
             let aboutMeContent = aboutMeContent.replace("/** ", special_content_wrapper_end);
             let _ = aboutMe.stage.iter().map(|stage| {
                 let mut stages = Vec::new();
-                let _ = stage.stages.iter().map(|s| {
-                    stages.push((s.value as i32, &s.category))
+                let _ = stage.value.iter().map(|s| {
+                    stages.push((s.value as i32, &s.name))
                 });
-                let chart = Chart::new().series(Pie::new().name(&stage.legend_title).radius(vec!["40%", "70%"]).avoid_label_overlap(true).item_style(ItemStyle::new().border_radius(4).border_color("#fff").border_width(1)).emphasis(Emphasis::new().label(Label::new().show(true).font_size(40))).label(Label::new().show(false).position(LabelPosition::Center))
+                let chart = Chart::new().series(Pie::new().name(&stage.category).radius(vec!["40%", "70%"]).avoid_label_overlap(true).item_style(ItemStyle::new().border_radius(4).border_color("#fff").border_width(1)).emphasis(Emphasis::new().label(Label::new().show(true).font_size(40))).label(Label::new().show(false).position(LabelPosition::Center))
                     .data(
                         stages.to_vec()));
-                WasmRenderer::new(250, 250).theme(Theme::Vintage).render(&stage.legend_title, &chart).unwrap();
+                WasmRenderer::new(250, 250).theme(Theme::Vintage).render(&stage.category, &chart).unwrap();
             });
             rsx!(
             div { id: "aboutme_content",
@@ -60,7 +61,7 @@ pub fn AboutMeContent(cx: Scope<AboutMeContentContext>) -> Element {
                      class:"w-5/6 min-h-[800px] mx-auto translate-y-44 relative flex flex-wrap justify-around",
                     img { id: "aboutme_content_image",
                         class:"border border-black w-[400px] h-[500px] rounded-lg shadow-xl mx-10 my-10",
-                        src:"{aboutMe.about_me.about_me_image}",
+                        src:"{aboutMe.image}",
                         alt:"",
                     }
                     pre { id: "aboutme_content_description",
@@ -73,7 +74,7 @@ pub fn AboutMeContent(cx: Scope<AboutMeContentContext>) -> Element {
                         aboutMe.stage.iter().map(|stage|{
                             rsx!(
                                 div{
-                                    id:"{stage.legend_title}"
+                                    id:"{stage.category}"
                                 }
                             )
                         })

@@ -2,11 +2,8 @@
 
 use dioxus::prelude::*;
 
-#[derive(Props, PartialEq)]
-pub struct CalendarContext {
-    url: String,
-}
-pub fn Calendar(cx: Scope<CalendarContext>) -> Element {
+#[inline_props]
+pub fn Calendar(cx: Scope) -> Element {
     cx.render(rsx!(
         div { id: "calendar",
             div { id: "calendar_box" }

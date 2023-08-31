@@ -1,19 +1,18 @@
 #![allow(non_snake_case)]
 
-use crate::model::config::TimerContent;
-use dioxus::html::animate;
 use dioxus::prelude::*;
-use getrandom::getrandom;
 use rand::Rng;
+use crate::model::config::{Timer, TimerPost};
 
-#[derive(Props, PartialEq)]
+
+#[derive(PartialEq, Props)]
 pub struct TimerContext {
-    timer_intro: Vec<TimerContent>,
+    pub posts: Vec<TimerPost>,
 }
 
 pub fn Timer(cx: Scope<TimerContext>) -> Element {
     let rand_top = || rand::thread_rng().gen_range(20..60);
-    let delay_time = || rand::thread_rng().gen_range(0..cx.props.timer_intro.len() * 25);
+    let delay_time = || rand::thread_rng().gen_range(0..cx.props.posts.len() * 25);
     cx.render(
         rsx!(
             style { include_str!("css/timer.css") }
@@ -34,7 +33,7 @@ pub fn Timer(cx: Scope<TimerContext>) -> Element {
                         }
                     ))
                 }
-                cx.props.timer_intro.iter().map(|t|{
+                cx.props.posts.iter().map(|t|{
                     rsx!(
                 div {
                     id: "timer_content",

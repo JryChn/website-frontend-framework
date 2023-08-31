@@ -1,15 +1,10 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_router::use_route;
 
-#[derive(Props, PartialEq)]
-pub struct ArticleContext {
-    url: String,
-}
-pub fn Article(cx: Scope<ArticleContext>) -> Element {
+#[inline_props]
+pub fn Article(cx: Scope, id:String) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64,0f64);
-    let id = use_route(&cx).last_segment()?;
     cx.render(rsx!(
         div { id: "article",
             class:"bg-gray-200 w-screen min-h-[2000px] relative",

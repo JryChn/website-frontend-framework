@@ -1,26 +1,26 @@
 #![allow(non_snake_case)]
 
+use std::ops::Deref;
 use dioxus::prelude::*;
-use dioxus_router::Link;
+use dioxus_router::prelude::*;
+use crate::{NAV, Route};
 
-#[derive(Props, PartialEq)]
-pub struct HeaderContext {
-    title: String,
-    url_jumper: Vec<(String, String)>,
-}
-pub fn Header(cx: Scope<HeaderContext>) -> Element {
-    let header_list = cx.props.url_jumper.iter().map(|url| {
+#[inline_props]
+pub fn Header(cx: Scope) -> Element {
+    let title :String= "DJEREMY".into();
+    let navigate = use_shared_state::<NAV>(cx).unwrap().read().deref().0.clone();
+    let header_list = navigate.iter().map(|url| {
         rsx!(
-            Link { class: "hover:border-b-black hover:border-b dark:text-gray-50", to: "{url.1}", "{url.0}" }
+            Link { class: "hover:border-b-black hover:border-b dark:text-gray-50", to: url.1.clone(), "{url.0}" }
         )
     });
     cx.render(rsx!(
         header { id: "header", class: "bg-white w-screen h-14 shadow-xl fixed top-0 z-50 dark:bg-black",
             Link {
-                to:"/",
+                to: Route::HomePage {},
                 id: "header_title",
                 class: "inline-block absolute top-4 left-3 uppercase font-bold text-xl dark:text-gray-50",
-                "{cx.props.title}"
+                "{title}"
             }
             div {
                 id: "header_content",
@@ -30,5 +30,7 @@ pub fn Header(cx: Scope<HeaderContext>) -> Element {
                 }
             }
         }
+        Outlet::<Route>{}
+        footer{}
     ))
 }

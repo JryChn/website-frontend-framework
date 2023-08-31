@@ -3,21 +3,17 @@
 use std::time::Duration;
 
 use dioxus::prelude::*;
-use dioxus_router::Link;
-use gloo_utils::{document_element, window};
+use dioxus_router::prelude::*;
+use crate::model::config::Welcome;
+use crate::Route;
 
-#[derive(Props, PartialEq)]
-pub struct SingleWelcomeContext {
-    title: String,
-    animation_video_url: (String, String),
-    content: Vec<String>,
-}
 
-pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
+#[inline_props]
+pub fn SingleWelcome(cx: Scope,welcome:Welcome) -> Element {
     let typing_words = use_state(cx, || "".to_string());
     use_future(cx, (), |_| {
         to_owned![typing_words];
-        let whole_str = cx.props.content.to_owned();
+        let whole_str = welcome.subtitle.to_owned();
         async move {
             loop {
                 for i in whole_str.iter() {
@@ -45,9 +41,9 @@ pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
         }
     });
     let animation_url = if gloo_utils::document_element().class_list().contains("dark") {
-        &cx.props.animation_video_url.1
+        &welcome.animation_url.dark
     } else {
-        &cx.props.animation_video_url.0
+        &welcome.animation_url.light
     };
     let svg_bold = r###"
         <svg t="1689862785707" class="hidden md:block w-12 h-12 -translate-x-[1px] -translate-y-3" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3640" width="200" height="200"><path d="M510.3 327.1c-8.3 0-15-6.7-15-15V34.6c0-8.3 6.7-15 15-15s15 6.7 15 15v277.6c0 8.2-6.7 14.9-15 14.9z" fill="" p-id="3641"></path><path d="M762 881.8H260.6c-11.1 0-21.6-4.4-29.4-12.3-7.9-7.9-12.1-18.4-12.1-29.5 0.2-31.8 2.8-59.6 15-107.7 17.4-68.7 60.5-177.8 98.7-214v-180c0-22.7 18.5-41.1 41.1-41.1h273.4c22.7 0 41.2 18.5 41.2 41.1V517c38.5 35 82.4 145.8 100 215.3 12.2 48.2 14.8 76 15 107.7 0.1 11.1-4.2 21.6-12.1 29.6-7.8 7.9-18.2 12.2-29.4 12.2zM353.4 540c-29.4 27.4-71.9 127.6-90.2 199.7-11.5 45.4-13.8 70.4-14 100.6 0 3.1 1.2 6 3.3 8.2 2.2 2.2 5.1 3.4 8.1 3.4H762c3.1 0 6-1.2 8.1-3.4 2.2-2.2 3.4-5.1 3.3-8.2-0.2-30.1-2.5-55.1-14.1-100.5-18.7-73.7-62.7-176.7-92.2-201.4-5.3-3.1-8.8-8.9-8.8-15.2V338.3c0-6.1-5-11.1-11.2-11.1H374c-6.1 0-11.1 5-11.1 11.1V510h224.6c8.3 0 15 6.7 15 15s-6.7 15-15 15H353.4z" fill="" p-id="3642"></path><path d="M511.6 985.9c-65.6 0-119.1-53.4-119.1-119.1 0-8.3 6.7-15 15-15s15 6.7 15 15c0 49.1 40 89.1 89.1 89.1s89.1-40 89.1-89.1c0-8.3 6.7-15 15-15s15 6.7 15 15c0 65.7-53.4 119.1-119.1 119.1zM715.7 777.3c-7 0-13.3-5-14.7-12.1l-4.2-21.6c-3.3-16.6-9-32.6-17.2-47.5l-10.3-18.8c-4-7.3-1.3-16.4 6-20.4s16.4-1.3 20.4 6l10.3 18.8c9.6 17.6 16.4 36.5 20.3 56.2l4.2 21.6c1.6 8.1-3.7 16-11.8 17.6-1.1 0.2-2.1 0.2-3 0.2z" fill="" p-id="3643"></path><path d="M657.6 627.6m-17.5 0a17.5 17.5 0 1 0 35 0 17.5 17.5 0 1 0-35 0Z" fill="" p-id="3644"></path></svg>
@@ -60,11 +56,11 @@ pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
         div {
             id: "welcome_page",
             class: "w-screen min-h-[1000px] bg-gray-200 dark:bg-black",
-            Link { to: "/",
+            Link { to: Route::HomePage {},
                 h1 {
                     id: "title_logo",
                     class: "relative w-20 h-20 uppercase font-bold break-words md:text-4xl md:top-3.5 md:left-3.5 md:w-36 md:h-36 dark:text-gray-50",
-                    "{cx.props.title}"
+                    "{welcome.title}"
                 }
             }
             div {
@@ -116,7 +112,7 @@ pub fn SingleWelcome(cx: Scope<SingleWelcomeContext>) -> Element {
             }
             Link {
                 id: "book_my_time",
-                to: "/calendar",
+                to: Route::Calendar {},
                 class: "hidden md:block md:absolute md:right-10 md:top-2 dark:text-gray-50",
                 div { class: "inline", dangerous_inner_html: "{svg_calendar}" }
                 span { "book my time" }
