@@ -10,9 +10,6 @@ use crate::component::calendar::calendar::Calendar;
 use crate::component::header::header::Header;
 use crate::component::homepage::HomePage;
 use crate::component::pageNotFound::pageNotFound::PageNotFound;
-use crate::model::config::{AboutMePage, CommonConfig, ConfigurationTemplate, Welcome};
-use crate::utils::encryptedUtils::{fetch_and_decrypt};
-use crate::utils::netUtils::parse_to_data_url;
 
 mod component;
 mod model;

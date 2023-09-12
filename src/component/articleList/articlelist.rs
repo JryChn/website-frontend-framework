@@ -1,6 +1,10 @@
 #![allow(non_snake_case)]
 
 use std::collections::{HashMap, HashSet};
+use charming::{Chart, WasmRenderer};
+use charming::component::Legend;
+use charming::element::{Label, LabelLayout, LabelPosition, LineStyle, ScaleLimit, Tooltip};
+use charming::series::{Graph, GraphData, GraphLayout};
 use dioxus::prelude::*;
 use dioxus_router::components::Link;
 use futures::future::{join, join_all};
@@ -61,7 +65,30 @@ pub fn ArticleList(cx: Scope) -> Element {
                                     id: "article_list_sidebar_key_words",
                                     class: "w-11/12 h-96 mx-auto my-10",
                                     span { class: "text-gray-800 text-xl font-sans", "key words:" }
-                                    div { class: "w-11/12 h-[90%]" }
+                                    div {
+                                        id: "article_list_keyset",
+                                        class: "w-11/12 h-[90%]",
+                                        onmounted: |e| {
+                                            let chart = Chart::new()
+                                                .tooltip(Tooltip::new())
+                                                .series(
+                                                    Graph::new()
+                                                        .name("Les Miserables")
+                                                        .layout(GraphLayout::None)
+                                                        .label(
+                                                            Label::new()
+                                                                .show(true)
+                                                                .position(LabelPosition::Right)
+                                                                .formatter("{b}"),
+                                                        )
+                                                        .label_layout(LabelLayout::new().hide_overlap(true))
+                                                        .scale_limit(ScaleLimit::new().min(0.4).max(2.0))
+                                                        .line_style(LineStyle::new().color("source").curveness(0.3))
+                                                        .data(serde_json::from_str(include_str!("test.json")).unwrap()),
+                                                );
+                                            WasmRenderer::new(450, 350).render("article_list_keyset", &chart).unwrap();
+                                        }
+                                    }
                                 }
                                 div {
                                     id: "article_list_sidebar_tag",

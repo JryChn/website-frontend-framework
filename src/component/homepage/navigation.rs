@@ -16,14 +16,20 @@ pub fn Navigate(cx: Scope) -> Element {
     });
     cx.render(
         rsx!(
-            nav { id: "navigator", class: "w-20 h-20 fixed right-0 top-0 md:top-1/2 z-50",
+            nav {
+                id: "navigator",
+                class: "w-10 h-8 fixed right-0 top-0 md:top-1/2 z-50 flex flex-col justify-evenly cursor-pointer",
+                onclick: |e| {
+                    gloo_utils::document()
+                        .get_element_by_id("navigator_sidebar")
+                        .unwrap()
+                        .class_list()
+                        .remove_1("hidden");
+                },
                 (1..4).map(|i|{
                     rsx!(
                     div{
-                        class:"w-1/3 h-1 relative border-2 border-gray-800 top-{i+3}  bg-black rounded-lg mx-auto cursor-pointer dark:bg-gray-50 dark:border-gray-50",
-                            onclick:|e|{
-                                gloo_utils::document().get_element_by_id("navigator_sidebar").unwrap().class_list().remove_1("hidden");
-                            },
+                        class:"w-3/4 h-1 border-2 border-gray-800  bg-black rounded-lg mx-auto dark:bg-gray-50 dark:border-gray-50",
                     }
                     )
                 }

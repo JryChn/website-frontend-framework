@@ -19,7 +19,7 @@ pub struct ConfigurationTemplate {
 }
 #[derive(Serialize, Deserialize, Debug,Clone)]
 pub struct Contact {
-    pub github: String,
+    pub github_username: String,
     pub email: String,
     pub telegram: String,
 }

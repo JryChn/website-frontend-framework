@@ -1,22 +1,16 @@
 #![allow(non_snake_case)]
 
-use std::ops::Deref;
-use std::time::Duration;
-use charming::element::{Color, Emphasis, ItemStyle, Label, LabelPosition, Tooltip, Trigger};
-use charming::series::{Pie, PieRoseType};
+use charming::element::{AxisType, Color, CoordinateSystem, Emphasis, ItemStyle, Label, LabelPosition, SplitArea, SymbolSize, Tooltip, Trigger};
+use charming::series::{Heatmap, Pie, PieRoseType, Scatter};
 use charming::theme::Theme;
-use charming::{Chart, WasmRenderer};
-use charming::component::Title;
-use charming::element::TextVerticalAlign::Bottom;
+use charming::{Chart, df, WasmRenderer};
+use charming::component::{Axis, Title, VisualMap};
+use dioxus::html::img;
 use dioxus::prelude::*;
-use futures::future::join_all;
+use dioxus_router::prelude::Link;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
-use serde::de::value;
-use crate::component::homepage::about_me::AboutMeContext;
 use crate::model;
-use crate::model::AboutMe::Stage;
-use crate::model::config::AboutMePage;
 
 
 use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
@@ -39,9 +33,9 @@ pub fn AboutMeContent(cx: Scope) -> Element {
         value.into_iter().collect::<String>()
     };
     // use special decoration to replace **/test/** in paragraph.
-    let special_content_wrapper_start = r##"<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-3"><span class="relative text-white">"##;
+    let special_content_wrapper_start =r##"<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-green-800 relative inline-block mx-3"><span class="relative text-white">"##;
     let special_content_wrapper_end = r##"</span></span>"##;
-    let fetch = use_future(cx, (), |_| async {
+    let fetch = use_future(cx, (), |_|  async {
         let mut content :model::AboutMe::AboutMePage;
         let url = fetch_configuration().await.about_me.api;
         if url.is_empty() {
@@ -52,6 +46,9 @@ pub fn AboutMeContent(cx: Scope) -> Element {
         }
         content.image = parse_to_data_url(content.image.clone()).await;
         content
+    });
+    let github_username = use_future(cx,(),|_|async{
+        fetch_configuration().await.contact.github_username.clone()
     });
     cx.render(match fetch.value() {
         None =>
@@ -64,7 +61,8 @@ pub fn AboutMeContent(cx: Scope) -> Element {
                 ),
         Some(aboutMe)=> {
             let aboutMeContent = aboutMe.description.replace(" **/", special_content_wrapper_end);
-            let aboutMeContent = aboutMeContent.replace("/** ", special_content_wrapper_start);
+            let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
+            let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username.value().unwrap()+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
             rsx!(
                 div { id: "aboutme_content", class: "bg-gray-200 w-screen min-h-[2000px]",
                     div { id: "aboutme_content_contact" }
@@ -95,7 +93,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
                     stage.value.iter().for_each(|s| {
                         stages.push((s.value as i32, &s.name))
                     });
-                    let chart = Chart::new().series(Pie::new().rose_type(PieRoseType::Area).name(&stage.category).radius(vec!["30%", "50%"]).avoid_label_overlap(false).item_style(ItemStyle::new().border_radius(4).border_color("#fff").border_width(1)).emphasis(Emphasis::new().label(Label::new().show(true).shadow_blur(10)))
+                    let chart = Chart::new().series(Pie::new().rose_type(PieRoseType::Area).name(&stage.category).radius(vec!["20%", "60%"]).avoid_label_overlap(false).item_style(ItemStyle::new().border_radius(4).border_color("#fff").border_width(1)).emphasis(Emphasis::new().label(Label::new().show(true).shadow_blur(10)))
                         .data(
                             stages)).title(Title::new().text(&stage.category).left("center").bottom("center")).tooltip(Tooltip::new().trigger(Trigger::Item)).color(
     (1..10).map(|_|{
@@ -108,7 +106,9 @@ pub fn AboutMeContent(cx: Scope) -> Element {
                             )
                         })
                     }
-                    div { id: "aboutme_content_github" }
+                    div { id: "aboutme_content_github",
+                        Link { to: "https://github.com/".to_string() + &github_username.value().unwrap(), img { alt: "", src: "{github_states}" } }
+                    }
                 }
             )
         }
