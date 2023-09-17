@@ -1,10 +1,11 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_router::prelude::Link;
+
 use crate::model::Article::Article;
 use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
 use crate::utils::netUtils::parse_to_data_url;
+use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[inline_props]
 pub fn Article(cx: Scope, id:String) -> Element {
@@ -17,7 +18,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
         }else{
             article = fetch_and_decrypt::<Article>(&(api+"/article/"+&id)).await;
         }
-            article.image = parse_to_data_url(article.image.clone()).await;
+            article.image = parse_to_data_url(article.image.clone(),IMAGE).await;
         article
     });
     cx.render(

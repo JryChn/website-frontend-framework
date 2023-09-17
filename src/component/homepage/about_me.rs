@@ -2,6 +2,7 @@
 
 use dioxus::prelude::*;
 use dioxus_router::prelude::Link;
+
 use crate::Route;
 
 #[derive(Props, PartialEq)]
@@ -31,7 +32,7 @@ pub fn AboutMe(cx: Scope<AboutMeContext>) -> Element {
                             class: "w-full h-full brightness-75 contrast-75 object-fill",
                             autoplay: "true",
                             muted: "true",
-                            "loop": "loop",
+                            "loop": "true",
                             playsinline: "true"
                         }
                         h3 {

@@ -4,9 +4,9 @@ use std::time::Duration;
 
 use dioxus::prelude::*;
 use dioxus_router::prelude::*;
+
 use crate::model::config::Welcome;
 use crate::Route;
-
 
 #[inline_props]
 pub fn SingleWelcome(cx: Scope,welcome:Welcome) -> Element {
@@ -66,15 +66,14 @@ pub fn SingleWelcome(cx: Scope,welcome:Welcome) -> Element {
             div {
                 id: "welcome_video",
                 class: "w-3/5 h-1/2  max-w-[900px] max-h-[450px] left-1/2 relative -translate-x-1/2",
+                mix_blend_mode: "multiply",
                 video {
-                    class: "w-full h-full",
+                    class: "max-w-[900px] max-h-[450px] w-full h-full object-fill",
                     src: "{animation_url}",
                     autoplay: "true",
-                    // todo: it seems transparent video background is hard, do it later
-                    mix_blend_mode: "screen",
                     muted: "true",
-                    "loop": "loop",
-                    playsinline: "true"
+                    "loop": "true",
+                    playsinline: "true",
                 }
             }
             div {
@@ -95,7 +94,7 @@ pub fn SingleWelcome(cx: Scope,welcome:Welcome) -> Element {
             }
             div {
                 id: "light_line_box",
-                class: "w-24 h-10 absolute top-1 right-20 border border-b-gray-300 rounded-3xl shadow-gray-500 hover:shadow-inner md:shadow-none md:hover:shadow-none md:border-none md:right-1/3 md:h-1/4 md:top-0 dark:border-b-gray-50 ",
+                class: "w-24 h-10 absolute top-1 right-20 border border-b-gray-300 rounded-3xl shadow-gray-500 hover:shadow-inner md:shadow-none md:hover:shadow-none md:border-none md:right-1/3 md:h-1/4 md:top-0 dark:border-b-gray-50 z-50",
                 div {
                     id: "light_line",
                     class: "relative h-1/2 md:left-1/2 md:w-0 md:h-4/5 md:border md:border-black md:cursor-pointer md:dark:border-gray-50"

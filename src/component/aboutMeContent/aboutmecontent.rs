@@ -1,21 +1,19 @@
 #![allow(non_snake_case)]
 
-use charming::element::{AxisType, Color, CoordinateSystem, Emphasis, ItemStyle, Label, LabelPosition, SplitArea, SymbolSize, Tooltip, Trigger};
-use charming::series::{Heatmap, Pie, PieRoseType, Scatter};
+use charming::{Chart, WasmRenderer};
+use charming::component::Title;
+use charming::element::{Color, Emphasis, ItemStyle, Label, Tooltip, Trigger};
+use charming::series::{Pie, PieRoseType};
 use charming::theme::Theme;
-use charming::{Chart, df, WasmRenderer};
-use charming::component::{Axis, Title, VisualMap};
-use dioxus::html::img;
 use dioxus::prelude::*;
 use dioxus_router::prelude::Link;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
+
 use crate::model;
-
-
 use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
 use crate::utils::netUtils::parse_to_data_url;
-
+use crate::utils::resourceType::ResourceType;
 
 #[inline_props]
 pub fn AboutMeContent(cx: Scope) -> Element {
@@ -44,7 +42,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
             content =  fetch_and_decrypt(url.as_str()).await;
 
         }
-        content.image = parse_to_data_url(content.image.clone()).await;
+        content.image = parse_to_data_url(content.image.clone(),ResourceType::IMAGE).await;
         content
     });
     let github_username = use_future(cx,(),|_|async{

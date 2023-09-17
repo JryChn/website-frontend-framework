@@ -1,5 +1,6 @@
+use crate::utils::resourceType::ResourceType;
 
-pub async fn parse_to_data_url(url: String) -> String {
+pub async fn parse_to_data_url(url: String, reource_type: ResourceType) -> String {
     if url.starts_with("data") {
         url
     } else {
@@ -11,7 +12,7 @@ pub async fn parse_to_data_url(url: String) -> String {
                     match data.binary().await {
                         Err(_) => url,
                         Ok(data) => {
-                            gloo_file::futures::read_as_data_url(&gloo_file::Blob::new(data.as_slice())).await.unwrap_or_else(|_| url)
+                            gloo_file::futures::read_as_data_url(&gloo_file::Blob::new_with_options(data.as_slice(),Some(&reource_type.get_reources_type()))).await.unwrap_or_else(|_| url)
                         }
                     }
                 }

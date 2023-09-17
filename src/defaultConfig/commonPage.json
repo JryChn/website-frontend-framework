@@ -8,7 +8,7 @@
     "title": "TestTemplate.com/",
     "subtitle": ["一个__测试的_样_本","Just _A__Te_m__p_lat__e","Wubalabadabadu!"],
     "animation_url": {
-      "light": "",
+      "light": "https://www.hellomonday.com/assets/video/animations/hm-hero-desktop.mp4",
       "dark": ""
     }
   },

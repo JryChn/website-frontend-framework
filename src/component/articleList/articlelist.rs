@@ -1,17 +1,19 @@
 #![allow(non_snake_case)]
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
+
 use charming::{Chart, WasmRenderer};
-use charming::component::Legend;
 use charming::element::{Label, LabelLayout, LabelPosition, LineStyle, ScaleLimit, Tooltip};
-use charming::series::{Graph, GraphData, GraphLayout};
+use charming::series::{Graph, GraphLayout};
 use dioxus::prelude::*;
 use dioxus_router::components::Link;
-use futures::future::{join, join_all};
+use futures::future::join_all;
+
 use crate::model::Article::Article;
 use crate::Route;
 use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
 use crate::utils::netUtils::parse_to_data_url;
+use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[inline_props]
 pub fn ArticleList(cx: Scope) -> Element {
@@ -27,7 +29,7 @@ pub fn ArticleList(cx: Scope) -> Element {
             articles = fetch_and_decrypt::<Vec<Article>>(&(api+"/fetchArticles")).await;
         }
         join_all(articles.iter_mut().map(|a| async {
-            a.image = parse_to_data_url(a.image.clone()).await;
+            a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
         })).await;
         articles
     });
