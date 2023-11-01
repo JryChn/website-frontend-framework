@@ -1,10 +1,10 @@
 #![allow(non_snake_case)]
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use charming::{Chart, WasmRenderer};
 use charming::element::{Label, LabelLayout, LabelPosition, LineStyle, ScaleLimit, Tooltip};
-use charming::series::{Graph, GraphLayout};
+use charming::series::{Graph, GraphData, GraphLayout};
 use dioxus::prelude::*;
 use dioxus_router::components::Link;
 use futures::future::join_all;
@@ -20,6 +20,8 @@ pub fn ArticleList(cx: Scope) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
     let mut tags :HashMap<String,u32> = HashMap::new();
     let mut keywords : HashMap<String,u32> = HashMap::new();
+    // todo: enable tag filter
+    let tags_filter = use_ref(cx,||HashSet::<String>::new());
     let content = use_future(cx, (), |_| async {
         let mut articles;
         let api = fetch_configuration().await.articles.api ;
@@ -86,9 +88,15 @@ pub fn ArticleList(cx: Scope) -> Element {
                                                         .label_layout(LabelLayout::new().hide_overlap(true))
                                                         .scale_limit(ScaleLimit::new().min(0.4).max(2.0))
                                                         .line_style(LineStyle::new().color("source").curveness(0.3))
-                                                        .data(serde_json::from_str(include_str!("test.json")).unwrap()),
+                                                .data(GraphData{
+                                                    categories: Vec::new(),
+                                                    nodes: Vec::new(),
+                                                    links: Vec::new()
+                                                })
                                                 );
-                                            WasmRenderer::new(450, 350).render("article_list_keyset", &chart).unwrap();
+                                            let width = gloo_utils::document().get_element_by_id("article_list_keyset").unwrap().client_width() as u32;
+                                            let height = gloo_utils::document().get_element_by_id("article_list_keyset").unwrap().client_height() as u32;
+                                            WasmRenderer::new(width, height).render("article_list_keyset", &chart).unwrap();
                                         }
                                     }
                                 }
@@ -99,7 +107,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                                     ul { class: "w-11/12 h-4/5 p-8",
                                         tags.iter().map(|t|{
                                             rsx!(
-                                        li { class: "m-3 inline-block hover:underline",
+                                        li { class: "m-3 inline-block hover:underline cursor-pointer",
                                                     "{t.0}({t.1})"
                                         }
                                             )
@@ -127,7 +135,21 @@ pub fn ArticleList(cx: Scope) -> Element {
                             ul {
                                 id: "article_list_content",
                                 class: "h-[1600px] w-[90%]  md:w-[65%] absolute left-4 top-12 p-5 flex flex-col justify-start gap-5",
-                                article.iter().map(|a|{
+                                article.iter()
+                                .filter(|a|{
+                                    if tags_filter.read().is_empty(){
+                                        return true;
+                                    }
+                                    let mut has_tag = false;
+                                    for tag in &a.tags{
+                                    if tags_filter.read().contains(tag){
+                                            has_tag = true;
+                                            break;
+                                        }
+                                    }
+                                    has_tag
+                                })
+                                .map(|a|{
                                     rsx!{
                         Link{
                             to:"/article/{a.id}",

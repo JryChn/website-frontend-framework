@@ -1,9 +1,9 @@
 use std::sync::Mutex;
+
 use lazy_static::lazy_static;
 use serde::de::DeserializeOwned;
+
 use crate::model::config::{CommonConfig, ConfigurationTemplate};
-
-
 
 lazy_static!{
 static ref CONFIG :CommonConfig = serde_json::from_str(include_str!("../config.json")).expect("ERROR When Loading Configuration");
@@ -27,7 +27,7 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
 pub async fn fetch_configuration() -> ConfigurationTemplate{
     if CONFIGURATION.lock().unwrap().is_empty() {
         if !CONFIG.configuration_fetching_url.is_empty() {
-         let mut configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url).await;
+         let configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url).await;
             CONFIGURATION.lock().unwrap().push(configuration);
         }
     }
