@@ -11,14 +11,15 @@ use rand::prelude::SliceRandom;
 use rand::thread_rng;
 
 use crate::model;
-use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
+use crate::model::config::ConfigurationTemplate;
+use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType;
 
 #[inline_props]
 pub fn AboutMeContent(cx: Scope) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
-
+    let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
     let color_generator = ||{
         let mut value = Vec::new();
             let color_char = vec![
@@ -35,7 +36,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
     let special_content_wrapper_end = r##"</span></span>"##;
     let fetch = use_future(cx, (), |_|  async {
         let mut content :model::AboutMe::AboutMePage;
-        let url = fetch_configuration().await.about_me.api;
+        let url = configuration.about_me.api;
         if url.is_empty() {
             content = serde_json::from_str(include_str!("../../defaultConfig/aboutMe.json")).unwrap()
         }else{
@@ -45,9 +46,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
         content.image = parse_to_data_url(content.image.clone(),ResourceType::IMAGE).await;
         content
     });
-    let github_username = use_future(cx,(),|_|async{
-        fetch_configuration().await.contact.github_username.clone()
-    });
+    let github_username = configuration.contact.github_username.clone();
     cx.render(match fetch.value() {
         None =>
                 rsx!(
@@ -60,7 +59,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
         Some(aboutMe)=> {
             let aboutMeContent = aboutMe.description.replace(" **/", special_content_wrapper_end);
             let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
-            let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username.value().unwrap()+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
+            let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
             rsx!(
                 div { id: "aboutme_content", class: "bg-gray-200 w-screen min-h-[2000px]",
                     div { id: "aboutme_content_contact" }
@@ -105,7 +104,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
                         })
                     }
                     div { id: "aboutme_content_github",
-                        Link { to: "https://github.com/".to_string() + &github_username.value().unwrap(), img { alt: "", src: "{github_states}" } }
+                        Link { to: "https://github.com/".to_string() + &github_username, img { alt: "", src: "{github_states}" } }
                     }
                 }
             )

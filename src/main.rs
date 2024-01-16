@@ -10,6 +10,7 @@ use crate::component::calendar::calendar::Calendar;
 use crate::component::header::header::Header;
 use crate::component::homepage::HomePage;
 use crate::component::pageNotFound::pageNotFound::PageNotFound;
+use crate::utils::encryptedUtils::fetch_configuration;
 
 mod component;
 mod model;
@@ -26,6 +27,7 @@ fn main() {
 // todo: make article more readable
 // todo: add github and radar at about me page
 fn App(cx: Scope) -> Element {
+    let configuration = fetch_configuration();
     let navigator:Vec<(String, Route)>= vec![
         ("AboutMe".to_string(), Route::AboutMeContent {}),
         ("Calendar".to_string(), Route::Calendar {}),
@@ -33,6 +35,9 @@ fn App(cx: Scope) -> Element {
         ("Timer".to_string(), Route::HomePage{}),
         ("Zone".to_string(), Route::HomePage{}),
     ];
+    use_shared_state_provider(cx,||{
+        configuration
+    });
     use_shared_state_provider(cx,||NAV(navigator));
     render!( Router::<Route> {} )
 }

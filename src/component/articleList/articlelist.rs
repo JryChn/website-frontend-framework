@@ -2,59 +2,66 @@
 
 use std::collections::{HashMap, HashSet};
 
-use charming::{Chart, WasmRenderer};
-use charming::element::{Label, LabelLayout, LabelPosition, LineStyle, ScaleLimit, Tooltip};
-use charming::series::{Graph, GraphData, GraphLayout};
 use dioxus::prelude::*;
 use dioxus_router::components::Link;
 use futures::future::join_all;
 
 use crate::model::Article::Article;
+use crate::model::config::ConfigurationTemplate;
 use crate::Route;
-use crate::utils::encryptedUtils::{fetch_and_decrypt, fetch_configuration};
+use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[inline_props]
 pub fn ArticleList(cx: Scope) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
-    let mut tags :HashMap<String,u32> = HashMap::new();
-    let mut keywords : HashMap<String,u32> = HashMap::new();
-    // todo: enable tag filter
+    let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
     let tags_filter = use_ref(cx,||HashSet::<String>::new());
     let content = use_future(cx, (), |_| async {
         let mut articles;
-        let api = fetch_configuration().await.articles.api ;
+        let mut tags = HashMap::new();
+        let mut keywords = HashMap::new();
+        let api = configuration.articles.article_api ;
         if api.is_empty() {
             articles = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).unwrap();
         }else{
-            articles = fetch_and_decrypt::<Vec<Article>>(&(api+"/fetchArticles")).await;
+            articles = fetch_and_decrypt::<Vec<Article>>(&api).await;
         }
         join_all(articles.iter_mut().map(|a| async {
             a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
         })).await;
-        articles
+        articles.iter().for_each(|a|{
+            a.tags.iter().for_each(|t|{
+                if tags.contains_key(t){
+                    *tags.get_mut(t).unwrap() +=1;
+                }else{
+                    tags.insert(t.clone(),1);
+                }
+            });
+            a.keywords.iter().for_each(|k|{
+                if keywords.contains_key(k){
+                    *keywords.get_mut(k).unwrap() +=1;
+                }else{
+                    keywords.insert(k.clone(),1);
+                }
+            });
+        });
+        let mut keywords_string = String::new();
+        keywords.iter().for_each(|kv|{
+            keywords_string.push_str("{name: '");
+            keywords_string.push_str(kv.0);
+            keywords_string.push_str("',value:");
+            keywords_string.push_str(kv.1.to_string().as_str());
+            keywords_string.push_str(",emphasis: {textStyle: {color: '#9d2933'}}},");
+        });
+        (articles,tags,keywords_string)
     });
+    let js_function_eval =  use_eval(cx);
     cx.render(
         match content.value() {
-            None => { rsx!( div {} ) }
-            Some(article) => {
-                article.iter().for_each(|a|{
-                    a.tags.iter().for_each(|t|{
-                        if tags.contains_key(t){
-                            *tags.get_mut(t).unwrap() +=1;
-                        }else{
-                            tags.insert(t.clone(),1);
-                        }
-                    });
-                    a.keywords.iter().for_each(|k|{
-                        if keywords.contains_key(k){
-                            *keywords.get_mut(k).unwrap() +=1;
-                        }else{
-                            keywords.insert(k.clone(),1);
-                        }
-                    });
-                });
+            None => { rsx!( div { "Loading" } ) }
+            Some((article,tags,keywords)) => {
                 rsx!(
                     div {
                         id: "article_list",
@@ -70,44 +77,71 @@ pub fn ArticleList(cx: Scope) -> Element {
                                     class: "w-11/12 h-96 mx-auto my-10",
                                     span { class: "text-gray-800 text-xl font-sans", "key words:" }
                                     div {
-                                        id: "article_list_keyset",
+                                        id: "article_list_keys",
                                         class: "w-11/12 h-[90%]",
-                                        onmounted: |e| {
-                                            let chart = Chart::new()
-                                                .tooltip(Tooltip::new())
-                                                .series(
-                                                    Graph::new()
-                                                        .name("Les Miserables")
-                                                        .layout(GraphLayout::None)
-                                                        .label(
-                                                            Label::new()
-                                                                .show(true)
-                                                                .position(LabelPosition::Right)
-                                                                .formatter("{b}"),
-                                                        )
-                                                        .label_layout(LabelLayout::new().hide_overlap(true))
-                                                        .scale_limit(ScaleLimit::new().min(0.4).max(2.0))
-                                                        .line_style(LineStyle::new().color("source").curveness(0.3))
-                                                .data(GraphData{
-                                                    categories: Vec::new(),
-                                                    nodes: Vec::new(),
-                                                    links: Vec::new()
-                                                })
-                                                );
-                                            let width = gloo_utils::document().get_element_by_id("article_list_keyset").unwrap().client_width() as u32;
-                                            let height = gloo_utils::document().get_element_by_id("article_list_keyset").unwrap().client_height() as u32;
-                                            WasmRenderer::new(width, height).render("article_list_keyset", &chart).unwrap();
+                                        onmounted: |_e| {
+                                            js_function_eval(
+                                                    &*(r#"
+                                                                                 var option = {
+                                                                                    tooltip: {},
+                                                                                    series: [ {
+                                                                                        type: 'wordCloud',
+                                                                                        gridSize: 2,
+                                                                                        sizeRange: [12, 150],
+                                                                                        rotationRange: [-90, 90],
+                                                                                        shape: 'pentagon',
+                                                                                        drawOutOfBound: true,
+                                                                                        textStyle: {
+                                                                                            color: function () {
+                                                                                                return 'rgb(' + [
+                                                                                                    Math.round(Math.random() * 160),
+                                                                                                    Math.round(Math.random() * 160),
+                                                                                                    Math.round(Math.random() * 160)
+                                                                                                ].join(',') + ')';
+                                                                                            }
+                                                                                        },
+                                                                                        emphasis: {
+                                                                                            textStyle: {
+                                                                                                shadowBlur: 10,
+                                                                                                shadowColor: '#333'
+                                                                                            }
+                                                                                        },
+                                                                                        data: [ "#
+                                                        .to_owned() + keywords
+                                                        + r#"
+                                                                                        ]
+                                                                                    } ]
+                                                                                 };
+                                        
+                                                                                var chart = echarts.init(document.getElementById('article_list_keys'));
+                                                                                chart.setOption(option);
+                                                                                window.onresize = chart.resize;
+                                                                                "#),
+                                                )
+                                                .unwrap();
                                         }
                                     }
                                 }
                                 div {
                                     id: "article_list_sidebar_tag",
                                     class: "w-11/12 h-96 mx-auto my-10",
-                                    span { class: "text-gray-800 text-xl font-sans", "tag:" }
+                                    span { class: "text-gray-800 text-xl font-sans",
+                                        "tag:"
+                                        tags_filter.read().iter().map(|t|{
+                                            rsx!("{t}")
+                                        })
+                                    }
                                     ul { class: "w-11/12 h-4/5 p-8",
                                         tags.iter().map(|t|{
                                             rsx!(
                                         li { class: "m-3 inline-block hover:underline cursor-pointer",
+                                                    onclick:|_e|{
+                                                        tags_filter.with_mut(|tf|tf.take(t.0).or_else(||{
+                                                            tf.insert(t.0.clone());
+                                                            Some("done".to_string())
+                                                        })
+                                                        );
+                                                    },
                                                     "{t.0}({t.1})"
                                         }
                                             )
@@ -137,17 +171,15 @@ pub fn ArticleList(cx: Scope) -> Element {
                                 class: "h-[1600px] w-[90%]  md:w-[65%] absolute left-4 top-12 p-5 flex flex-col justify-start gap-5",
                                 article.iter()
                                 .filter(|a|{
-                                    if tags_filter.read().is_empty(){
-                                        return true;
-                                    }
-                                    let mut has_tag = false;
-                                    for tag in &a.tags{
-                                    if tags_filter.read().contains(tag){
-                                            has_tag = true;
-                                            break;
+                                    let mut check_tags = true;
+                                    tags_filter.with(|tags_filter|{
+                                        for t in tags_filter{
+                                            if !a.tags.contains(&t){
+                                                check_tags = false;
+                                            }
                                         }
-                                    }
-                                    has_tag
+                                    });
+                                    check_tags
                                 })
                                 .map(|a|{
                                     rsx!{

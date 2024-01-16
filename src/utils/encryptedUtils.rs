@@ -1,5 +1,6 @@
 use std::sync::Mutex;
 
+use futures::executor::block_on;
 use lazy_static::lazy_static;
 use serde::de::DeserializeOwned;
 
@@ -24,10 +25,11 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
      serde_json::from_slice::<T>(response.as_slice()).unwrap()
 }
 
-pub async fn fetch_configuration() -> ConfigurationTemplate{
+pub fn fetch_configuration() -> ConfigurationTemplate{
     if CONFIGURATION.lock().unwrap().is_empty() {
         if !CONFIG.configuration_fetching_url.is_empty() {
-         let configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url).await;
+         let  configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url);
+            let configuration = block_on(configuration);
             CONFIGURATION.lock().unwrap().push(configuration);
         }
     }

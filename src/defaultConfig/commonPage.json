@@ -13,7 +13,8 @@
     }
   },
   "articles": {
-    "api": "",
+    "article_with_id_api": "",
+    "article_api": "",
     "article": [
       {
         "id": "testId1",

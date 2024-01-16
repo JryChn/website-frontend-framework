@@ -1,7 +1,7 @@
-use crate::model::Article::Article;
 use dioxus::prelude::Props;
-use dioxus_router::prelude::Routable;
 use serde::{Deserialize, Serialize};
+
+use crate::model::Article::Article;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CommonConfig {
@@ -12,7 +12,7 @@ pub struct CommonConfig {
 pub struct ConfigurationTemplate {
     pub contact:Contact,
     pub welcome: Welcome,
-    pub articles: Articles,
+    pub articles: ArticleList,
     pub about_me: AboutMePage,
     pub timer: Timer,
     pub calendar:Calendar
@@ -35,8 +35,9 @@ pub struct ModeUrl {
     pub light: String,
 }
 #[derive(Serialize, Deserialize, Debug,Props,PartialEq,Clone)]
-pub struct Articles {
-    pub api:String,
+pub struct ArticleList {
+    pub article_api:String,
+    pub article_with_id_api:String,
     pub article:Vec<Article>,
 }
 #[derive(Serialize, Deserialize, Debug,Clone)]
