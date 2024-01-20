@@ -4,7 +4,7 @@ use futures::executor::block_on;
 use lazy_static::lazy_static;
 use serde::de::DeserializeOwned;
 
-use crate::model::config::{CommonConfig, ConfigurationTemplate};
+use crate::model::{CommonConfig, ConfigurationTemplate};
 
 lazy_static!{
 static ref CONFIG :CommonConfig = serde_json::from_str(include_str!("../config.json")).expect("ERROR When Loading Configuration");

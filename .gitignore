@@ -24,3 +24,5 @@ yarn-error.log*
 /dist/
 /target/
 /Cargo.lock
+/package.json
+/package-lock.json

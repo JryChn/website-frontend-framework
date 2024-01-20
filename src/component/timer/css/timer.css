@@ -1,5 +1,0 @@
-@keyframes parallel_move {
-    100%{
-        transform:  translateX(-100vw);
-    }
-}

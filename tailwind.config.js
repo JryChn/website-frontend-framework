@@ -2,8 +2,12 @@
 module.exports = {
   mode: "all",
   darkMode:"class",
-  content: ["./src/**/*.{rs,html,css}","./index.html"],
+  content: ["./src/**/*.{rs,html,css}","./public/tailwind.css"],
   theme: {
+    fontFamily:{
+      sans: ["outfit"],
+      serif: ["outfit"]
+    },
     extend: {},
   },
   plugins: [],

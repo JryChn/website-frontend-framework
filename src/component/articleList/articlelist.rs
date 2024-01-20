@@ -6,8 +6,9 @@ use dioxus::prelude::*;
 use dioxus_router::components::Link;
 use futures::future::join_all;
 
+use crate::component::loading::Loading;
 use crate::model::Article::Article;
-use crate::model::config::ConfigurationTemplate;
+use crate::model::ConfigurationTemplate;
 use crate::Route;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
@@ -22,7 +23,7 @@ pub fn ArticleList(cx: Scope) -> Element {
         let mut articles;
         let mut tags = HashMap::new();
         let mut keywords = HashMap::new();
-        let api = configuration.articles.article_api ;
+        let api = configuration.article_api;
         if api.is_empty() {
             articles = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).unwrap();
         }else{
@@ -60,7 +61,8 @@ pub fn ArticleList(cx: Scope) -> Element {
     let js_function_eval =  use_eval(cx);
     cx.render(
         match content.value() {
-            None => { rsx!( div { "Loading" } ) }
+            None => {
+                rsx!(Loading{}) }
             Some((article,tags,keywords)) => {
                 rsx!(
                     div {
@@ -71,7 +73,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                             class: "w-[90%] h-[1800px] mx-auto relative top-48",
                             div {
                                 id: "article_list_sidebar",
-                                class: "h-[1600px] w-[30%] black bg-gray-100 absolute right-4 top-12 shadow-lg hidden md:block",
+                                class: "h-[1600px] w-[30%] black bg-white absolute right-4 top-12 shadow-lg hidden md:block",
                                 div {
                                     id: "article_list_sidebar_key_words",
                                     class: "w-11/12 h-96 mx-auto my-10",
@@ -92,11 +94,13 @@ pub fn ArticleList(cx: Scope) -> Element {
                                                                                         shape: 'pentagon',
                                                                                         drawOutOfBound: true,
                                                                                         textStyle: {
+                                                                                        fontFamily: 'outfit',
+                                                                                        fontWeight: 'bold',
                                                                                             color: function () {
                                                                                                 return 'rgb(' + [
-                                                                                                    Math.round(Math.random() * 160),
-                                                                                                    Math.round(Math.random() * 160),
-                                                                                                    Math.round(Math.random() * 160)
+                                                                                                    Math.round(Math.random() * 80),
+                                                                                                    Math.round(Math.random() * 20),
+                                                                                                    Math.round(Math.random() * 50)
                                                                                                 ].join(',') + ')';
                                                                                             }
                                                                                         },

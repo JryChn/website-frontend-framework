@@ -1,0 +1,54 @@
+[application]
+
+# App name
+name = "MedJeremy's Page"
+
+# The Dioxus platform to default to
+default_platform = "web"
+
+# `build` & `serve` output path
+out_dir = "dist"
+
+# The static resource path
+asset_dir = "public"
+
+[web.app]
+
+# HTML title tag content
+title = "MedJeremy's Page"
+
+[web.watcher]
+
+# When watcher is triggered, regenerate the `index.html`
+reload_html = true
+
+# Which files or dirs will be monitored
+watch_path = ["src", "public"]
+
+# Include style or script assets
+[web.resource]
+
+# CSS style file
+style = ["tailwind.css"]
+
+
+# Javascript code file
+script = [
+    "https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js",
+    "https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js",
+    "https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"
+]
+[web.resource.dev]
+
+# Same as [web.resource], but for development servers
+
+# CSS style file
+style = ["tailwind.css"]
+
+
+# Javascript code file
+script = [
+    "https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js",
+    "https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js",
+    "https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"
+]

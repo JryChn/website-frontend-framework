@@ -3,7 +3,7 @@
 use dioxus::prelude::*;
 
 use crate::model::Article::Article;
-use crate::model::config::ConfigurationTemplate;
+use crate::model::ConfigurationTemplate;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
@@ -14,11 +14,12 @@ pub fn Article(cx: Scope, id:String) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64,0f64);
     let content = use_future(cx, (id), |id| async move{
         let mut article;
-        let api =configuration.articles.article_with_id_api ;
+        let api =configuration.article_api;
         if api.is_empty() {
             article = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).unwrap().iter().filter(|a|{a.id == id}).last().unwrap().clone();
         }else{
-            article = fetch_and_decrypt::<Article>(&api).await;
+            let api_with_id = api+"/"+id.as_str();
+            article = fetch_and_decrypt::<Article>(&api_with_id).await;
         }
             article.image = parse_to_data_url(article.image.clone(),IMAGE).await;
         article

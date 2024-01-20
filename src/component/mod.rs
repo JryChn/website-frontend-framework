@@ -6,5 +6,5 @@ pub mod footer;
 pub mod header;
 pub mod homepage;
 pub mod story;
-pub mod timer;
 pub mod pageNotFound;
+pub mod loading;

@@ -6,16 +6,17 @@ use dioxus::core::{Element, Scope};
 use dioxus::prelude::*;
 use futures::StreamExt;
 
+use crate::component::homepage::icons::Icons;
 use crate::component::homepage::navigation::Navigate;
-use crate::component::homepage::single_welcome::SingleWelcome;
-use crate::model::config::ConfigurationTemplate;
+use crate::component::homepage::single_welcome::WelcomePage;
+use crate::component::loading::Loading;
+use crate::model::ConfigurationTemplate;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::MP4;
 
 pub mod single_welcome;
 pub mod navigation;
-pub mod articles;
-pub mod about_me;
+mod icons;
 
 pub fn HomePage(cx:Scope) -> Element{
     let mut configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
@@ -36,20 +37,14 @@ pub fn HomePage(cx:Scope) -> Element{
     cx.render(rsx!(
         match config.value() {
             None => {
-        rsx!( div { class:"w-screen h-screen relative",
-                    div{ class:"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold",
-                     "Loading...."
-                    }
-                    })
+                rsx!(Loading{})
             },
             Some(configuration) => {
                 rsx! {
-                    main { id: "djeremy",
-                        SingleWelcome{},
+                    main { id: "welcome",
+                        WelcomePage{},
                         Navigate{},
-                        // Articles{articles:configuration.articles.article.clone()},
-                        // AboutMe{ name:configuration.about_me.name.clone(),description:configuration.about_me.description.clone(),video:configuration.about_me.video.clone()},
-                        // Timer{posts:configuration.timer.posts.clone()},
+                        Icons{}
                     }
                 }
             }

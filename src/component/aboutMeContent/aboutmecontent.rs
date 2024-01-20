@@ -10,8 +10,9 @@ use dioxus_router::prelude::Link;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
 
+use crate::component::loading::Loading;
 use crate::model;
-use crate::model::config::ConfigurationTemplate;
+use crate::model::ConfigurationTemplate;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType;
@@ -19,6 +20,39 @@ use crate::utils::resourceType::ResourceType;
 #[inline_props]
 pub fn AboutMeContent(cx: Scope) -> Element {
     gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
+    // let typing_words = use_state(cx, || "".to_string());
+    // let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
+    // let welcome = &configuration.welcome;
+    // // words blink type animation
+    // use_future(cx, (), |_| {
+    //     to_owned![typing_words];
+    //     let whole_str = welcome.subtitle.to_owned();
+    //     async move {
+    //         loop {
+    //             for i in whole_str.iter() {
+    //                 let whole_str = i;
+    //                 gloo_timers::future::sleep(Duration::from_millis(1000)).await;
+    //                 let mut init_string = "".to_string();
+    //                 for i in whole_str.chars() {
+    //                     if i != '_' {
+    //                         init_string.push(i);
+    //                     }
+    //                     gloo_timers::future::sleep(Duration::from_millis(300)).await;
+    //                     typing_words.set(init_string.to_string());
+    //                 }
+    //                 gloo_timers::future::sleep(Duration::from_millis(1500)).await;
+    //                 loop {
+    //                     if init_string.len() == 0 {
+    //                         break;
+    //                     }
+    //                     init_string.pop();
+    //                     gloo_timers::future::sleep(Duration::from_millis(200)).await;
+    //                     typing_words.set(init_string.to_string());
+    //                 }
+    //             }
+    //         }
+    //     }
+    // });
     let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
     let color_generator = ||{
         let mut value = Vec::new();
@@ -36,7 +70,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
     let special_content_wrapper_end = r##"</span></span>"##;
     let fetch = use_future(cx, (), |_|  async {
         let mut content :model::AboutMe::AboutMePage;
-        let url = configuration.about_me.api;
+        let url = configuration.about_me_api;
         if url.is_empty() {
             content = serde_json::from_str(include_str!("../../defaultConfig/aboutMe.json")).unwrap()
         }else{
@@ -50,17 +84,14 @@ pub fn AboutMeContent(cx: Scope) -> Element {
     cx.render(match fetch.value() {
         None =>
                 rsx!(
-                    div { class: "w-screen h-screen relative",
-                        div { class: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-bold",
-                            "Loading...."
-                        }
-                    }
+                    Loading{}
                 ),
         Some(aboutMe)=> {
             let aboutMeContent = aboutMe.description.replace(" **/", special_content_wrapper_end);
             let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
             let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
             rsx!(
+                style { include_str!("../../css/keyframe.css") }
                 div { id: "aboutme_content", class: "bg-gray-200 w-screen min-h-[2000px]",
                     div { id: "aboutme_content_contact" }
                     div {

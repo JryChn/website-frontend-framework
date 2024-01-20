@@ -23,16 +23,12 @@ fn main() {
     dioxus_web::launch(App);
 }
 
-// todo: add keyword word-cloud
-// todo: make article more readable
-// todo: add github and radar at about me page
 fn App(cx: Scope) -> Element {
     let configuration = fetch_configuration();
     let navigator:Vec<(String, Route)>= vec![
         ("AboutMe".to_string(), Route::AboutMeContent {}),
         ("Calendar".to_string(), Route::Calendar {}),
         ("Articles".to_string(), Route::ArticleList{}),
-        ("Timer".to_string(), Route::HomePage{}),
         ("Zone".to_string(), Route::HomePage{}),
     ];
     use_shared_state_provider(cx,||{
