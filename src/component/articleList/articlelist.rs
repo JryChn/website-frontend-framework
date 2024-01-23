@@ -62,7 +62,7 @@ pub fn ArticleList(cx: Scope) -> Element {
     cx.render(
         match content.value() {
             None => {
-                rsx!(Loading{}) }
+                rsx!( Loading {} ) }
             Some((article,tags,keywords)) => {
                 rsx!(
                     div {
@@ -84,43 +84,43 @@ pub fn ArticleList(cx: Scope) -> Element {
                                         onmounted: |_e| {
                                             js_function_eval(
                                                     &*(r#"
-                                                                                 var option = {
-                                                                                    tooltip: {},
-                                                                                    series: [ {
-                                                                                        type: 'wordCloud',
-                                                                                        gridSize: 2,
-                                                                                        sizeRange: [12, 150],
-                                                                                        rotationRange: [-90, 90],
-                                                                                        shape: 'pentagon',
-                                                                                        drawOutOfBound: true,
-                                                                                        textStyle: {
-                                                                                        fontFamily: 'outfit',
-                                                                                        fontWeight: 'bold',
-                                                                                            color: function () {
-                                                                                                return 'rgb(' + [
-                                                                                                    Math.round(Math.random() * 80),
-                                                                                                    Math.round(Math.random() * 20),
-                                                                                                    Math.round(Math.random() * 50)
-                                                                                                ].join(',') + ')';
-                                                                                            }
-                                                                                        },
-                                                                                        emphasis: {
-                                                                                            textStyle: {
-                                                                                                shadowBlur: 10,
-                                                                                                shadowColor: '#333'
-                                                                                            }
-                                                                                        },
-                                                                                        data: [ "#
+                                                                                                                         var option = {
+                                                                                                                            tooltip: {},
+                                                                                                                            series: [ {
+                                                                                                                                type: 'wordCloud',
+                                                                                                                                gridSize: 2,
+                                                                                                                                sizeRange: [12, 150],
+                                                                                                                                rotationRange: [-90, 90],
+                                                                                                                                shape: 'pentagon',
+                                                                                                                                drawOutOfBound: true,
+                                                                                                                                textStyle: {
+                                                                                                                                fontFamily: 'outfit',
+                                                                                                                                fontWeight: 'bold',
+                                                                                                                                    color: function () {
+                                                                                                                                        return 'rgb(' + [
+                                                                                                                                            Math.round(Math.random() * 80),
+                                                                                                                                            Math.round(Math.random() * 20),
+                                                                                                                                            Math.round(Math.random() * 50)
+                                                                                                                                        ].join(',') + ')';
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                emphasis: {
+                                                                                                                                    textStyle: {
+                                                                                                                                        shadowBlur: 10,
+                                                                                                                                        shadowColor: '#333'
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                data: [ "#
                                                         .to_owned() + keywords
                                                         + r#"
-                                                                                        ]
-                                                                                    } ]
-                                                                                 };
-                                        
-                                                                                var chart = echarts.init(document.getElementById('article_list_keys'));
-                                                                                chart.setOption(option);
-                                                                                window.onresize = chart.resize;
-                                                                                "#),
+                                                                                                                                ]
+                                                                                                                            } ]
+                                                                                                                         };
+                                                                                
+                                                                                                                        var chart = echarts.init(document.getElementById('article_list_keys'));
+                                                                                                                        chart.setOption(option);
+                                                                                                                        window.onresize = chart.resize;
+                                                                                                                        "#),
                                                 )
                                                 .unwrap();
                                         }
@@ -187,15 +187,15 @@ pub fn ArticleList(cx: Scope) -> Element {
                                 })
                                 .map(|a|{
                                     rsx!{
-                        Link{
-                            to:"/article/{a.id}",
-                           class:"h-[200px] w-full border-stone-900 rounded-2xl shadow-xl relative" ,
-                            img{
+                                Link{
+                                to:"/article/{a.id}",
+                                class:"h-[200px] w-full border-stone-900 rounded-2xl shadow-xl relative" ,
+                                img{
                                 src:"{a.image}",
                                 alt:"",
                                 class:"w-full h-full rounded-2xl object-cover blur-[1px] contrast-75 brightness-90"
-                            }
-                            span{
+                                }
+                                span{
                                 class:"w-[90%] h-20 flex flex-col absolute top-1/2 left-4 text-gray-50 text-ellipsis overflow-hidden",
                                 span{
                                     class:"text-3xl font-sans block",
@@ -203,10 +203,10 @@ pub fn ArticleList(cx: Scope) -> Element {
                                 }
                                 span{
                                     class:"text-md font-mono block text-gray-200 flex-1 ",
-                                                   "{a.introduction}"
+                                                "{a.introduction}"
                                 }
-                            }
-                        }}
+                                }
+                                }}
                                 })
                             }
                         }

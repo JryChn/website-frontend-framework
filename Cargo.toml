@@ -9,7 +9,6 @@ edition = "2021"
 dioxus = "0.4.0"
 dioxus-web = "0.4.0"
 dioxus-router = "0.4.1"
-dioxus-use-window = "0.7.0"
 gloo-timers = {version="0.3.0", features = ["futures"]}
 gloo-file = {version="0.2.3", features = ["futures"]}
 gloo-net = "0.3.0"

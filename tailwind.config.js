@@ -2,7 +2,7 @@
 module.exports = {
   mode: "all",
   darkMode:"class",
-  content: ["./src/**/*.{rs,html,css}","./public/tailwind.css"],
+  content: ["./src/**/*.{rs,html,css}","./dist/**/*.html"],
   theme: {
     fontFamily:{
       sans: ["outfit"],
