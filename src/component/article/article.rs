@@ -11,7 +11,7 @@ use crate::utils::resourceType::ResourceType::IMAGE;
 #[inline_props]
 pub fn Article(cx: Scope, id:String) -> Element {
     let mut configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
-    gloo_utils::window().scroll_with_x_and_y(0f64,0f64);
+    gloo::utils::window().scroll_with_x_and_y(0f64,0f64);
     let content = use_future(cx, (id), |id| async move{
         let mut article;
         let api =configuration.article_api;

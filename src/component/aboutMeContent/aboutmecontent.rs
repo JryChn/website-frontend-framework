@@ -19,7 +19,7 @@ use crate::utils::resourceType::ResourceType;
 
 #[inline_props]
 pub fn AboutMeContent(cx: Scope) -> Element {
-    gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
+    gloo::utils::window().scroll_with_x_and_y(0f64, 0f64);
     // let typing_words = use_state(cx, || "".to_string());
     // let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
     // let welcome = &configuration.welcome;
@@ -31,22 +31,22 @@ pub fn AboutMeContent(cx: Scope) -> Element {
     //         loop {
     //             for i in whole_str.iter() {
     //                 let whole_str = i;
-    //                 gloo_timers::future::sleep(Duration::from_millis(1000)).await;
+    //                 gloo::timers::future::sleep(Duration::from_millis(1000)).await;
     //                 let mut init_string = "".to_string();
     //                 for i in whole_str.chars() {
     //                     if i != '_' {
     //                         init_string.push(i);
     //                     }
-    //                     gloo_timers::future::sleep(Duration::from_millis(300)).await;
+    //                     gloo::timers::future::sleep(Duration::from_millis(300)).await;
     //                     typing_words.set(init_string.to_string());
     //                 }
-    //                 gloo_timers::future::sleep(Duration::from_millis(1500)).await;
+    //                 gloo::timers::future::sleep(Duration::from_millis(1500)).await;
     //                 loop {
     //                     if init_string.len() == 0 {
     //                         break;
     //                     }
     //                     init_string.pop();
-    //                     gloo_timers::future::sleep(Duration::from_millis(200)).await;
+    //                     gloo::timers::future::sleep(Duration::from_millis(200)).await;
     //                     typing_words.set(init_string.to_string());
     //                 }
     //             }
@@ -89,7 +89,6 @@ pub fn AboutMeContent(cx: Scope) -> Element {
             let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
             let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
             rsx!(
-                style { include_str!("../../css/keyframe.css") }
                 div {
                     id: "aboutme_content",
                     class: "bg-gray-200 w-screen min-h-[2000px]",

@@ -9,7 +9,8 @@ pub fn Navigate(cx: Scope) -> Element {
     let navigator = use_shared_state::<NAV>(cx).unwrap().read().0.clone();
     let nav_list = navigator.iter().map(|url| {
         rsx!(
-            Link { class: "text-center align-middle p-3", to: "{url.1}", "{url.0}" }
+            Link { class: "text-center align-middle p-3 m-1.5", to: "{url.1}", "{url.0}" }
+            img { src: "/static/straightLine.svg" }
         )
     });
     let nav_sidebar_switch = use_state(cx,||{false});
@@ -17,7 +18,7 @@ pub fn Navigate(cx: Scope) -> Element {
         rsx!(
             nav {
                 id: "navigator",
-                class: "fixed top-0 right-0 w-[10vw] h-[10vw] rounded-full translate-x-1/2 -translate-y-1/2 bg-black cursor-pointer md:bg-gray-50",
+                class: "fixed top-0 right-0 w-[10vw] h-[10vw] rounded-full translate-x-1/2 -translate-y-1/2 bg-gray-50 cursor-pointer md:bg-black",
                 onclick: |_e| {
                     nav_sidebar_switch.set(true);
                 }
@@ -31,7 +32,7 @@ pub fn Navigate(cx: Scope) -> Element {
                 (1..4).map(|_i|{
                     rsx!(
                     div{
-                        class: "w-3/4 h-1 border-black border-2 bg-black rounded-lg mx-auto md:border-gray-50 md:bg-gray-50",
+                        class:"w-3/4 h-1 border-black border-2 bg-black rounded-lg mx-auto md:border-gray-50 md:bg-gray-50",
                     }
                     )
                 }
@@ -39,23 +40,23 @@ pub fn Navigate(cx: Scope) -> Element {
             }
             if *nav_sidebar_switch.get(){
                 rsx!(
-            nav {
-                id: "navigator_sidebar",
-                class: "fixed right-0 top-0 w-72 bg-black rounded-l-xl shadow-zinc-700 shadow-2xl h-screen z-20",
-                div {
-                    dangerous_inner_html: "sign",
+                img {
+                    src: "/static/close.svg",
+                    class: "fixed right-4 top-3 cursor-pointer z-30",
                     onclick: |_e| {
                         nav_sidebar_switch.set(false);
                     }
                 }
-                div { class: "w-3/4 h-1/2 mx-auto translate-y-1/2 cursor-pointer",
+            nav {
+                id: "navigator_sidebar",
+                class: "fixed right-0 top-0 w-screen bg-black shadow-zinc-700 shadow-2xl h-screen z-20 md:animate-slideFromR2L",
+                div { class: "fixed right-1/2 top-1/2 w-44 h-80 -translate-y-1/2 translate-x-1/2 cursor-pointer md:right-1/4 md:translate-x-0",
                     ul { class: "text-neutral-200 text-2xl flex flex-col justify-evenly",
                         nav_list
                     }
                 }
-            }
-            
-                )
+                div { class: "fixed left-[15%] top-1/2 w-1/3 h-[40%] -translate-y-1/2 bg-white rounded-[37px] hidden md:block" }
+                        })
             }
         )
     )

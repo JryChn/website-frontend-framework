@@ -13,7 +13,7 @@ pub fn Icons(cx: Scope) -> Element {
     cx.render(rsx!(
         div {
             id: "icons",
-            class: "fixed bottom-[15vh] right-5 h-[10vw] w-[2vw] flex flex-col justify-evenly",
+            class: "fixed bottom-[15vh] right-5 h-[10vw] w-[2vw] flex-col justify-evenly hidden md:flex",
             div { class: "flex justify-center items-center ",
                 Link { class: "w-full h-full", to: email, img {
                     class: "w-full h-full p-2 cursor-pointer",

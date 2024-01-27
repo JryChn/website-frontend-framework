@@ -10,7 +10,7 @@ use crate::Route;
 pub fn WelcomePage(cx: Scope) -> Element {
     let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
     let welcome = &configuration.welcome;
-    let animation_url = if gloo_utils::document_element().class_list().contains("dark") {
+    let animation_url = if gloo::utils::document_element().class_list().contains("dark") {
         &welcome.animation_url.dark
     } else {
         &welcome.animation_url.light
@@ -47,7 +47,7 @@ pub fn WelcomePage(cx: Scope) -> Element {
                     id: "light_bold",
                     class: "relative w-11 h-11 translate-x-2.5 -translate-y-1",
                     onclick: |_e| {
-                        let dom = gloo_utils::document_element();
+                        let dom = gloo::utils::document_element();
                         dom.class_list().toggle("dark").expect("Error when toggle dark");
                     },
                     img { src: "/static/bulb.svg" }

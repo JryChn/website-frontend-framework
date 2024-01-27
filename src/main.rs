@@ -26,10 +26,10 @@ fn main() {
 fn App(cx: Scope) -> Element {
     let configuration = fetch_configuration();
     let navigator:Vec<(String, Route)>= vec![
-        ("AboutMe".to_string(), Route::AboutMeContent {}),
+        ("Articles".to_string(), Route::ArticleList {}),
         ("Calendar".to_string(), Route::Calendar {}),
-        ("Articles".to_string(), Route::ArticleList{}),
         ("Zone".to_string(), Route::HomePage{}),
+        ("AboutMe".to_string(), Route::AboutMeContent{}),
     ];
     use_shared_state_provider(cx,||{
         configuration

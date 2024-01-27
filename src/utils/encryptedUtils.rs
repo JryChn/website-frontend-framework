@@ -8,12 +8,12 @@ use crate::model::{CommonConfig, ConfigurationTemplate};
 
 lazy_static!{
 static ref CONFIG :CommonConfig = serde_json::from_str(include_str!("../config.json")).expect("ERROR When Loading Configuration");
-static ref CONFIGURATION:Mutex<Vec<ConfigurationTemplate>> = Mutex::from(vec![serde_json::from_str::<ConfigurationTemplate>(include_str!("../defaultConfig/CommonPage.json")).expect("Error When loading Configuration")]);
+static ref CONFIGURATION:Mutex<Vec<ConfigurationTemplate>> = Mutex::from(vec![serde_json::from_str::<ConfigurationTemplate>(include_str!("../defaultConfig/commonPage.json")).expect("Error When loading Configuration")]);
 }
 
 pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
     let key = CONFIG.encrypted_key;
-    let mut response = gloo_net::http::Request::get(&url)
+    let mut response = gloo::net::http::Request::get(&url)
         .send()
         .await
         .expect("Failed fetching config from remote").binary().await.expect("Failed, remote json file parsing error");

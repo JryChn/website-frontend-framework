@@ -9,10 +9,7 @@ edition = "2021"
 dioxus = "0.4.0"
 dioxus-web = "0.4.0"
 dioxus-router = "0.4.1"
-gloo-timers = {version="0.3.0", features = ["futures"]}
-gloo-file = {version="0.2.3", features = ["futures"]}
-gloo-net = "0.3.0"
-gloo-utils = {version = "0.1.7"}
+gloo = {version = "0.11.0",features = ["futures"]}
 web-sys = {version = "0.3.64",features = ["DomTokenList"]}
 charming = { version = "0.2.3", features = ["wasm"] }
 rand = "0.8.5"

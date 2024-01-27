@@ -1,13 +1,17 @@
 #![allow(non_snake_case)]
 
 use std::ops::Deref;
+
 use dioxus::prelude::*;
 use dioxus_router::prelude::*;
+
 use crate::{NAV, Route};
+use crate::model::ConfigurationTemplate;
 
 #[inline_props]
 pub fn Header(cx: Scope) -> Element {
-    let title :String= "DJEREMY".into();
+    let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
+    let title = &configuration.welcome.subtitle;
     let navigate = use_shared_state::<NAV>(cx).unwrap().read().deref().0.clone();
     let header_list = navigate.iter().map(|url| {
         rsx!(
@@ -37,6 +41,6 @@ pub fn Header(cx: Scope) -> Element {
             }
         }
         Outlet::<Route> {}
-        footer {}
+        // Footer{}
     ))
 }

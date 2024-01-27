@@ -27,6 +27,7 @@ pub struct Contact {
 #[derive(Serialize, Deserialize, Debug,Props,PartialEq,Clone)]
 pub struct Welcome {
     pub title: String,
+    pub subtitle: String,
     pub animation_url:ModeUrl
 }
 #[derive(Serialize, Deserialize, Debug,Props,PartialEq,Clone)]

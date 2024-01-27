@@ -6,6 +6,7 @@
   },
   "welcome": {
     "title": "Test.   domainthis    /com",
+    "subtitle": "djeremy",
     "animation_url": {
       "light": "static/test.mp4",
       "dark": ""

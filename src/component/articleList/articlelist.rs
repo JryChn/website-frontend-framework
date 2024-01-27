@@ -16,7 +16,7 @@ use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[inline_props]
 pub fn ArticleList(cx: Scope) -> Element {
-    gloo_utils::window().scroll_with_x_and_y(0f64, 0f64);
+    gloo::utils::window().scroll_with_x_and_y(0f64, 0f64);
     let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
     let tags_filter = use_ref(cx,||HashSet::<String>::new());
     let content = use_future(cx, (), |_| async {
@@ -84,43 +84,43 @@ pub fn ArticleList(cx: Scope) -> Element {
                                         onmounted: |_e| {
                                             js_function_eval(
                                                     &*(r#"
-                                                                                                                         var option = {
-                                                                                                                            tooltip: {},
-                                                                                                                            series: [ {
-                                                                                                                                type: 'wordCloud',
-                                                                                                                                gridSize: 2,
-                                                                                                                                sizeRange: [12, 150],
-                                                                                                                                rotationRange: [-90, 90],
-                                                                                                                                shape: 'pentagon',
-                                                                                                                                drawOutOfBound: true,
-                                                                                                                                textStyle: {
-                                                                                                                                fontFamily: 'outfit',
-                                                                                                                                fontWeight: 'bold',
-                                                                                                                                    color: function () {
-                                                                                                                                        return 'rgb(' + [
-                                                                                                                                            Math.round(Math.random() * 80),
-                                                                                                                                            Math.round(Math.random() * 20),
-                                                                                                                                            Math.round(Math.random() * 50)
-                                                                                                                                        ].join(',') + ')';
-                                                                                                                                    }
-                                                                                                                                },
-                                                                                                                                emphasis: {
-                                                                                                                                    textStyle: {
-                                                                                                                                        shadowBlur: 10,
-                                                                                                                                        shadowColor: '#333'
-                                                                                                                                    }
-                                                                                                                                },
-                                                                                                                                data: [ "#
+                                                                                                                                                                                                                                                 var option = {
+                                                                                                                                                                                                                                                    tooltip: {},
+                                                                                                                                                                                                                                                    series: [ {
+                                                                                                                                                                                                                                                        type: 'wordCloud',
+                                                                                                                                                                                                                                                        gridSize: 2,
+                                                                                                                                                                                                                                                        sizeRange: [12, 150],
+                                                                                                                                                                                                                                                        rotationRange: [-90, 90],
+                                                                                                                                                                                                                                                        shape: 'pentagon',
+                                                                                                                                                                                                                                                        drawOutOfBound: true,
+                                                                                                                                                                                                                                                        textStyle: {
+                                                                                                                                                                                                                                                        fontFamily: 'outfit',
+                                                                                                                                                                                                                                                        fontWeight: 'bold',
+                                                                                                                                                                                                                                                            color: function () {
+                                                                                                                                                                                                                                                                return 'rgb(' + [
+                                                                                                                                                                                                                                                                    Math.round(Math.random() * 80),
+                                                                                                                                                                                                                                                                    Math.round(Math.random() * 20),
+                                                                                                                                                                                                                                                                    Math.round(Math.random() * 50)
+                                                                                                                                                                                                                                                                ].join(',') + ')';
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                                                        emphasis: {
+                                                                                                                                                                                                                                                            textStyle: {
+                                                                                                                                                                                                                                                                shadowBlur: 10,
+                                                                                                                                                                                                                                                                shadowColor: '#333'
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                                                        data: [ "#
                                                         .to_owned() + keywords
                                                         + r#"
-                                                                                                                                ]
-                                                                                                                            } ]
-                                                                                                                         };
-                                                                                
-                                                                                                                        var chart = echarts.init(document.getElementById('article_list_keys'));
-                                                                                                                        chart.setOption(option);
-                                                                                                                        window.onresize = chart.resize;
-                                                                                                                        "#),
+                                                                                                                                                                                                                                                        ]
+                                                                                                                                                                                                                                                    } ]
+                                                                                                                                                                                                                                                 };
+                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                var chart = echarts.init(document.getElementById('article_list_keys'));
+                                                                                                                                                                                                                                                chart.setOption(option);
+                                                                                                                                                                                                                                                window.onresize = chart.resize;
+                                                                                                                                                                                                                                                "#),
                                                 )
                                                 .unwrap();
                                         }
