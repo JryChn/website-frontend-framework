@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use charming::{Chart, WasmRenderer};
 use charming::component::Title;
 use charming::element::{Color, Emphasis, ItemStyle, Label, Tooltip, Trigger};
@@ -17,9 +15,8 @@ use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType;
 
-#[inline_props]
+#[component]
 pub fn AboutMeContent(cx: Scope) -> Element {
-    gloo::utils::window().scroll_with_x_and_y(0f64, 0f64);
     // let typing_words = use_state(cx, || "".to_string());
     // let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
     // let welcome = &configuration.welcome;

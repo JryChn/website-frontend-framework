@@ -8,3 +8,4 @@ pub mod homepage;
 pub mod story;
 pub mod pageNotFound;
 pub mod loading;
+pub mod navigation;

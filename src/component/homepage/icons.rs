@@ -5,6 +5,7 @@ use dioxus_router::prelude::Link;
 use crate::model::ConfigurationTemplate;
 use crate::Route;
 
+#[component]
 pub fn Icons(cx: Scope) -> Element {
     let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
     let github_url = String::from("https://github.com/".to_owned() +configuration.contact.github_username.as_str());

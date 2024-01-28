@@ -5,6 +5,7 @@ use dioxus_router::prelude::*;
 
 use crate::NAV;
 
+#[component]
 pub fn Navigate(cx: Scope) -> Element {
     let navigator = use_shared_state::<NAV>(cx).unwrap().read().0.clone();
     let nav_list = navigator.iter().map(|url| {

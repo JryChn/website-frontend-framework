@@ -1,12 +1,10 @@
-#![allow(non_snake_case)]
-
 use dioxus::prelude::*;
 use dioxus_router::prelude::*;
 
 use crate::model::ConfigurationTemplate;
 use crate::Route;
 
-#[inline_props]
+#[component]
 pub fn WelcomePage(cx: Scope) -> Element {
     let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
     let welcome = &configuration.welcome;

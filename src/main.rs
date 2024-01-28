@@ -56,13 +56,10 @@ enum Route {
     #[end_nest]
     #[route("/aboutMe")]
     AboutMeContent {},
-    // #[route("/timer")]
-    // Timer{},
-    // #[route("/zone")]
-    // Zone{},
     #[end_layout]
-    #[route("/:..route")]
+    // todo: may fix page not found error later
+    #[route("/:route")]
     PageNotFound {
-        route: Vec<String>,
+        route: String
     }
 }

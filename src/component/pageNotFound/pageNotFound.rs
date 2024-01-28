@@ -2,9 +2,8 @@
 
 use dioxus::prelude::*;
 use dioxus_router::prelude::*;
-use crate::Route;
 
-#[inline_props]
-pub fn PageNotFound(cx: Scope, route:Vec<String>) -> Element {
+#[component]
+pub fn PageNotFound(cx: Scope, route:String) -> Element {
     cx.render(rsx!( div { "Page not Found" } ))
 }

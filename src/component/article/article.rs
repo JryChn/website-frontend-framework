@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use dioxus::prelude::*;
 
 use crate::model::Article::Article;
@@ -8,10 +6,9 @@ use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
 
-#[inline_props]
+#[component]
 pub fn Article(cx: Scope, id:String) -> Element {
     let mut configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
-    gloo::utils::window().scroll_with_x_and_y(0f64,0f64);
     let content = use_future(cx, (id), |id| async move{
         let mut article;
         let api =configuration.article_api;

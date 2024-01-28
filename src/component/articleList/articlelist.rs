@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use std::collections::{HashMap, HashSet};
 
 use dioxus::prelude::*;
@@ -13,10 +11,10 @@ use crate::Route;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
+use crate::utils::wordCloud::word_cloud_maker;
 
-#[inline_props]
+#[component]
 pub fn ArticleList(cx: Scope) -> Element {
-    gloo::utils::window().scroll_with_x_and_y(0f64, 0f64);
     let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
     let tags_filter = use_ref(cx,||HashSet::<String>::new());
     let content = use_future(cx, (), |_| async {
@@ -48,15 +46,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                 }
             });
         });
-        let mut keywords_string = String::new();
-        keywords.iter().for_each(|kv|{
-            keywords_string.push_str("{name: '");
-            keywords_string.push_str(kv.0);
-            keywords_string.push_str("',value:");
-            keywords_string.push_str(kv.1.to_string().as_str());
-            keywords_string.push_str(",emphasis: {textStyle: {color: '#9d2933'}}},");
-        });
-        (articles,tags,keywords_string)
+        (articles,tags,keywords)
     });
     let js_function_eval =  use_eval(cx);
     cx.render(
@@ -67,72 +57,45 @@ pub fn ArticleList(cx: Scope) -> Element {
                 rsx!(
                     div {
                         id: "article_list",
-                        class: "bg-gray-200 w-screen min-h-[2000px] relative",
+                        class: "w-screen h-screen min-h-[800px] relative",
+                        div {
+                            id: "article_title",
+                            class:"relative top-48 mx-auto w-1/2 text-4xl font-semibold capitalize text-center md:hidden",
+                            "article"
+                        }
                         div {
                             id: "article_list_box",
                             class: "w-[90%] h-[1800px] mx-auto relative top-48",
                             div {
                                 id: "article_list_sidebar",
-                                class: "h-[1600px] w-[30%] black bg-white absolute right-4 top-12 shadow-lg hidden md:block",
-                                div {
-                                    id: "article_list_sidebar_key_words",
-                                    class: "w-11/12 h-96 mx-auto my-10",
-                                    span { class: "text-gray-800 text-xl font-sans", "key words:" }
-                                    div {
-                                        id: "article_list_keys",
-                                        class: "w-11/12 h-[90%]",
-                                        onmounted: |_e| {
-                                            js_function_eval(
-                                                    &*(r#"
-                                                                                                                                                                                                                                                 var option = {
-                                                                                                                                                                                                                                                    tooltip: {},
-                                                                                                                                                                                                                                                    series: [ {
-                                                                                                                                                                                                                                                        type: 'wordCloud',
-                                                                                                                                                                                                                                                        gridSize: 2,
-                                                                                                                                                                                                                                                        sizeRange: [12, 150],
-                                                                                                                                                                                                                                                        rotationRange: [-90, 90],
-                                                                                                                                                                                                                                                        shape: 'pentagon',
-                                                                                                                                                                                                                                                        drawOutOfBound: true,
-                                                                                                                                                                                                                                                        textStyle: {
-                                                                                                                                                                                                                                                        fontFamily: 'outfit',
-                                                                                                                                                                                                                                                        fontWeight: 'bold',
-                                                                                                                                                                                                                                                            color: function () {
-                                                                                                                                                                                                                                                                return 'rgb(' + [
-                                                                                                                                                                                                                                                                    Math.round(Math.random() * 80),
-                                                                                                                                                                                                                                                                    Math.round(Math.random() * 20),
-                                                                                                                                                                                                                                                                    Math.round(Math.random() * 50)
-                                                                                                                                                                                                                                                                ].join(',') + ')';
-                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                        },
-                                                                                                                                                                                                                                                        emphasis: {
-                                                                                                                                                                                                                                                            textStyle: {
-                                                                                                                                                                                                                                                                shadowBlur: 10,
-                                                                                                                                                                                                                                                                shadowColor: '#333'
-                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                        },
-                                                                                                                                                                                                                                                        data: [ "#
-                                                        .to_owned() + keywords
-                                                        + r#"
-                                                                                                                                                                                                                                                        ]
-                                                                                                                                                                                                                                                    } ]
-                                                                                                                                                                                                                                                 };
-                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                var chart = echarts.init(document.getElementById('article_list_keys'));
-                                                                                                                                                                                                                                                chart.setOption(option);
-                                                                                                                                                                                                                                                window.onresize = chart.resize;
-                                                                                                                                                                                                                                                "#),
-                                                )
-                                                .unwrap();
-                                        }
-                                    }
-                                }
+                                class: "absolute h-[1600px] w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col",
                                 div {
                                     id: "article_list_sidebar_tag",
-                                    class: "w-11/12 h-96 mx-auto my-10",
-                                    span { class: "text-gray-800 text-xl font-sans",
-                                        "tag:"
+                                    class: "w-11/12 mx-auto my-10 flex-1",
+                                    div {
+                                        img {
+                                            class: "inline-block w-8 h-8 my-2.5 mr-[2%]",
+                                            src: "/static/tag.svg"
+                                        }
                                         tags_filter.read().iter().map(|t|{
-                                            rsx!("{t}")
+                                            rsx!(
+                                                div{
+                                                    id:"tags_block",
+                                                    class: "inline-flex h-8 mx-2 my-2 rounded-sm shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] flex-row items-center cursor-pointer",
+                                                    span{
+                                                        class:"text-sm font-normal align-middle px-2 flex-1",
+                                                        "{t}"
+                                                    }
+                                                    img{
+                                                        class: "w-3.5 h-3.5 flex-1 pr-1 ",
+                                                        src: "/static/close_black.svg",
+                                                        onclick:  |_e|{
+                                                            //todo: clear from tag filter, now its hard remove from map iterator
+                                                        }
+                                        
+                                                    }
+                                                }
+                                            )
                                         })
                                     }
                                     ul { class: "w-11/12 h-4/5 p-8",
@@ -142,24 +105,45 @@ pub fn ArticleList(cx: Scope) -> Element {
                                                     onclick:|_e|{
                                                         tags_filter.with_mut(|tf|tf.take(t.0).or_else(||{
                                                             tf.insert(t.0.clone());
-                                                            Some("done".to_string())
+                                                            Some("Ok".to_string())
                                                         })
                                                         );
                                                     },
-                                                    "{t.0}({t.1})"
+                                                    span{
+                                                        class: "text-base whitespace-pre-wrap",
+                                                    "●  {t.0}({t.1})"
+                                                    }
                                         }
                                             )
                                         })
                                     }
                                 }
                                 div {
+                                    id: "article_list_sidebar_key_words",
+                                    class: "w-11/12 mx-auto my-10 flex-1",
+                                    img {
+                                        class: "inline-block w-8 h-8 my-2 mr-[2%]",
+                                        src: "/static/keywords.svg"
+                                    }
+                                    div {
+                                        id: "article_list_keys",
+                                        class: "w-11/12 h-[90%]",
+                                        onmounted: |_e| {
+                                            js_function_eval(&word_cloud_maker(keywords)).unwrap();
+                                        }
+                                    }
+                                }
+                                div {
                                     id: "article_list_sidebar_recommend",
-                                    class: "w-11/12 h-96 mx-auto my-10",
-                                    span { class: "text-gray-800 text-xl font-sans", "recommend:" }
-                                    ul { class: "w-11/12 h-4/5 p-8",
+                                    class: "w-11/12 mx-auto my-10 flex-1",
+                                    img {
+                                        class: "inline-block w-8 h-8 my-2 mr-[2%]",
+                                        src: "/static/editor.svg"
+                                    }
+                                    ul { class: "w-11/12 h-4/5 p-4 px-20",
                                         article.iter().take(10).map(|a|{
                                             rsx!{
-                                            li { class: "my-1 underline",
+                                            li { class: "my-3 underline",
                                                     Link{
                                                         to: Route::Article {id : a.id.clone()},
                                                         "{a.title}"
@@ -172,7 +156,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                             }
                             ul {
                                 id: "article_list_content",
-                                class: "h-[1600px] w-[90%]  md:w-[65%] absolute left-4 top-12 p-5 flex flex-col justify-start gap-5",
+                                class: "absolute h-[1600px] w-[90%]  md:w-[65%] left-4 top-12 p-5 flex flex-col justify-start gap-5",
                                 article.iter()
                                 .filter(|a|{
                                     let mut check_tags = true;
@@ -189,25 +173,32 @@ pub fn ArticleList(cx: Scope) -> Element {
                                     rsx!{
                                 Link{
                                 to:"/article/{a.id}",
-                                class:"h-[200px] w-full border-stone-900 rounded-2xl shadow-xl relative" ,
+                                class:"relative w-full h-44 border border-black/10 rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] " ,
                                 img{
                                 src:"{a.image}",
                                 alt:"",
-                                class:"w-full h-full rounded-2xl object-cover blur-[1px] contrast-75 brightness-90"
+                                class:"w-full h-full rounded-2xl object-cover contrast-50 brightness-50 saturate-50"
                                 }
                                 span{
-                                class:"w-[90%] h-20 flex flex-col absolute top-1/2 left-4 text-gray-50 text-ellipsis overflow-hidden",
+                                class:"w-[90%] h-20 flex flex-col absolute top-1/2 left-4 text-white text-ellipsis overflow-hidden",
                                 span{
-                                    class:"text-3xl font-sans block",
+                                    class:"text-3xl block",
                                     "{a.title}"
                                 }
                                 span{
-                                    class:"text-md font-mono block text-gray-200 flex-1 ",
+                                    class:"text-md block text-gray-300 flex-1 ",
                                                 "{a.introduction}"
                                 }
                                 }
                                 }}
-                                })
+                                }),
+                                // todo: implement page feature
+                                div {
+                                    id: "article_list_table",
+                                    class: "relative w-full h-8 my-16 flex rounded-[30px] shadow-[0_-4px_4px_0_rgba(0,0,0,0.25)] justify-center text-lg",
+                                    div { class: "mx-2 text-gray-500", "1" }
+                                    div { class: "mx-2 text-black", "2" }
+                                }
                             }
                         }
                     }
