@@ -4,6 +4,7 @@ use dioxus::prelude::*;
 use dioxus_router::prelude::*;
 
 use crate::{NAV, Route};
+use crate::component::navigation::Navigate;
 use crate::model::ConfigurationTemplate;
 
 #[component]
@@ -24,20 +25,24 @@ pub fn Header(cx: Scope) -> Element {
     cx.render(rsx!(
         header {
             id: "header",
-            class: "bg-white w-screen h-14 shadow-[0_4px_20px_0_rgba(0,0,0,0.25)] fixed top-0 z-50",
+            class: "bg-transparent w-screen h-14 fixed top-0 shadow-none z-50 md:bg-white md:shadow-[0_4px_20px_0_rgba(0,0,0,0.25)] ",
             Link {
                 to: Route::HomePage {},
                 class: "absolute w-auto h-11 top-1/2 -translate-y-1/2 flex uppercase font-bold text-lg items-center text-center p-3",
                 id: "header_title",
                 "{title}"
             }
-            // todo: make hamburger when mobile size
             div {
                 id: "header_content",
-                class: "inline-block absolute top-4 left-1/3 w-1/2",
+                class: "absolute top-4 left-1/3 w-1/2 hidden md:inline-block",
                 ul { class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
                     header_list
                 }
+            }
+            // make hamburger when mobile size
+            div{
+               class:"block z-60 md:hidden",
+                Navigate{}
             }
         }
         Outlet::<Route> {}

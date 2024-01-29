@@ -8,13 +8,15 @@ use crate::NAV;
 #[component]
 pub fn Navigate(cx: Scope) -> Element {
     let navigator = use_shared_state::<NAV>(cx).unwrap().read().0.clone();
+    let nav_sidebar_switch = use_state(cx,||{false});
     let nav_list = navigator.iter().map(|url| {
         rsx!(
-            Link { class: "text-center align-middle p-3 m-1.5", to: "{url.1}", "{url.0}" }
+            Link { class: "text-center align-middle p-3 m-1.5", to: "{url.1}", "{url.0}" onclick:|_e|{
+                    nav_sidebar_switch.set(false);
+            } }
             img { src: "/static/straightLine.svg" }
         )
     });
-    let nav_sidebar_switch = use_state(cx,||{false});
     cx.render(
         rsx!(
             nav {

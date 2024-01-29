@@ -35,7 +35,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
                         style { include_str!("css/markdown-theme-light.css") }
                         img {
                             id: "article_image",
-                            class: "w-full h-72 object-cover shadow-[inset_9px_4px_14px_6px_rgba(0,0,0,0.25),0_4px_4px_0_rgba(0,0,0,0.25)] contrast-75 ",
+                            class: "w-full h-72 object-cover shadow-[inset_9px_4px_14px_6px_rgba(0,0,0,0.25),0_4px_4px_0_rgba(0,0,0,0.25)] contrast-75",
                             src: "{content.image}",
                             alt: ""
                         }

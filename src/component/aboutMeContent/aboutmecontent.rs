@@ -88,7 +88,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
             rsx!(
                 div {
                     id: "aboutme_content",
-                    class: "bg-gray-200 w-screen min-h-[2000px]",
+                    class: "w-screen min-h-[800px]",
                     div { id: "aboutme_content_contact" }
                     div {
                         id: "aboutme_content_main",

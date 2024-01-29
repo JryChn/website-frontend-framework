@@ -57,7 +57,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                 rsx!(
                     div {
                         id: "article_list",
-                        class: "w-screen h-screen min-h-[800px] relative",
+                        class: "w-screen h-screen min-h-[400px] relative",
                         div {
                             id: "article_title",
                             class:"relative top-48 mx-auto w-1/2 text-4xl font-semibold capitalize text-center md:hidden",
@@ -65,10 +65,10 @@ pub fn ArticleList(cx: Scope) -> Element {
                         }
                         div {
                             id: "article_list_box",
-                            class: "w-[90%] h-[1800px] mx-auto relative top-48",
+                            class: "w-[90%] h-auto mx-auto relative top-48",
                             div {
                                 id: "article_list_sidebar",
-                                class: "absolute h-[1600px] w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col",
+                                class: "absolute h-auto w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col",
                                 div {
                                     id: "article_list_sidebar_tag",
                                     class: "w-11/12 mx-auto my-10 flex-1",
@@ -120,7 +120,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                                 }
                                 div {
                                     id: "article_list_sidebar_key_words",
-                                    class: "w-11/12 mx-auto my-10 flex-1",
+                                    class: "w-11/12 h-[20vw] mx-auto my-10 flex-1",
                                     img {
                                         class: "inline-block w-8 h-8 my-2 mr-[2%]",
                                         src: "/static/keywords.svg"
