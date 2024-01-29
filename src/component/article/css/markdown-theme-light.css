@@ -4,7 +4,6 @@
     --control-text-color: #777;
 }
 
-/* MWeb：增加 padding */
 #article_content {
     margin: 0 auto !important;
     padding: 1em;
@@ -23,7 +22,6 @@
     text-indent: -1.7em;
 }
 
-/* MWeb：代码块高亮 */
 #article_content code,
 #article_content tt,
 #article_content pre {
@@ -552,5 +550,3 @@ footer {
     background: -webkit-gradient(linear, left top, right top, color-stop(70%, rgba(77, 130, 23, 0.2)), to(rgba(77, 130, 23, 0)));
     background: linear-gradient(to right, rgba(77, 130, 23, 0.2) 70%, rgba(77, 130, 23, 0));
 }
-
-/*# sourceMappingURL=prism-base2tone-meadow-light.css.map */

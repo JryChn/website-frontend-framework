@@ -173,7 +173,7 @@ pub fn ArticleList(cx: Scope) -> Element {
                                     rsx!{
                                 Link{
                                 to:"/article/{a.id}",
-                                class:"relative w-full h-44 border border-black/10 rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] " ,
+                                class:"relative w-full h-44 border border-black/10 rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]" ,
                                 img{
                                 src:"{a.image}",
                                 alt:"",

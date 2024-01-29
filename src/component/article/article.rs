@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use dioxus_router::prelude::GoBackButton;
 
 use crate::model::Article::Article;
 use crate::model::ConfigurationTemplate;
@@ -9,7 +10,7 @@ use crate::utils::resourceType::ResourceType::IMAGE;
 #[component]
 pub fn Article(cx: Scope, id:String) -> Element {
     let mut configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
-    let content = use_future(cx, (id), |id| async move{
+    let content = use_future(cx, id, |id| async move{
         let mut article;
         let api =configuration.article_api;
         if api.is_empty() {
@@ -21,6 +22,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
             article.image = parse_to_data_url(article.image.clone(),IMAGE).await;
         article
     });
+    let enable_align_top_button = use_state(cx,||false);
     cx.render(
         match content.value() { None => {
             rsx!( div { "Nothing Here" } )
@@ -29,25 +31,47 @@ pub fn Article(cx: Scope, id:String) -> Element {
                 rsx!(
                     div {
                         id: "article",
-                        class: "bg-gray-200 w-screen min-h-[2000px] relative",
+                        class: "w-screen min-h-[800px] relative scroll-smooth",
                         style { include_str!("css/markdown-theme-light.css") }
                         img {
                             id: "article_image",
-                            class: "w-full h-[400px] object-cover shadow-inner  shadow-zinc-50 border-b-2 border-black contrast-75 ",
+                            class: "w-full h-72 object-cover shadow-[inset_9px_4px_14px_6px_rgba(0,0,0,0.25),0_4px_4px_0_rgba(0,0,0,0.25)] contrast-75 ",
                             src: "{content.image}",
                             alt: ""
                         }
+                        div{
+                            id:"go_back_button",
+                            class: "absolute my-20 mx-8 font-light text-lg text-center align-middle hidden md:block",
+                            GoBackButton {
+                            img{
+                                    class:"inline-block",
+                                src:"/static/go_back.svg",
+                            }
+                                    "Back to list"
+                            }
+                        }
+                        //todo: show when scroll to proper location later
+                        div{
+                           id:"align_top_button",
+                            class:"fixed right-8 bottom-5 cursor-pointer",
+                            onclick:|_e|{
+                                gloo::utils::window().scroll_to_with_x_and_y(0f64,0f64);
+                            },
+                            img{
+                                src:"/static/align_top.svg"
+                            }
+                        }
                         div {
                             id: "article_content",
-                            class: "w-full min-h-[1000px] shadow-t",
+                            class: "w-full min-h-screen shadow-t",
                             div {
                                 id: "article_content_index",
-                                class: "w-full h-[50px] text-center text-3xl font-bold font-mono align-middle p-4 my-12",
-                                h1 { "{content.title}" }
+                                class: "w-full h-20 text-center text-4xl font-semibold align-middle p-4 my-8",
+                                span { "{content.title}" }
                             }
                             div {
                                 id: "article_content_box",
-                                class: "w-[70%] h-full p-4 my-10 mx-auto",
+                                class: "w-3/4 h-full p-4 my-10 mx-auto",
                                 // div{
                                 //  class:"bg-gray-300 w-[80%] h-100 block mx-auto border-[#2F4858] my-4 p-10 border-l-4",
                                 //  "{content.introduction}",
@@ -59,6 +83,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
                                 }
                             }
                         }
+                        //todo: add sidebar to index later
                     }
                 )
 
