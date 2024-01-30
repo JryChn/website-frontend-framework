@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_router::prelude::GoBackButton;
+use web_sys::ScrollBehavior;
+use web_sys::ScrollToOptions;
 
 use crate::model::Article::Article;
 use crate::model::ConfigurationTemplate;
@@ -55,7 +57,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
                            id:"align_top_button",
                             class:"fixed right-8 bottom-5 cursor-pointer",
                             onclick:|_e|{
-                                gloo::utils::window().scroll_to_with_x_and_y(0f64,0f64);
+                                gloo::utils::window().scroll_to_with_scroll_to_options(ScrollToOptions::new().behavior(ScrollBehavior::Smooth).top(0f64));
                             },
                             img{
                                 src:"/static/align_top.svg"

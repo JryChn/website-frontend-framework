@@ -1,10 +1,5 @@
-use charming::{Chart, WasmRenderer};
-use charming::component::Title;
-use charming::element::{Color, Emphasis, ItemStyle, Label, Tooltip, Trigger};
-use charming::series::{Pie, PieRoseType};
-use charming::theme::Theme;
 use dioxus::prelude::*;
-use dioxus_router::prelude::Link;
+use futures::future::join_all;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
 
@@ -13,7 +8,7 @@ use crate::model;
 use crate::model::ConfigurationTemplate;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
-use crate::utils::resourceType::ResourceType;
+use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[component]
 pub fn AboutMeContent(cx: Scope) -> Element {
@@ -74,7 +69,14 @@ pub fn AboutMeContent(cx: Scope) -> Element {
             content =  fetch_and_decrypt(url.as_str()).await;
 
         }
-        content.image = parse_to_data_url(content.image.clone(),ResourceType::IMAGE).await;
+        content.image1 = parse_to_data_url(content.image1.clone(),IMAGE).await;
+        content.image2 = parse_to_data_url(content.image2.clone(),IMAGE).await;
+        join_all(content.stage.iter_mut().flat_map(|stage| {
+            stage.children.iter_mut()
+        }).map(|child|async {
+            child.image =
+                parse_to_data_url(child.image.clone(),IMAGE).await;
+        })).await;
         content
     });
     let github_username = configuration.contact.github_username.clone();
@@ -86,53 +88,9 @@ pub fn AboutMeContent(cx: Scope) -> Element {
             let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
             let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
             rsx!(
-                div {
-                    id: "aboutme_content",
+                div{
+                    id:"about_me_content",
                     class: "w-screen min-h-[800px]",
-                    div { id: "aboutme_content_contact" }
-                    div {
-                        id: "aboutme_content_main",
-                        class: "w-5/6 min-h-[800px] mx-auto translate-y-44 relative flex flex-wrap justify-around",
-                        img {
-                            id: "aboutme_content_image",
-                            class: "border border-black w-[400px] h-[500px] rounded-lg shadow-xl mx-10 my-10",
-                            src: "{aboutMe.image}",
-                            alt: ""
-                        }
-                        div {
-                            id: "aboutme_content_description",
-                            class: "block w-1/2 h-[400px] text-xl p-14 mx-10 my-10 font-sans break-words",
-                            dangerous_inner_html: "{aboutMeContent}"
-                        }
-                    }
-                    div {
-                        id: "aboutme_content_stage",
-                        class: "w-5/6 h-[500px] mx-auto flex flex-wrap flex-row justify-around items-center",
-                        aboutMe.stage.iter().map(|stage|{
-                            rsx!(
-                                div{
-                                    id:"{stage.category}",
-                                    onmounted: move |_| {
-                        let mut stages = Vec::new();
-                        stage.value.iter().for_each(|s| {
-                        stages.push((s.value as i32, &s.name))
-                        });
-                        let chart = Chart::new().series(Pie::new().rose_type(PieRoseType::Area).name(&stage.category).radius(vec!["20%", "60%"]).avoid_label_overlap(false).item_style(ItemStyle::new().border_radius(4).border_color("#fff").border_width(1)).emphasis(Emphasis::new().label(Label::new().show(true).shadow_blur(10)))
-                        .data(
-                            stages)).title(Title::new().text(&stage.category).left("center").bottom("center")).tooltip(Tooltip::new().trigger(Trigger::Item)).color(
-                        (1..10).map(|_|{
-                        Color::from("#".to_string()+color_generator().as_str())
-                        }).collect::<Vec<Color>>()
-                        );
-                        WasmRenderer::new(350, 350).theme(Theme::Essos).render(&stage.category, &chart).unwrap();
-                                    }
-                                }
-                            )
-                        })
-                    }
-                    div { id: "aboutme_content_github",
-                        Link { to: "https://github.com/".to_string() + &github_username, img { alt: "", src: "{github_states}" } }
-                    }
                 }
             )
         }
