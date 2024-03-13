@@ -25,7 +25,7 @@ pub fn HomePage(cx:Scope) -> Element{
         configuration.welcome.animation_url.light = parse_to_data_url(configuration.welcome.animation_url.light,MP4).await;
         configuration
     });
-    cx.render(rsx!(
+    render!(
         match config.value() {
             None => {
                 rsx!(Loading{})
@@ -40,5 +40,5 @@ pub fn HomePage(cx:Scope) -> Element{
                 }
             }
         }
-    ))
+    )
 }

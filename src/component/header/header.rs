@@ -22,7 +22,7 @@ pub fn Header(cx: Scope) -> Element {
             }
         )
     });
-    cx.render(rsx!(
+    render!(
         header {
             id: "header",
             class: "bg-transparent w-screen h-14 fixed top-0 shadow-none z-50 md:bg-white md:shadow-[0_4px_20px_0_rgba(0,0,0,0.25)] ",
@@ -46,5 +46,5 @@ pub fn Header(cx: Scope) -> Element {
             }
         }
         Outlet::<Route> {}
-    ))
+    )
 }

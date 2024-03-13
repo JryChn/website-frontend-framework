@@ -5,5 +5,5 @@ use dioxus_router::prelude::*;
 
 #[component]
 pub fn PageNotFound(cx: Scope, route:String) -> Element {
-    cx.render(rsx!( div { "Page not Found" } ))
+    render!( div { "Page not Found" } )
 }

@@ -80,7 +80,7 @@ pub fn AboutMeContent(cx: Scope) -> Element {
         content
     });
     let github_username = configuration.contact.github_username.clone();
-    cx.render(match fetch.value() {
+    render!(match fetch.value() {
         None =>
                 rsx!( Loading {} ),
         Some(aboutMe)=> {

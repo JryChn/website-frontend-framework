@@ -13,7 +13,7 @@ pub fn WelcomePage(cx: Scope) -> Element {
     } else {
         &welcome.animation_url.light
     };
-    cx.render(rsx!(
+    render!{
         div { id: "welcome_page", class: "w-screen h-screen min-h-[800px] bg-gray-50",
             Link { to: Route::HomePage {},
                 h1 {
@@ -60,5 +60,5 @@ pub fn WelcomePage(cx: Scope) -> Element {
                 }
             }
         }
-    ))
+    }
 }

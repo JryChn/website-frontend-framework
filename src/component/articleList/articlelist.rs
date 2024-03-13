@@ -49,7 +49,7 @@ pub fn ArticleList(cx: Scope) -> Element {
         (articles,tags,keywords)
     });
     let js_function_eval =  use_eval(cx);
-    cx.render(
+    render!(
         match content.value() {
             None => {
                 rsx!( Loading {} ) }

@@ -25,7 +25,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
         article
     });
     let enable_align_top_button = use_state(cx,||false);
-    cx.render(
+    render!(
         match content.value() { None => {
             rsx!( div { "Nothing Here" } )
         },

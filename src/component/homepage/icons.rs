@@ -11,7 +11,7 @@ pub fn Icons(cx: Scope) -> Element {
     let github_url = String::from("https://github.com/".to_owned() +configuration.contact.github_username.as_str());
     let telegram_url = String::from("https://t.me/".to_owned() +configuration.contact.telegram_username.as_str());
     let email = String::from("mailto:".to_owned() +configuration.contact.email.as_str());
-    cx.render(rsx!(
+    render!(
         div {
             id: "icons",
             class: "fixed bottom-[15vh] right-5 h-[10vw] w-[2vw] flex-col justify-evenly hidden md:flex",
@@ -40,5 +40,5 @@ pub fn Icons(cx: Scope) -> Element {
                 } }
             }
         }
-    ))
+    )
 }

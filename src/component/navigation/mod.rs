@@ -17,8 +17,7 @@ pub fn Navigate(cx: Scope) -> Element {
             img { src: "/static/straightLine.svg" }
         )
     });
-    cx.render(
-        rsx!(
+    render!(
             nav {
                 id: "navigator",
                 class: "fixed top-0 right-0 w-[10vw] h-[10vw] rounded-full translate-x-1/2 -translate-y-1/2 bg-gray-50 cursor-pointer md:bg-black",
@@ -61,6 +60,5 @@ pub fn Navigate(cx: Scope) -> Element {
                 div { class: "fixed left-[15%] top-1/2 w-1/3 h-[40%] -translate-y-1/2 bg-white rounded-[37px] hidden md:block" }
                         })
             }
-        )
     )
 }

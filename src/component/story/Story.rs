@@ -3,5 +3,5 @@
 use dioxus::prelude::*;
 
 pub fn Story(cx: Scope) -> Element {
-    cx.render(rsx!( div { id: "story" } ))
+    render!( div { id: "story" } )
 }
