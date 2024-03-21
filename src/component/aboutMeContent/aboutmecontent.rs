@@ -80,20 +80,26 @@ pub fn AboutMeContent(cx: Scope) -> Element {
         content
     });
     let github_username = configuration.contact.github_username.clone();
-    render!(match fetch.value() {
-        None =>
-                rsx!( Loading {} ),
-        Some(aboutMe)=> {
-            let aboutMeContent = aboutMe.description.replace(" **/", special_content_wrapper_end);
-            let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
-            let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
-            rsx!(
-                div{
-                    id:"about_me_content",
-                    class: "w-screen min-h-[800px]",
+    render! {
+        div { id: "about_me_content", class: "w-screen min-h-[800px]",
+            div {
+                id: "about_me_title",
+                class: "absolute w-full min-h-[800px] top-18 bg-pink-400",
+                div { id: "title", class: "", "SomeTitleAboutMe" }
+                div { id: "description", class: "",
+                    div { class: "" }
+                    div { class: "", "Some words" }
                 }
-            )
+            }
         }
     }
-    )
+    // match fetch.value() {
+    //     None =>
+    //             render!{ Loading {} },
+    //     Some(aboutMe)=> {
+    //         let aboutMeContent = aboutMe.description.replace(" **/", special_content_wrapper_end);
+    //         let aboutMeContent = aboutMeContent.replace("/** ", &*special_content_wrapper_start);
+    //         let github_states="https://github-readme-stats.vercel.app/api?username=".to_string()+&github_username+"&count_private=true&show_icons=true&title_color=ffffff&text_color=ffffff&icon_color=ffa502&bg_color=009432,9980FA,6F1E51";
+    //     }
+    // }
 }

@@ -1,5 +1,3 @@
-use std::ops::Deref;
-
 use dioxus::prelude::*;
 use dioxus_router::prelude::*;
 
@@ -35,15 +33,13 @@ pub fn Header(cx: Scope) -> Element {
             div {
                 id: "header_content",
                 class: "absolute top-4 left-1/3 w-1/2 hidden md:inline-block",
-                ul { class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
-                    header_list
+                ul {
+                    class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
+                    header_list: header_list
                 }
             }
             // make hamburger when mobile size
-            div{
-               class:"block z-60 md:hidden",
-                Navigate{}
-            }
+            div { class: "block z-60 md:hidden", Navigate {} }
         }
         Outlet::<Route> {}
     )

@@ -14,7 +14,9 @@ pub fn WelcomePage(cx: Scope) -> Element {
         &welcome.animation_url.light
     };
     render!{
-        div { id: "welcome_page", class: "w-screen h-screen min-h-[800px] bg-gray-50",
+        div {
+            id: "welcome_page",
+            class: "w-screen h-screen min-h-[800px] bg-gray-50",
             Link { to: Route::HomePage {},
                 h1 {
                     id: "title_logo",
@@ -36,7 +38,9 @@ pub fn WelcomePage(cx: Scope) -> Element {
                     playsinline: "true"
                 }
             }
-            div { id: "light_line_box", class: "absolute h-[15vw] top-0 right-[30vw]",
+            div {
+                id: "light_line_box",
+                class: "absolute h-[15vw] top-0 right-[30vw]",
                 div {
                     id: "light_line",
                     class: "relative left-1/2 w-0 h-4/5 border-[1.5px] border-black md:cursor-pointer"

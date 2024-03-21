@@ -54,7 +54,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
                         }
                         //todo: show when scroll to proper location later
                         div{
-                           id:"align_top_button",
+                        id:"align_top_button",
                             class:"fixed right-8 bottom-5 cursor-pointer",
                             onclick:|_e|{
                                 gloo::utils::window().scroll_to_with_scroll_to_options(ScrollToOptions::new().behavior(ScrollBehavior::Smooth).top(0f64));
@@ -88,7 +88,7 @@ pub fn Article(cx: Scope, id:String) -> Element {
                         //todo: add sidebar to index later
                     }
                 )
-
+        
             }
         }
     )
