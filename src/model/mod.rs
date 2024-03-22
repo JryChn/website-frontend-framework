@@ -1,4 +1,3 @@
-use dioxus::prelude::Props;
 use serde::{Deserialize, Serialize};
 
 pub mod AboutMe;
@@ -24,13 +23,13 @@ pub struct Contact {
     pub email: String,
     pub telegram_username: String,
 }
-#[derive(Serialize, Deserialize, Debug,Props,PartialEq,Clone)]
+#[derive(Serialize, Deserialize, Debug,PartialEq,Clone)]
 pub struct Welcome {
     pub title: String,
     pub subtitle: String,
     pub animation_url:ModeUrl
 }
-#[derive(Serialize, Deserialize, Debug,Props,PartialEq,Clone)]
+#[derive(Serialize, Deserialize, Debug,PartialEq,Clone)]
 pub struct ModeUrl {
     pub dark: String,
     pub light: String,

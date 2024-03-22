@@ -1,19 +1,18 @@
 use dioxus::prelude::*;
-use dioxus_router::prelude::*;
 
 use crate::model::ConfigurationTemplate;
 use crate::Route;
 
 #[component]
-pub fn WelcomePage(cx: Scope) -> Element {
-    let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
+pub fn WelcomePage() -> Element {
+    let configuration = consume_context::<Signal<ConfigurationTemplate>>()();
     let welcome = &configuration.welcome;
     let animation_url = if gloo::utils::document_element().class_list().contains("dark") {
         &welcome.animation_url.dark
     } else {
         &welcome.animation_url.light
     };
-    render!{
+    rsx!{
         div {
             id: "welcome_page",
             class: "w-screen h-screen min-h-[800px] bg-gray-50",

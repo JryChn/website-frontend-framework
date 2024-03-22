@@ -2,6 +2,6 @@
 
 use dioxus::prelude::*;
 
-pub fn Story(cx: Scope) -> Element {
-    render!( div { id: "story" } )
+pub fn Story() -> Element {
+    rsx!{ div { id: "story" } }
 }

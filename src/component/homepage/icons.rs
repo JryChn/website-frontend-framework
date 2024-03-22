@@ -1,4 +1,3 @@
-use dioxus::core::{Element, Scope};
 use dioxus::prelude::*;
 use dioxus_router::prelude::Link;
 
@@ -6,12 +5,12 @@ use crate::model::ConfigurationTemplate;
 use crate::Route;
 
 #[component]
-pub fn Icons(cx: Scope) -> Element {
-    let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
-    let github_url = String::from("https://github.com/".to_owned() +configuration.contact.github_username.as_str());
-    let telegram_url = String::from("https://t.me/".to_owned() +configuration.contact.telegram_username.as_str());
-    let email = String::from("mailto:".to_owned() +configuration.contact.email.as_str());
-    render!(
+pub fn Icons() -> Element {
+    let configuration = consume_context::<Signal<ConfigurationTemplate>>();
+    let github_url = String::from("https://github.com/".to_owned() +configuration().contact.github_username.as_str());
+    let telegram_url = String::from("https://t.me/".to_owned() +configuration().contact.telegram_username.as_str());
+    let email = String::from("mailto:".to_owned() +configuration().contact.email.as_str());
+    rsx!(
         div {
             id: "icons",
             class: "fixed bottom-[15vh] right-5 h-[10vw] w-[2vw] flex-col justify-evenly hidden md:flex",

@@ -10,31 +10,32 @@ use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[component]
-pub fn Article(cx: Scope, id:String) -> Element {
-    let mut configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
-    let content = use_future(cx, id, |id| async move{
+pub fn Article(id:String) -> Element {
+    let configuration = consume_context::<Signal<ConfigurationTemplate>>();
+    let id = use_signal(||id);
+    let content = use_resource (move || async move{
         let mut article;
-        let api =configuration.article_api;
+        let api =configuration().article_api;
         if api.is_empty() {
-            article = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).unwrap().iter().filter(|a|{a.id == id}).last().unwrap().clone();
+            article = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).unwrap().iter().filter(|a|{a.id == id()}).last().unwrap().clone();
         }else{
-            let api_with_id = api+"/"+id.as_str();
+            let api_with_id = api+"/"+id().as_str();
             article = fetch_and_decrypt::<Article>(&api_with_id).await;
         }
             article.image = parse_to_data_url(article.image.clone(),IMAGE).await;
         article
     });
-    let enable_align_top_button = use_state(cx,||false);
-    render!(
-        match content.value() { None => {
+    let enable_align_top_button = use_signal(||false);
+    let css_themes :&str = include_str!("css/markdown-theme-light.css") ;
+        match &*content.value().read() { None => {
             rsx!( div { "Nothing Here" } )
         },
             Some(content)=>{
-                rsx!(
+                rsx! {
                     div {
                         id: "article",
                         class: "w-screen min-h-[800px] relative scroll-smooth",
-                        style { include_str!("css/markdown-theme-light.css") }
+                         style { "{css_themes}"}
                         img {
                             id: "article_image",
                             class: "w-full h-72 object-cover shadow-[inset_9px_4px_14px_6px_rgba(0,0,0,0.25),0_4px_4px_0_rgba(0,0,0,0.25)] contrast-75",
@@ -87,9 +88,8 @@ pub fn Article(cx: Scope, id:String) -> Element {
                         }
                         //todo: add sidebar to index later
                     }
-                )
+                }
         
             }
         }
-    )
 }

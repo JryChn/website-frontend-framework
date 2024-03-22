@@ -1,7 +1,6 @@
-use dioxus::prelude::Props;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Props, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq,  Clone)]
 pub struct Article {
     pub id: String,
     pub image: String,

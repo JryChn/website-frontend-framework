@@ -1,16 +1,16 @@
 use dioxus::prelude::*;
 use dioxus_router::prelude::*;
 
-use crate::{NAV, Route};
+use crate::{NAVIGATOR, Route};
 use crate::component::navigation::Navigate;
 use crate::model::ConfigurationTemplate;
 
 #[component]
-pub fn Header(cx: Scope) -> Element {
+pub fn Header() -> Element {
     // todo: let the nav who be selected become bolder or underline
-    let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
-    let title = &configuration.welcome.subtitle;
-    let navigate = use_shared_state::<NAV>(cx).unwrap().read().deref().0.clone();
+    let configuration = consume_context::<Signal<ConfigurationTemplate>>();
+    let title = &configuration().welcome.subtitle;
+    let navigate = &*NAVIGATOR.read();
     let header_list = navigate.iter().map(|url| {
         rsx!(
             Link {
@@ -20,7 +20,7 @@ pub fn Header(cx: Scope) -> Element {
             }
         )
     });
-    render!(
+    rsx! {
         header {
             id: "header",
             class: "bg-transparent w-screen h-14 fixed top-0 shadow-none z-50 md:bg-white md:shadow-[0_4px_20px_0_rgba(0,0,0,0.25)] ",
@@ -35,12 +35,12 @@ pub fn Header(cx: Scope) -> Element {
                 class: "absolute top-4 left-1/3 w-1/2 hidden md:inline-block",
                 ul {
                     class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
-                    header_list: header_list
+                    {header_list}
                 }
             }
             // make hamburger when mobile size
             div { class: "block z-60 md:hidden", Navigate {} }
         }
         Outlet::<Route> {}
-    )
+    }
 }

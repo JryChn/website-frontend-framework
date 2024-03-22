@@ -1,8 +1,8 @@
+use std::cell::Ref;
 use std::convert::Into;
 use std::ops::Deref;
 use std::string::ToString;
 
-use dioxus::core::{Element, Scope};
 use dioxus::prelude::*;
 use futures::StreamExt;
 
@@ -18,19 +18,19 @@ pub mod single_welcome;
 mod icons;
 
 #[component]
-pub fn HomePage(cx:Scope) -> Element{
-    let mut configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read().clone();
-    let config = use_future(cx, (), |_| async {
-        configuration.welcome.animation_url.dark = parse_to_data_url(configuration.welcome.animation_url.dark,MP4).await;
-        configuration.welcome.animation_url.light = parse_to_data_url(configuration.welcome.animation_url.light,MP4).await;
-        configuration
+pub fn HomePage() -> Element{
+    let configuration = consume_context::<Signal<ConfigurationTemplate>>();
+    let config = use_resource(move ||async move{
+            let mut configuration = configuration();
+            configuration.welcome.animation_url.dark = parse_to_data_url(configuration.welcome.animation_url.dark,MP4).await;
+            configuration.welcome.animation_url.light = parse_to_data_url(configuration.welcome.animation_url.light,MP4).await;
+            configuration
     });
-    render!(
-        match config.value() {
+        match &*config.value().read() {
             None => {
-                rsx!(Loading{})
+                rsx!{Loading{}}
             },
-            Some(configuration) => {
+            Some(_) => {
                 rsx! {
                     main { id: "welcome",
                         WelcomePage{},
@@ -40,5 +40,4 @@ pub fn HomePage(cx:Scope) -> Element{
                 }
             }
         }
-    )
 }
