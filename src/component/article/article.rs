@@ -35,34 +35,35 @@ pub fn Article(id:String) -> Element {
                     div {
                         id: "article",
                         class: "w-screen min-h-[800px] relative scroll-smooth",
-                         style { "{css_themes}"}
+                        style { "{css_themes}" }
                         img {
                             id: "article_image",
                             class: "w-full h-72 object-cover shadow-[inset_9px_4px_14px_6px_rgba(0,0,0,0.25),0_4px_4px_0_rgba(0,0,0,0.25)] contrast-75",
                             src: "{content.image}",
                             alt: ""
                         }
-                        div{
-                            id:"go_back_button",
+                        div {
+                            id: "go_back_button",
                             class: "absolute my-20 mx-8 font-light text-lg text-center align-middle hidden md:block",
-                            GoBackButton {
-                            img{
-                                    class:"inline-block",
-                                src:"/static/go_back.svg",
-                            }
-                                    "Back to list"
+                            GoBackButton { 
+                                img {
+                                    class: "inline-block",
+                                    src: "/static/go_back.svg"
+                                }
+                                "Back to list"
                             }
                         }
                         //todo: show when scroll to proper location later
-                        div{
-                        id:"align_top_button",
-                            class:"fixed right-8 bottom-5 cursor-pointer",
-                            onclick:|_e|{
-                                gloo::utils::window().scroll_to_with_scroll_to_options(ScrollToOptions::new().behavior(ScrollBehavior::Smooth).top(0f64));
+                        div {
+                            id: "align_top_button",
+                            class: "fixed right-8 bottom-5 cursor-pointer",
+                            onclick: |_e| {
+                                gloo::utils::window()
+                                    .scroll_to_with_scroll_to_options(
+                                        ScrollToOptions::new().behavior(ScrollBehavior::Smooth).top(0f64),
+                                    );
                             },
-                            img{
-                                src:"/static/align_top.svg"
-                            }
+                            img { src: "/static/align_top.svg" }
                         }
                         div {
                             id: "article_content",
@@ -86,7 +87,6 @@ pub fn Article(id:String) -> Element {
                                 }
                             }
                         }
-                        //todo: add sidebar to index later
                     }
                 }
         

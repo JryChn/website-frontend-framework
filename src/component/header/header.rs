@@ -33,8 +33,7 @@ pub fn Header() -> Element {
             div {
                 id: "header_content",
                 class: "absolute top-4 left-1/3 w-1/2 hidden md:inline-block",
-                ul {
-                    class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
+                ul { class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
                     {header_list}
                 }
             }

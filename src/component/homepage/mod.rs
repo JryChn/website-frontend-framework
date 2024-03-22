@@ -28,14 +28,14 @@ pub fn HomePage() -> Element{
     });
         match &*config.value().read() {
             None => {
-                rsx!{Loading{}}
+                rsx!{ Loading {} }
             },
             Some(_) => {
                 rsx! {
                     main { id: "welcome",
-                        WelcomePage{},
-                        Navigate{},
-                        Icons{}
+                        WelcomePage {}
+                        Navigate {}
+                        Icons {}
                     }
                 }
             }
