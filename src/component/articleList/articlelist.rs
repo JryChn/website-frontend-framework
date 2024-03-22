@@ -1,8 +1,10 @@
 use std::collections::{HashMap, HashSet};
+use std::ops::Add;
 
 use dioxus::html::article;
 use dioxus::prelude::*;
 use futures::future::join_all;
+use gloo::console::{console, console_dbg};
 
 use crate::component::loading::Loading;
 use crate::model::Article::Article;
@@ -18,31 +20,36 @@ pub fn ArticleList() -> Element {
     let configuration = consume_context::<Signal<ConfigurationTemplate>>();
     let mut tags_filter = use_signal(||HashSet::<String>::new());
     let mut articles = use_signal(||Vec::<Article>::new());
-    let tags = use_signal(||HashMap::<String,i32>::new());
-    let keywords = use_signal(||HashMap::<String,i32>::new());
+    let mut tags = 
+        use_signal(||HashMap::<String,i32>::new());
+    let mut keywords = use_signal(||HashMap::<String,i32>::new());
     let content = use_resource(move || async move{
         let api = configuration().article_api;
         if api.is_empty() {
-            articles.set(serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).unwrap());
+            articles.set(serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).expect("loading failed"));
         }else{
             articles.set(fetch_and_decrypt::<Vec<Article>>(&api).await);
         }
-        join_all(articles.write().iter_mut().map(|a| async {
-            a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
-        })).await;
-        articles.write().iter().for_each(|a|{
+        // todo: why this throw error?
+        // join_all(articles.write().iter_mut().map(|a| async {
+        //     a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
+        // })).await;
+        articles.read().iter().for_each(|a|{
             a.tags.iter().for_each(|t|{
+                
                 if tags().contains_key(t){
-                    *tags().get_mut(t).unwrap() +=1;
+                    let count = tags.read().get(t).unwrap().add(1);
+                    tags.write().insert(t.clone(), count);
                 }else{
-                    tags().insert(t.clone(),1);
+                    tags.write().insert(t.clone(),1);
                 }
             });
             a.keywords.iter().for_each(|k|{
                 if keywords().contains_key(k){
-                    *keywords().get_mut(k).unwrap() +=1;
+                    let count = keywords.read().get(k).unwrap().add(1);
+                    keywords.write().insert(k.clone(),count);
                 }else{
-                    keywords().insert(k.clone(),1);
+                    keywords.write().insert(k.clone(),1);
                 }
             });
         });
@@ -89,6 +96,20 @@ pub fn ArticleList() -> Element {
                 }
             }
                                  });
+    let tags_all = tags.read();
+    let tags_all = tags_all.iter().map(|t|{
+        rsx! {
+            li {
+                class: "m-3 inline-block hover:underline cursor-pointer",
+                onclick: move |_| {
+                    // if !tags_filter().contains(t.0){
+                    //     tags_filter().insert(t.0.clone());
+                    // }
+                },
+                span { class: "text-base whitespace-pre-wrap", "●  {t.0}({t.1})" }
+            }
+        }
+    });
         match &*content.value().read() {
             None => {
                 rsx!( Loading {} ) }
@@ -126,22 +147,13 @@ pub fn ArticleList() -> Element {
                                                 img {
                                                     class: "w-3.5 h-3.5 flex-1 pr-1 ",
                                                     src: "/static/close_black.svg",
-                                                    onclick: |_| {}
+                                                    onclick: |_| {
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                    ul { class: "w-11/12 h-4/5 p-8",
-                                        for t in tags() {
-                                            li {
-                                                class: "m-3 inline-block hover:underline cursor-pointer",
-                                                onclick: |_| {},
-                                                span { class: "text-base whitespace-pre-wrap",
-                                                    "●  {t.0}({t.1})"
-                                                }
-                                            }
-                                        }
-                                    }
+                                    ul { class: "w-11/12 h-4/5 p-8", {tags_all} }
                                 }
                                 div {
                                     id: "article_list_sidebar_key_words",
