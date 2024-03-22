@@ -96,20 +96,6 @@ pub fn ArticleList() -> Element {
                 }
             }
                                  });
-    let tags_all = tags.read();
-    let tags_all = tags_all.iter().map(|t|{
-        rsx! {
-            li {
-                class: "m-3 inline-block hover:underline cursor-pointer",
-                onclick: move |_| {
-                    // if !tags_filter().contains(t.0){
-                    //     tags_filter().insert(t.0.clone());
-                    // }
-                },
-                span { class: "text-base whitespace-pre-wrap", "●  {t.0}({t.1})" }
-            }
-        }
-    });
         match &*content.value().read() {
             None => {
                 rsx!( Loading {} ) }
@@ -147,13 +133,31 @@ pub fn ArticleList() -> Element {
                                                 img {
                                                     class: "w-3.5 h-3.5 flex-1 pr-1 ",
                                                     src: "/static/close_black.svg",
-                                                    onclick: |_| {
+                                                    onclick: move |_| {
+                                                        tags_filter.write().remove(&t);
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                    ul { class: "w-11/12 h-4/5 p-8", {tags_all} }
+                                    ul { class: "w-11/12 h-4/5 p-8",
+                                        for t in tags() {
+                                            li {
+                                                class: "m-3 inline-block hover:underline cursor-pointer",
+                                                onclick: move |_| {
+                                                    console_dbg!(tags_filter.read());
+                                                    if !tags_filter().contains(&t.0) {
+                                                        tags_filter.write().insert(t.0.clone());
+                                                    }else{
+                                                        tags_filter.write().remove(&t.0);
+                                                    }
+                                                },
+                                                span { class: "text-base whitespace-pre-wrap",
+                                                    "●  {t.0}({t.1})"
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 div {
                                     id: "article_list_sidebar_key_words",
