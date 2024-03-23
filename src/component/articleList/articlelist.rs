@@ -19,24 +19,21 @@ use crate::utils::wordCloud::word_cloud_maker;
 pub fn ArticleList() -> Element {
     let configuration = consume_context::<Signal<ConfigurationTemplate>>();
     let mut tags_filter = use_signal(||HashSet::<String>::new());
-    let mut articles = use_signal(||Vec::<Article>::new());
+    let mut articles = use_signal(||Vec::<(Vec<Article>,bool)>::new());
     let mut tags = 
         use_signal(||HashMap::<String,i32>::new());
     let mut keywords = use_signal(||HashMap::<String,i32>::new());
     let content = use_resource(move || async move{
         let api = configuration().article_api;
+        let mut all_articles = Vec::<Article>::new();
+        let mut article_vec = Vec::<(Vec<Article>,bool)>::new();
         if api.is_empty() {
-            articles.set(serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).expect("loading failed"));
+            all_articles =serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).expect("loading failed");
         }else{
-            articles.set(fetch_and_decrypt::<Vec<Article>>(&api).await);
+            all_articles = fetch_and_decrypt::<Vec<Article>>(&api).await;
         }
-        // todo: why this throw error?
-        // join_all(articles.write().iter_mut().map(|a| async {
-        //     a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
-        // })).await;
-        articles.read().iter().for_each(|a|{
+        all_articles.iter().for_each(|a|{
             a.tags.iter().for_each(|t|{
-                
                 if tags().contains_key(t){
                     let count = tags.read().get(t).unwrap().add(1);
                     tags.write().insert(t.clone(), count);
@@ -53,11 +50,25 @@ pub fn ArticleList() -> Element {
                 }
             });
         });
+        // todo: why this throw error?
+        // join_all(articles.write().iter_mut().map(|a| async {
+        //     a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
+        // })).await;
+        let split_length = 7;
+        while all_articles.len()>split_length{
+            let (a,b)  = all_articles.split_at(split_length);
+            article_vec.push((Vec::from(a), false));
+            all_articles = Vec::from(b);
+        }
+        article_vec.push((all_articles,false));
+        article_vec.get_mut(0).unwrap().1 = true;
+        articles.set(article_vec);
         "Done"
     });
     let articles_all = articles.read();
     let articles_all =
-        articles_all.iter().take(10).map(|a|{
+        articles_all.iter().flat_map(|t|{t.0.as_slice()})
+            .take(10).map(|a|{
             rsx!{
                 li { class: "my-3 underline",
                     Link { to: Route::Article { id: a.id.clone() }, "{a.title}" }
@@ -67,7 +78,7 @@ pub fn ArticleList() -> Element {
     
     let articles_after_filter  = articles.read();
     let articles_after_filter = 
-        articles_after_filter.iter()
+        articles_after_filter.iter().filter(|a|{a.1}).flat_map(|t|t.0.as_slice())
         .filter(|a|{
             let mut check_tags = true;
             tags_filter.with(|tags_filter|{
@@ -188,12 +199,29 @@ pub fn ArticleList() -> Element {
                                 id: "article_list_content",
                                 class: "absolute h-[1600px] w-[90%]  md:w-[65%] left-4 top-12 p-5 flex flex-col justify-start gap-5",
                                 {articles_after_filter},
-                                // todo: implement page feature
+                                if !articles().is_empty() {
                                 div {
                                     id: "article_list_table",
                                     class: "relative w-full h-8 my-16 flex rounded-[30px] shadow-[0_-4px_4px_0_rgba(0,0,0,0.25)] justify-center text-lg",
-                                    div { class: "mx-2 text-gray-500", "1" }
-                                    div { class: "mx-2 text-black", "2" }
+                                    for (i, t) in articles().iter().enumerate(){
+                                        if t.1{
+                                    div { class: "mx-2 text-gray-500", 
+                                                    "{i+1}"
+                                                }
+                                        }
+                                        else{
+                                    div { class: "mx-2 text-black cursor-pointer",
+                                                    onclick: move |_| {
+                                                       let mut articles =  articles.write();
+                                                        articles.iter_mut().for_each(|t|{t.1 = false});
+                                                        articles.get_mut(i).unwrap().1=true;
+                                                    }
+                                                    , "{i+1}" }
+                                        }
+                                        
+                                    }
+                                }
+                                    
                                 }
                             }
                         }
