@@ -1,12 +1,10 @@
 use dioxus::prelude::*;
 
-use crate::model::ConfigurationTemplate;
+use crate::model::{ConfigurationTemplate, Welcome};
 use crate::Route;
 
 #[component]
-pub fn WelcomePage() -> Element {
-    let configuration = consume_context::<Signal<ConfigurationTemplate>>()();
-    let welcome = &configuration.welcome;
+pub fn WelcomePage(welcome:Welcome) -> Element {
     let animation_url = if gloo::utils::document_element().class_list().contains("dark") {
         &welcome.animation_url.dark
     } else {

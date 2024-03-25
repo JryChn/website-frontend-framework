@@ -1,19 +1,18 @@
 use dioxus::prelude::*;
 use dioxus_router::prelude::Link;
 
-use crate::model::ConfigurationTemplate;
+use crate::model::{ConfigurationTemplate, Contact};
 use crate::Route;
 
 #[component]
-pub fn Icons() -> Element {
-    let configuration = consume_context::<Signal<ConfigurationTemplate>>();
-    let github_url = String::from("https://github.com/".to_owned() +configuration().contact.github_username.as_str());
-    let telegram_url = String::from("https://t.me/".to_owned() +configuration().contact.telegram_username.as_str());
-    let email = String::from("mailto:".to_owned() +configuration().contact.email.as_str());
+pub fn Icons(contact :Contact) -> Element {
+    let github_url = String::from("https://github.com/".to_owned() +contact.github_username.as_str());
+    let telegram_url = String::from("https://t.me/".to_owned() +contact.telegram_username.as_str());
+    let email = String::from("mailto:".to_owned() +contact.email.as_str());
     rsx!(
         div {
             id: "icons",
-            class: "fixed bottom-[15vh] right-5 h-[10vw] w-[2vw] flex-col justify-evenly hidden md:flex",
+            class: "fixed bottom-[15vh] right-5 h-[10vw] w-9 flex-col justify-evenly hidden md:flex",
             div { class: "flex justify-center items-center ",
                 Link { class: "w-full h-full", to: email, img {
                     class: "w-full h-full p-2 cursor-pointer",

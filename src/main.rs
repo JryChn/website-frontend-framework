@@ -61,7 +61,6 @@ enum Route {
     #[route("/aboutMe")]
     AboutMeContent {},
     #[end_layout]
-    // todo: may fix page not found error later
     #[route("/:..route")]
     PageNotFound {
         route: Vec<String>

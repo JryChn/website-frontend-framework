@@ -159,7 +159,7 @@ pub fn ArticleList() -> Element {
                                                     console_dbg!(tags_filter.read());
                                                     if !tags_filter().contains(&t.0) {
                                                         tags_filter.write().insert(t.0.clone());
-                                                    }else{
+                                                    } else {
                                                         tags_filter.write().remove(&t.0);
                                                     }
                                                 },
@@ -200,28 +200,25 @@ pub fn ArticleList() -> Element {
                                 class: "absolute h-[1600px] w-[90%]  md:w-[65%] left-4 top-12 p-5 flex flex-col justify-start gap-5",
                                 {articles_after_filter},
                                 if !articles().is_empty() {
-                                div {
-                                    id: "article_list_table",
-                                    class: "relative w-full h-8 my-16 flex rounded-[30px] shadow-[0_-4px_4px_0_rgba(0,0,0,0.25)] justify-center text-lg",
-                                    for (i, t) in articles().iter().enumerate(){
-                                        if t.1{
-                                    div { class: "mx-2 text-gray-500", 
+                                    div {
+                                        id: "article_list_table",
+                                        class: "relative w-full h-8 my-16 flex rounded-[30px] shadow-[0_-4px_4px_0_rgba(0,0,0,0.25)] justify-center text-lg",
+                                        for (i , t) in articles().iter().enumerate() {
+                                            if t.1 {
+                                                div { class: "mx-2 text-gray-500", "{i+1}" }
+                                            } else {
+                                                div {
+                                                    class: "mx-2 text-black cursor-pointer",
+                                                    onclick: move |_| {
+                                                        let mut articles = articles.write();
+                                                        articles.iter_mut().for_each(|t| { t.1 = false });
+                                                        articles.get_mut(i).unwrap().1 = true;
+                                                    },
                                                     "{i+1}"
                                                 }
+                                            }
                                         }
-                                        else{
-                                    div { class: "mx-2 text-black cursor-pointer",
-                                                    onclick: move |_| {
-                                                       let mut articles =  articles.write();
-                                                        articles.iter_mut().for_each(|t|{t.1 = false});
-                                                        articles.get_mut(i).unwrap().1=true;
-                                                    }
-                                                    , "{i+1}" }
-                                        }
-                                        
                                     }
-                                }
-                                    
                                 }
                             }
                         }

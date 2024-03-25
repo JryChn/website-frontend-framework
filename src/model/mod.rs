@@ -17,7 +17,7 @@ pub struct ConfigurationTemplate {
     pub calendar_api:String,
     pub zone_api:String,
 }
-#[derive(Serialize, Deserialize, Debug,Clone)]
+#[derive(Serialize, Deserialize,Debug,PartialEq,Clone)]
 pub struct Contact {
     pub github_username: String,
     pub email: String,
