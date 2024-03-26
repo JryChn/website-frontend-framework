@@ -1,24 +1,23 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_router::prelude::*;
 
 use crate::NAVIGATOR;
 
 #[component]
 pub fn Navigate() -> Element {
-    let mut nav_sidebar_switch = use_signal(||false);
+    let mut nav_sidebar_switch = use_signal(|| false);
     rsx! {
-            nav {
-                id: "navigator",
-                class: "fixed top-0 right-0 w-48 h-48 rounded-full translate-x-1/2 -translate-y-1/2 bg-gray-50 cursor-pointer md:bg-black",
-                onclick: move |_| {
-                    nav_sidebar_switch.set(true);
-                }
+        nav {
+            id: "navigator",
+            class: "fixed top-0 right-0 w-48 h-48 rounded-full translate-x-1/2 -translate-y-1/2 bg-gray-50 cursor-pointer md:bg-black",
+            onclick: move |_| {
+                nav_sidebar_switch.set(true);
             }
-        Hamburger{nav_sidebar_switch}
-        SideBar{nav_sidebar_switch}
         }
+    Hamburger{nav_sidebar_switch}
+    SideBar{nav_sidebar_switch}
+    }
 }
 
 #[component]
@@ -30,14 +29,13 @@ fn Hamburger(mut nav_sidebar_switch:Signal<bool>) -> Element{
                 onclick: move |_| {
                     nav_sidebar_switch.set(true);
                 },
-            for i in (1..4){
+            for _ in (1..4){
                     div{
                         class:"w-3/4 h-1 border-black border-2 bg-black rounded-lg mx-auto md:border-gray-50 md:bg-gray-50",
                     }
             }
             }
     }
-    
 }
 
 #[component]

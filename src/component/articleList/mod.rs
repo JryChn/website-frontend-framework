@@ -32,7 +32,7 @@ struct ArticlesPage{
 #[component]
 pub fn ArticleList() -> Element {
     let configuration = consume_context::<Signal<ConfigurationTemplate>>();
-    let mut tags_filter = use_signal(|| HashSet::<String>::new());
+    let tags_filter = use_signal(|| HashSet::<String>::new());
     let mut articles = use_signal(|| Vec::<ArticlesPage>::new());
     let mut tags =
         use_signal(|| HashMap::<String, i32>::new());
