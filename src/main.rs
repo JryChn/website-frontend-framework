@@ -6,7 +6,7 @@ use dioxus_router::prelude::{Routable, Router};
 use log::LevelFilter;
 use manganis::mg;
 
-use crate::component::aboutMeContent::aboutmecontent::AboutMeContent;
+use crate::component::aboutMeContent::AboutMeContent;
 use crate::component::article::article::Article;
 use crate::component::articleList::ArticleList;
 use crate::component::calendar::calendar::Calendar;
