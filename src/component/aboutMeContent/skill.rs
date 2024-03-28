@@ -1,9 +1,10 @@
 use charming::{Chart, val, WasmRenderer};
 use charming::component::{RadarCoordinate, RadarIndicator, Title};
-use charming::element::Color;
+use charming::element::{Color, Emphasis};
 use charming::series::Radar;
 use charming::theme::Theme;
 use dioxus::prelude::*;
+use rand::prelude::SliceRandom;
 use uuid::{uuid, Uuid};
 
 use crate::component::aboutMeContent::SkillContent;
@@ -25,10 +26,9 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
         div { class: "relative bg-transparent -top-48 select-none cursor-default",
             div { class: "hidden text-5xl font-medium m-12 md:inline-block", "技能和技巧" }
             div { class: "w-full bg-[rgb(27,46,77)] min-h-[400px] mx-auto flex md:w-3/4",
-                // small screen render
-                div { class: "flex flex-col item-center md:hidden",
+                div { class: "flex flex-col item-center md:block md:w-full md:h-[400px] md:overflow-hidden",
                     for chart in charts {
-                        div { class: "w-screen my-16 flex flex-col",
+                        div { class: "w-screen my-16 flex flex-col md:w-full md:h-full md:flex-row",
                             div {
                                 id: "{chart.id}",
                                 class: "w-72 h-72 mx-auto",
@@ -39,27 +39,12 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                                         .unwrap();
                                 }
                             }
-                            div { class: "flex flex-col my-8 items-center",
+                            div { class: "flex flex-col my-8 items-center md:mx-6",
                                 div { class: "text-4xl font-normal text-white", "{chart.title}" }
                                 div { class: "w-96 text-lg text-white font-light my-4",
                                     "{chart.description}"
                                 }
                             }
-                        }
-                    }
-                }
-                // big screen render
-                div { class: "hidden flex-row w-full h-full md:flex",
-                    div { class: "w-[800px] h-[400px]",
-                        div { class: "w-full h-full flex items-center",
-                            div { class: "border-gray-950 border-2 w-72 h-72 mx-auto" } }
-                    }
-                    div { class: "flex-1 flex flex-col my-8",
-                        div { class: "text-4xl font-normal text-white -translate-x-4",
-                            "Skill Title"
-                        }
-                        div { class: "w-96 text-lg text-white font-light my-4",
-                            "Skill Description, descripte this skill is for what and the meaning of it, it should be long setence or just a few word."
                         }
                     }
                 }
@@ -86,8 +71,28 @@ fn create_radar(skill: &SkillContent) -> Skills {
         title: skill.clone().skill_name,
         description: skill.clone().description,
         chart: Chart::new().background_color(Color::from("rgb(27,46,77)"))
-            // .title(Title::new().text(skill.clone().skill_name))
+            .color(vec![get_random_color()])
             .radar(RadarCoordinate::new().indicator(indicators))
             .series(Radar::new().data(vec![(actual_values)])),
     }
+}
+
+fn get_random_color() -> Color{
+    let color = vec![
+    "blue",
+    "yellow",
+    "#c23531",
+    "#2f4554",
+    "#61a0a8",
+    "#d48265",
+    "#91c7ae",
+    "#749f83",
+    "#ca8622",
+    "#bda29a",
+    "#6e7074",
+    "#546570",
+    "#c4ccd3"
+    ];
+    Color::from(*color.choose(&mut rand::thread_rng()).unwrap_or(&"yellow"))
+
 }
