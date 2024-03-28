@@ -38,7 +38,7 @@ pub fn ArticleList() -> Element {
         use_signal(|| HashMap::<String, i32>::new());
     let mut keywords = use_signal(|| HashMap::<String, i32>::new());
     let content = use_resource(move || async move {
-        let all_articles = fetch_articles(configuration().article_api).await;
+        let all_articles = fetch_articles(configuration().article_list_api).await;
         tags.set(init_tags(&all_articles));
         keywords.set(init_keywords(&all_articles));
         articles.set(construct_article_split_page(all_articles));

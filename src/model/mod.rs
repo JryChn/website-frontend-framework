@@ -12,6 +12,7 @@ pub struct CommonConfig {
 pub struct ConfigurationTemplate {
     pub contact:Contact,
     pub welcome: Welcome,
+    pub article_list_api: String,
     pub article_api: String,
     pub about_me_api: String,
     pub calendar_api:String,

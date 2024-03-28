@@ -33,7 +33,7 @@ pub fn Article(id: String, article: Option<Article>) -> Element {
             .unwrap()
             .clone();
         } else {
-            let api_with_id = api + "/" + id().as_str();
+            let api_with_id = api + "/" + id().as_str()+".json";
             article = fetch_and_decrypt::<Article>(&api_with_id).await;
         }
         article.image = parse_to_data_url(article.image.clone(), IMAGE).await;
