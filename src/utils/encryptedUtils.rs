@@ -26,12 +26,12 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
 }
 
 pub fn fetch_configuration() -> ConfigurationTemplate{
-    if CONFIGURATION.lock().unwrap().is_empty() {
         if !CONFIG.configuration_fetching_url.is_empty() {
          let  configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url);
             let configuration = block_on(configuration);
-            CONFIGURATION.lock().unwrap().push(configuration);
+            let mut config = CONFIGURATION.lock().unwrap();
+            config.clear();
+            config.push(configuration);
         }
-    }
     CONFIGURATION.lock().unwrap()[0].clone()
 }
