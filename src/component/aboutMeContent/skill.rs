@@ -9,6 +9,7 @@ pub fn Skill() ->Element{
                 // small screen render
                 div{
                     class:"flex flex-col item-center md:hidden",
+                    // add for here
                     div{
                        class:"w-screen my-16 flex flex-col",
                     div { class: "border-gray-950 border-2 w-72 h-72 mx-auto"}

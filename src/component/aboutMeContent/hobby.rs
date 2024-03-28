@@ -1,0 +1,72 @@
+use dioxus::prelude::*;
+
+#[component]
+pub fn Hobby() ->Element{
+    rsx!{
+        div { class: "relative -top-44 cursor-default select-none md:top-0",
+            div { class: "hidden absolute w-5/6 border border-b-black right-0 md:block" }
+            div { class: "text-4xl top-6 flex justify-center md:relative md:right-[20%]", "Sport" }
+            div{
+                class:"relative -top-14 md:top-20",
+                div { class: "absolute text-4xl top-6 left-[50vw] -translate-x-1/2 md:hidden", "Sport" }
+                LeftImageBlock{bg_color:"bg-[rgb(91,128,86)]"}
+                RightImageBlock{bg_color:"bg-[rgb(108,131,175)]"}
+                LeftImageBlock{bg_color:"bg-[rgb(173,178,131)]"}
+            }
+        }
+    }
+}
+
+
+#[component]
+fn LeftImageBlock(bg_color:String) -> Element{
+    rsx!{
+       div{
+            class:"w-full {bg_color} py-2 flex flex-col shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] md:relative md:h-[490px]",
+            img{
+                class:"w-full h-72 mb-8 mt-20 shadow-[0px_12px_12px_0px_rgba(0,0,0,0.25)] md:absolute md:w-[609px] md:h-[313px] md:-top-1/2 md:translate-y-1/3 md:right-12 md:rounded-[156.5px_0_0_156.5px]",
+                src:""
+            }
+            div{
+                class:"w-[90%] h-72 my-8 flex flex-col mx-auto md:w-1/2 md:h-1/2 md:absolute md:left-10",
+                div{
+                    class:"flex items-center justify-center",
+                    div{
+                        class:"font-normal text-4xl mx-auto md:mx-0 md:translate-x-1/2",
+                        "Tines"
+                    }
+                }
+                div{
+                    class:"flex items-center justify-center my-8 font-light text-4xl",
+                    "Swiming is a good sport to decrise your body weight and become healthy"
+                }
+            }
+        } 
+    }
+}
+#[component]
+fn RightImageBlock(bg_color:String) -> Element{
+    rsx!{
+       div{
+            class:"w-full {bg_color} py-2 flex flex-col shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] md:relative md:h-[490px]",
+            img{
+                class:"w-full h-72 mb-8 mt-20 shadow-[0px_12px_12px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_-8px_6px_0px_rgba(0,0,0,0.25)] md:absolute md:w-[609px] md:h-[313px] md:-top-1/2 md:translate-y-1/3 md:left-12 md:rounded-[0_156.5px_156.5px_0]",
+                src:""
+            }
+            div{
+                class:"w-[90%] h-72 my-8 flex flex-col mx-auto md:w-1/2 md:h-1/2 md:absolute md:right-10",
+                div{
+                    class:"flex items-center justify-center",
+                    div{
+                        class:"font-normal text-4xl mx-auto md:mx-0 md:translate-x-1/2",
+                        "Tines"
+                    }
+                }
+                div{
+                    class:"flex items-center justify-center my-8 font-light text-4xl",
+                    "Swiming is a good sport to decrise your body weight and become healthy"
+                }
+            }
+        } 
+    }
+}

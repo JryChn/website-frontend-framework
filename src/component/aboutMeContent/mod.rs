@@ -5,6 +5,8 @@ use rand::thread_rng;
 
 use crate::component::aboutMeContent::aboutme::AboutMe;
 use crate::component::aboutMeContent::experience::Experience;
+use crate::component::aboutMeContent::hobby::Hobby;
+use crate::component::aboutMeContent::musicArt::MusicAndArt;
 use crate::component::aboutMeContent::quote::Quote;
 use crate::component::aboutMeContent::skill::Skill;
 use crate::component::loading::Loading;
@@ -18,7 +20,8 @@ mod aboutme;
 mod quote;
 mod experience;
 mod skill;
-mod habbit;
+mod hobby;
+mod musicArt;
 
 #[component]
 pub fn AboutMeContent() -> Element {
@@ -27,6 +30,8 @@ pub fn AboutMeContent() -> Element {
         Quote{description_quote:"关于我是谁，这话怎么说呢？这里可以用英文，也是可以使用中文来描述自己， of course there are some different special effect can be added into the words, or over the sentence.比如像下面这样，重点的文字可以用不一样的/** 颜色 **/进行一个标注，当然标注的单词可以根据配置进行选择， but if you want more effect here, you should try to create a new merge request on github of this project."}
         Experience{}
         Skill{}
+        Hobby{}
+        MusicAndArt{video_url:"",video2_url:""}
     }
     // let typing_words = use_state(cx, || "".to_string());
     // let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
