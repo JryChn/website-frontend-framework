@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = {version =  "0.5.0-alpha.2",features = ["web","router"] }
-manganis = "0.2.1"
+dioxus = {version =  "0.5.0",features = ["web","router"] }
+manganis = "0.2.2"
 log = "0.4.21"
 dioxus-logger = "0.4.1"
 console_error_panic_hook = "0.1.7"
