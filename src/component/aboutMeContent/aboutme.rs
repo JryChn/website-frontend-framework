@@ -4,7 +4,7 @@ use dioxus::prelude::*;
 pub fn AboutMe(title:String,subtitle:String,image1:String,image2:String) ->Element{
     rsx!{
         div{
-        class: "relative w-screen min-h-[1000px] top-18",
+        class: "relative w-screen min-h-[1000px] top-18 select-none cursor-default",
         AboutMeTitle{title,subtitle,image:&image2},
         Circle{}
         AboutMeImages{image_url:image1,image2_url:&image2},

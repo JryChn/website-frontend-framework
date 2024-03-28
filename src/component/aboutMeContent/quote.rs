@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 pub fn Quote(description_quote:String) ->Element{
     let quote = check_and_generate_effect(description_quote);
     rsx!{
-        div { class: "absolute w-full h-96 flex justify-center mx-auto bg-[rgb(249,248,248)] md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:translate-x-1/2 md:right-1/2 md:-translate-y-2/3 md:w-5/6 md:justify-normal",
+        div { class: "absolute w-full h-96 flex justify-center mx-auto bg-[rgb(249,248,248)] select-none cursor-default md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:translate-x-1/2 md:right-1/2 md:-translate-y-2/3 md:w-5/6 md:justify-normal",
             div { class: "hidden w-1/3 items-center justify-center md:flex",
                 div { class: "w-36 h-36 bg-white rounded-full flex items-center justify-center",
                     div { class: "w-1/2 h-1/2 bg-black rounded-full flex items-center justify-center",
@@ -25,7 +25,7 @@ pub fn Quote(description_quote:String) ->Element{
                 }
             }
         }
-        
+
     }
 }
 
