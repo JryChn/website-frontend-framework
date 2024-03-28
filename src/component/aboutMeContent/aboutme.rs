@@ -73,15 +73,15 @@ fn Circle()->Element{
 fn AboutMeImages(image_url:String,image2_url:String)->Element{
 rsx!{
     div { class: "hidden md:flex absolute top-52 right-14",
-        div {
+        img {
             id: "image_1",
-            class: "w-56 h-96 rounded-tl-[110px] shadow-[-9px_8px_25px_3px_rgba(0,0,0,0.25)] mx-6 my-2",
-            img { src: "{image_url}" }
+            class: "w-56 h-96 rounded-tl-[110px] shadow-[-9px_8px_25px_3px_rgba(0,0,0,0.25)] mx-6 my-2 object-cover",
+            src: "{image_url}"
         }
-        div {
+        img {
             id: "image_2",
-            class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-6 my-2",
-            img { src: "{image2_url}" }
+            class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-6 my-2 object-cover",
+            src: "{image2_url}"
         }
     }
 }

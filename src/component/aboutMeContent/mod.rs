@@ -13,6 +13,7 @@ use crate::component::loading::Loading;
 use crate::model;
 use crate::model::{AboutMe, ConfigurationTemplate};
 use crate::model::AboutMe::AboutMePage;
+use crate::model::Article::Article;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
@@ -52,7 +53,13 @@ struct RadarContent {
 pub fn AboutMeContent() -> Element {
     let configuration = use_context::<Signal<ConfigurationTemplate>>();
     let result = use_resource(move || async move {
-        let aboutMe: AboutMePage = fetch_and_decrypt(configuration().about_me_api.as_str()).await;
+        let api = configuration().about_me_api;
+        let aboutMe;
+        if api.is_empty() {
+            aboutMe = serde_json::from_str::<AboutMePage>(include_str!("../../defaultConfig/aboutMe.json")).unwrap();
+        }else{
+            aboutMe = fetch_and_decrypt(api.as_str()).await;
+        }
         aboutMe
     });
     match &*result.value().read() {

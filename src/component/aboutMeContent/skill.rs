@@ -1,5 +1,6 @@
 use charming::{Chart, val, WasmRenderer};
 use charming::component::{RadarCoordinate, RadarIndicator, Title};
+use charming::element::Color;
 use charming::series::Radar;
 use charming::theme::Theme;
 use dioxus::prelude::*;
@@ -30,10 +31,10 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                         div { class: "w-screen my-16 flex flex-col",
                             div {
                                 id: "{chart.id}",
-                                class: "border-gray-950 border-2 w-72 h-72 mx-auto",
+                                class: "w-72 h-72 mx-auto",
                                 onmounted: move |_| {
                                     WasmRenderer::new(300, 300)
-                                        .theme(Theme::Dark)
+                                        .theme(Theme::Essos)
                                         .render(&chart.id, &chart.chart)
                                         .unwrap();
                                 }
@@ -50,7 +51,8 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                 // big screen render
                 div { class: "hidden flex-row w-full h-full md:flex",
                     div { class: "w-[800px] h-[400px]",
-                        div { class: "w-full h-full flex items-center", div { class: "border-gray-950 border-2 w-72 h-72 mx-auto" } }
+                        div { class: "w-full h-full flex items-center",
+                            div { class: "border-gray-950 border-2 w-72 h-72 mx-auto" } }
                     }
                     div { class: "flex-1 flex flex-col my-8",
                         div { class: "text-4xl font-normal text-white -translate-x-4",
@@ -83,9 +85,9 @@ fn create_radar(skill: &SkillContent) -> Skills {
         id: Uuid::new_v4().as_u128().to_string(),
         title: skill.clone().skill_name,
         description: skill.clone().description,
-        chart: Chart::new()
-            .title(Title::new().text(skill.clone().skill_name))
+        chart: Chart::new().background_color(Color::from("rgb(27,46,77)"))
+            // .title(Title::new().text(skill.clone().skill_name))
             .radar(RadarCoordinate::new().indicator(indicators))
-            .series(Radar::new().data(Vec::from(actual_values))),
+            .series(Radar::new().data(vec![(actual_values)])),
     }
 }
