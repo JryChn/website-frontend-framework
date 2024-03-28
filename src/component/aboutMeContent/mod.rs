@@ -72,11 +72,16 @@ pub fn AboutMeContent() -> Element {
     // });
     // let github_username = configuration.contact.github_username.clone();
     rsx! {
-        AboutMe{title:"Some test Title",subtitle:"this is a test descirtption adjaslkdjsalfhs lkjsdlkgsjdlkgjsd gshsacsdcdscndscsdlkcnsdc",image1:"",image2:""}
-        Quote{description_quote:"关于我是谁，这话怎么说呢？这里可以用英文，也是可以使用中文来描述自己， of course there are some different special effect can be added into the words, or over the sentence.比如像下面这样，重点的文字可以用不一样的/** 颜色 **/进行一个标注，当然标注的单词可以根据配置进行选择， but if you want more effect here, you should try to create a new merge request on github of this project."}
-        Experience{experiences:Vec::new()}
-        Skill{skill_content:Vec::new()}
-        Hobby{hobbys:Vec::new()}
-        MusicAndArt{video_url:"",video2_url:""}
+        AboutMe {
+            title: "Some test Title",
+            subtitle: "this is a test descirtption adjaslkdjsalfhs lkjsdlkgsjdlkgjsd gshsacsdcdscndscsdlkcnsdc",
+            image1: "",
+            image2: ""
+        }
+        Quote { description_quote: "关于我是谁，这话怎么说呢？这里可以用英文，也是可以使用中文来描述自己， of course there are some different special effect can be added into the words, or over the sentence.比如像下面这样，重点的文字可以用不一样的/** 颜色 **/进行一个标注，当然标注的单词可以根据配置进行选择， but if you want more effect here, you should try to create a new merge request on github of this project." }
+        Experience { experiences: Vec::new() }
+        Skill { skill_content: Vec::new() }
+        Hobby { hobbys: Vec::new() }
+        MusicAndArt { video_url: "", video2_url: "" }
     }
 }

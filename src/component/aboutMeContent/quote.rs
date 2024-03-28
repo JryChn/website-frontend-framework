@@ -53,12 +53,12 @@ pub fn Quote(description_quote:String) ->Element{
                     }
                 }
                 div { class: "border border-b-black w-full md:w-5/6" }
-                div { class: "relative flex-1 w-full my-6 font-normal text-left md:w-5/6 md:left-8",
-                    dangerous_inner_html:"{quote}"
+                div {
+                    class: "relative flex-1 w-full my-6 font-normal text-left md:w-5/6 md:left-8",
+                    dangerous_inner_html: "{quote}"
                 }
             }
         }
-
     }
 }
 
