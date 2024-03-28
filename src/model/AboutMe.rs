@@ -9,12 +9,9 @@ pub struct AboutMePage {
     pub description:String,
     pub experience:Vec<Experience>,
     pub skill_radar:Vec<Radar>,
-    pub stage: Vec<MyStage>,
-}
-#[derive(Serialize, Deserialize)]
-pub struct MyStage {
-    pub category: String,
-    pub children: Vec<Stage>,
+    pub hobby: Vec<Hobby>,
+    pub music_art_1: String,
+    pub music_art_2: String,
 }
 #[derive(Serialize, Deserialize)]
 pub struct Stage {
@@ -40,4 +37,10 @@ pub struct Experience {
     pub title: String,
     pub keywords: Vec<String>,
     pub description:String
+}
+#[derive(Serialize, Deserialize)]
+pub struct Hobby {
+    pub title: String,
+    pub description:String,
+    pub image:String
 }

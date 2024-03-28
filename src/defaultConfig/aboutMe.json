@@ -1,82 +1,113 @@
 {
-  "about_me_title": "",
-  "about_me_motto": "",
+  "about_me_title": "Some Title About Me",
+  "about_me_motto": "也许生命的一次改变不会影响到未来的人生，但是我还是希望你如沐春风, 这里写一些有趣的文字，他将会有一个类似打字的动画把它写下来",
   "image1": "/static/test.jpg",
   "image2": "/static/test.jpg",
   "description": "當認識新朋友、參加活動，或者面試時，常會有要請我們/** 自我介紹 **/的時刻，但我們往往容易會被字面上的意思拉著走，開始徐徐地介紹自己的資訊：叫什麼名字、住哪、讀哪、在哪工作、血型、星座、興趣⋯等等。語畢，準備換下一位時，台下的人也差不多把你忘了。因為這樣的自我介紹特別常見，也特別容易讓人遺忘。一個好的自我介紹？是能夠讓聽者對你的/** 某個特點有印象 **/，並且能/** 連結到你的人本 **/",
-  "experience": [{
-    "time_of_year": 30,
-    "title": "",
-    "keywords": ["", ""],
-    "description": ""
-  }],
-  "skill_radar": [
+  "experience": [
     {
-      "skill_name": "",
-      "skill_description": "",
-      "dimensions": [
-        {
-        "name": "",
-        "value": 10
-      },
-        {
-          "name": "",
-          "value": 10
-        },
-        {
-          "name": "",
-          "value": 10
-        },
-        {
-          "name": "",
-          "value": 10
-        },
-        {
-          "name": "",
-          "value": 10
-        },
-        {
-          "name": "",
-          "value": 10
-        }
-      ]
+    "time_of_year": 2016,
+    "title": "测试用例",
+    "keywords": ["test", "experience"],
+    "description": "这是一个测试用例,set to true to allow word to be drawn partly outside of the canvas.// Allow word bigger than the size of the canvas to be drawnThis is an upgraded form of [use_future] with an integrated channel system. Specifically, the coroutine generated here comes with an [UnboundedChannel] built into it - saving you the hassle of building your own.\nThis makes it effective for apps that need to interact with an event loop or some asynchronous code without thinking too hard about state."
+  },
+    {
+      "time_of_year": 2019,
+      "title": "test case",
+      "keywords": ["keywords", "电脑"],
+      "description": "set to true to allow word to be drawn partly outside of the canvas.// Allow word bigger than the size of the canvas to be drawnThis is an upgraded form of [use_future] with an integrated channel system. Specifically, the coroutine generated here comes with an [UnboundedChannel] built into it - saving you the hassle of building your own.\nThis makes it effective for apps that need to interact with an event loop or some asynchronous code without thinking too hard about state."
+    },
+    {
+      "time_of_year": 2022,
+      "title": "敏感词",
+      "keywords": ["关键词", "用例" ,"能力"],
+      "description": "当使用泛型定义函数时，本来在函数签名中指定参数和返回值的类型的地方，会改用泛型来表示。采用这种技术，使得代码适应性更强，从而为函数的调用者提供更多的功能，同时也避免了代码的重复。"
     }
   ],
-  "stage": [
+  "skill_radar": [
     {
-      "category": "Music",
-      "children": [
+      "skill_name": "JAVA",
+      "skill_description": "一种能力测试机制",
+      "dimensions": [
         {
-          "name":"",
-          "description": "",
-          "image": "/static/test.jpg"
+        "name": "书写",
+        "value": 7
+      },
+        {
+          "name": "快乐",
+          "value": 4
         },
         {
-          "name":"",
-          "description": "",
-          "image": "/static/test.jpg"
+          "name": "表情",
+          "value": 1
         },
         {
-          "name":"",
-          "description": "",
-          "image": "/static/test.jpg"
+          "name": "未来",
+          "value": 14
+        },
+        {
+          "name": "不错",
+          "value": 10
+        },
+        {
+          "name": "可以",
+          "value": 3
         }
       ]
     },
     {
-      "category": "Music",
-      "children": [
+      "skill_name": "Rust",
+      "skill_description": "另外一种语言",
+      "dimensions": [
         {
-          "name":"",
-          "description": "",
-          "image": "/static/test.jpg"
+          "name": "书写",
+          "value": 72
         },
         {
-          "name":"",
-          "description": "",
-          "image": "/static/test.jpg"
+          "name": "快乐",
+          "value": 42
+        },
+        {
+          "name": "表情",
+          "value": 10
+        },
+        {
+          "name": "未来",
+          "value": 11
+        },
+        {
+          "name": "不错",
+          "value": 23
+        },
+        {
+          "name": "可以",
+          "value": 8
         }
       ]
     }
-  ]
+  ],
+  "hobby": [
+    {
+      "title": "网球",
+      "description": "Tennis level and describe what this game I played and something else",
+      "image": "/static/test.jpg"
+    },
+    {
+      "title": "Swimming",
+      "description": "Tennis level and describe what this game I played and something else",
+      "image": "/static/test.jpg"
+    },
+    {
+      "title": "网球",
+      "description": "Tennis level and describe what this game I played and something else",
+      "image": "/static/test.jpg"
+    },
+    {
+      "title": "网球",
+      "description": "Tennis level and describe what this game I played and something else",
+      "image": "/static/test.jpg"
+    }
+  ],
+  "music_art_1": "/static/test.mp4",
+  "music_art_2": "/static/test.jpg"
 }
