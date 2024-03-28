@@ -35,11 +35,15 @@ fn main() {
 
 fn App() -> Element {
     // Init debug
+    config= use_resource(||fetch_configuration());
+    if let some(config) = &config.value().read(){    
     let configuration = Signal::new(fetch_configuration());
     use_context_provider(||{
         configuration
     });
     rsx!( Router::<Route> {} )
+    }
+    rsx!()
 }
 #[derive(Routable,Clone,PartialEq)]
 enum Route {
