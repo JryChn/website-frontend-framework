@@ -25,13 +25,9 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
      serde_json::from_slice::<T>(response.as_slice()).unwrap()
 }
 
-pub fn fetch_configuration() -> ConfigurationTemplate{
+pub async fn fetch_configuration() -> ConfigurationTemplate{
         if !CONFIG.configuration_fetching_url.is_empty() {
-         let  configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url);
-            let configuration = block_on(configuration);
-            let mut config = CONFIGURATION.lock().unwrap();
-            config.clear();
-            config.push(configuration);
+        fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url).await
         }
     CONFIGURATION.lock().unwrap()[0].clone()
 }
