@@ -7,14 +7,21 @@ use crate::model::ConfigurationTemplate;
 
 #[component]
 pub fn Header() -> Element {
-    // todo: let the nav who be selected become bolder or underline
     let configuration = consume_context::<Signal<ConfigurationTemplate>>();
     let title = &configuration().welcome.subtitle;
     let navigate = &*NAVIGATOR.read();
+    let current_route = use_route::<Route>();
+    let underline_css = |r1:Route|{
+        if r1.eq(&current_route){
+            " border-b border-b-black "
+        }else{
+            ""
+        }
+    };
     let header_list = navigate.iter().map(|url| {
         rsx!(
             Link {
-                class: "text-lg capitalize font-normal hover:border-b-black hover:border-b",
+                class: "text-lg capitalize font-normal hover:border-b-black hover:border-b {underline_css(url.1.clone())}",
                 to: url.1.clone(),
                 "{url.0}"
             }
