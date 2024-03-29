@@ -23,8 +23,8 @@ fn AboutMeTitle(title:String,subtitle:String,image:String) ->Element{
                 class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-auto my-20 scale-125 md:hidden",
                 src: "{image}"
             }
-            div { class: "absolute w-96 left-24 border-t border-black md:left-0 md:w-12" }
-            div { class: "absolute w-96 left-24 h-full my-8 md:my-4 text-sm font-normal text-left tracking-normal md:w-full md:left-0",
+            div { class: "w-5/6 mx-auto border-t border-black md:left-0 md:w-12 md:absolute" }
+            div { class: "w-5/6 mx-auto h-full my-8 md:my-4 text-sm font-normal text-left tracking-normal md:w-full md:left-0 md:absolute",
                 "/* {subtitle}"
             }
         }
