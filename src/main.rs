@@ -9,7 +9,7 @@ use manganis::mg;
 use crate::component::aboutMeContent::AboutMeContent;
 use crate::component::article::article::Article;
 use crate::component::articleList::ArticleList;
-use crate::component::calendar::calendar::Calendar;
+use crate::component::calendar::Calendar;
 use crate::component::header::header::Header;
 use crate::component::homepage::HomePage;
 use crate::component::loading::Loading;

@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod AboutMe;
 pub mod Article;
+pub mod Calendar;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CommonConfig {
