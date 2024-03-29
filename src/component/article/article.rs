@@ -90,13 +90,13 @@ fn RenderArticle(content: Article) -> Element {
                 }
                 div {
                     id: "article_content_box",
-                    class: "w-3/4 h-full p-4 my-10 mx-auto",
+                    class: "w-full h-full p-4 my-10 mx-auto",
                     // div{
                     //  class:"bg-gray-300 w-[80%] h-100 block mx-auto border-[#2F4858] my-4 p-10 border-l-4",
                     //  "{content.introduction}",
                     // },
                     div {
-                        class: "w-[90%] min-h-200 mx-auto p-4",
+                        class: "w-[95%] min-h-200 mx-auto p-4",
                         id: "article_content_content",
                         dangerous_inner_html: "{content.content}"
                     }

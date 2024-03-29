@@ -64,12 +64,12 @@ fn LeftImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
 #[component]
 fn RightImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
     rsx! {
-        div { class: "w-full {bg_color} py-2 flex flex-col shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] md:relative md:h-[490px]",
+        div { class: "w-full {bg_color} py-2 flex flex-col shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] md:relative md:min-h-[490px]",
             img {
                 class: "w-full h-72 mb-8 mt-20 shadow-[0px_12px_12px_0px_rgba(0,0,0,0.25)] object-cover md:shadow-[0px_-8px_6px_0px_rgba(0,0,0,0.25)] md:absolute md:w-[609px] md:h-[313px] md:-top-1/2 md:translate-y-1/3 md:left-12 md:rounded-[0_156.5px_156.5px_0]",
                 src: "{hobby.image_url}"
             }
-            div { class: "w-[90%] h-72 my-8 flex flex-col mx-auto md:w-1/2 md:h-1/2 md:absolute md:right-10",
+            div { class: "w-[90%] min-h-72 my-8 flex flex-col mx-auto md:w-1/2 md:h-1/2 md:absolute md:right-10",
                 div { class: "flex items-center justify-center",
                     div { class: "font-normal text-4xl mx-auto md:mx-0 md:translate-x-1/2",
                         "{hobby.title}"

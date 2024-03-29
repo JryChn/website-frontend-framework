@@ -15,7 +15,7 @@ pub fn AboutMe(title:String,subtitle:String,image1:String,image2:String) ->Eleme
 #[component]
 fn AboutMeTitle(title:String,subtitle:String,image:String) ->Element{
     rsx!{
-        div { class: "absolute w-96 h-64 top-44 left-24",
+        div { class: "absolute w-full h-64 top-44 md:w-96 md:left-24",
             div { class: "h-1/3 flex flex-row items-center justify-center text-center font-semibold text-3xl ",
                 "{title}"
             }
@@ -23,8 +23,8 @@ fn AboutMeTitle(title:String,subtitle:String,image:String) ->Element{
                 class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-auto my-20 scale-125 md:hidden",
                 src: "{image}"
             }
-            div { class: "absolute w-full md:w-12 border-t border-black" }
-            div { class: "absolute w-full h-full my-8 md:my-4 text-sm font-normal text-left tracking-normal",
+            div { class: "absolute w-96 left-24 border-t border-black md:left-0 md:w-12" }
+            div { class: "absolute w-96 left-24 h-full my-8 md:my-4 text-sm font-normal text-left tracking-normal md:w-full md:left-0",
                 "/* {subtitle}"
             }
         }
@@ -36,7 +36,7 @@ fn Circle()->Element{
     rsx!{
         div {
             id: "circle",
-            class: "hidden absolute w-96 h-40 top-[460px] left-[50vw] md:block",
+            class: "hidden absolute w-96 h-40 top-[460px] md:left-[50vw] md:block",
             div {
                 id: "circle_1",
                 class: "border w-40 h-40 border-[rgb(96,24,123)] rounded-full flex justify-evenly items-center",
