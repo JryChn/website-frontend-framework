@@ -1,11 +1,89 @@
 {
-  "calendar": {
+    "year": 2024,
     "events": [
       {
-        "id": "",
-        "start_time": "",
-        "end_time": ""
+        "day": "1.19 Fri",
+        "duration": [
+          {
+          "start_number": 0 ,
+          "end_number": 12
+        },
+          {
+            "start_number": 15 ,
+            "end_number": 19
+          },
+          {
+            "start_number": 25 ,
+            "end_number": 32
+          },
+          {
+            "start_number": 34 ,
+            "end_number": 46
+          }
+        ]
+      },
+      {
+        "day": "1.20 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
+      },
+      {
+        "day": "1.19 Fri",
+        "duration": [{
+          "start_number": 0 ,
+          "end_number": 12
+        }]
       }
     ]
-  }
 }
