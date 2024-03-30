@@ -17,7 +17,7 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
         .flat_map(|(_, event)| event)
         .map(|e| e.clone())
         .collect();
-    let first_event = all_events.first().unwrap().clone();
+    let first_event :Vec<Option<VNode>>= date_schedule.first().unwrap().1.iter().map(|e|e.clone()).collect();
     rsx! {
      div{
          class:"flex-1 -translate-x-12 grid-cols-11 hidden md:grid",
@@ -48,7 +48,9 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
              // below is for small screen
      div{
          class:"flex-1 grid -translate-x-12 grid-cols-1 md:hidden",
-            {first_event}
+            for e in first_event{
+            {e}
+            }
             div{
                  class: "border-r {line_color}",
              }
@@ -85,6 +87,10 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
         + ";grid-row-end: "
         + (end_time+2).to_string().as_str();
 
+    let row_duration_small= "grid-row-start: ".to_string()
+        + (start_time+3).to_string().as_str()
+        + ";grid-row-end: "
+        + (end_time+3).to_string().as_str();
     rsx! {
            div{
                 class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] row-star hidden md:flex",
@@ -93,8 +99,8 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
             }
         if number == 1 {
            div{
-                class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl flex items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] row-star md:hidden",
-                style: "grid-column-start: 1;grid-column-end: 2;{row_duration}",
+                class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl flex items-center justify-center font-medium text-gray-50 mx-16 my-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] row-star md:hidden",
+                style: "grid-column-start: 1;grid-column-end: 2;{row_duration_small}",
                 "busy"
             }
         }
