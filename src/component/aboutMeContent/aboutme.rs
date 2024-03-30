@@ -20,7 +20,7 @@ fn AboutMeTitle(title:String,subtitle:String,image:String) ->Element{
                 "{title}"
             }
             img {
-                class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-auto my-20 scale-125 md:hidden",
+                class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-auto my-20 scale-125 object-cover md:hidden",
                 src: "{image}"
             }
             div { class: "w-5/6 mx-auto border-t border-black md:left-0 md:w-12 md:absolute" }
