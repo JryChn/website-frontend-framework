@@ -10,7 +10,7 @@ static ref CONFIG :CommonConfig = serde_json::from_str(include_str!("../config.j
 static ref CONFIGURATION:Mutex<Vec<ConfigurationTemplate>> = Mutex::from(vec![serde_json::from_str::<ConfigurationTemplate>(include_str!("../defaultConfig/commonPage.json")).expect("Error When loading Configuration")]);
 }
 
-pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
+pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->serde_json::Result<T>{
     let key = CONFIG.encrypted_key;
     let mut response = gloo::net::http::Request::get(&url)
         .send()
@@ -21,12 +21,12 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url :&str) ->T{
           response = aes_wasm::aes256ctr::decrypt(response,key.as_bytes().try_into().expect("error,the key is invalid, maybe not long enough"
          ),key.as_bytes().try_into().expect(""));
      }
-     serde_json::from_slice::<T>(response.as_slice()).unwrap()
+     serde_json::from_slice::<T>(response.as_slice())
 }
 
 pub async fn fetch_configuration() -> ConfigurationTemplate{
         if !CONFIG.configuration_fetching_url.is_empty() {
-        return fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url).await;
+        return fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url).await.expect("fetch configuration error");
         }
     CONFIGURATION.lock().unwrap()[0].clone()
 }

@@ -23,7 +23,7 @@ pub fn Calendar() -> Element {
             ))
             .unwrap();
         } else {
-            calendar = fetch_and_decrypt(api.as_str()).await;
+            calendar = fetch_and_decrypt(api.as_str()).await.unwrap();
         }
         calendar
     });

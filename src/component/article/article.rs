@@ -2,9 +2,11 @@ use dioxus::prelude::*;
 use dioxus_router::prelude::GoBackButton;
 use web_sys::ScrollBehavior;
 use web_sys::ScrollToOptions;
+use web_sys::wasm_bindgen::UnwrapThrowExt;
 
 use crate::model::Article::Article;
 use crate::model::ConfigurationTemplate;
+use crate::Route::PageNotFound;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
@@ -28,11 +30,11 @@ pub fn Article(id: String, article: Option<Article>) -> Element {
             .iter()
             .filter(|a| a.id == id())
             .last()
-            .unwrap()
+            .unwrap_or(&DefaultArticle())
             .clone();
         } else {
             let api_with_id = api + "/" + id().as_str()+".json";
-            article = fetch_and_decrypt::<Article>(&api_with_id).await;
+            article = fetch_and_decrypt::<Article>(&api_with_id).await.unwrap_or(DefaultArticle());
         }
         article.image = parse_to_data_url(article.image.clone(), IMAGE).await;
         article
@@ -104,4 +106,18 @@ fn RenderArticle(content: Article) -> Element {
             }
         }
     }
+}
+
+
+fn DefaultArticle() -> Article {
+   Article{
+       id: "".to_string(),
+       image: "".to_string(),
+       title: "Wrong Happened!!! Nothing Here".to_string(),
+       introduction: "".to_string(),
+       tags: vec![],
+       keywords: vec![],
+       post_time: "".to_string(),
+       content: "".to_string(),
+   } 
 }

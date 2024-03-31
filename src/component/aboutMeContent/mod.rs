@@ -58,7 +58,7 @@ pub fn AboutMeContent() -> Element {
         if api.is_empty() {
             aboutMe = serde_json::from_str::<AboutMePage>(include_str!("../../defaultConfig/aboutMe.json")).unwrap();
         }else{
-            aboutMe = fetch_and_decrypt(api.as_str()).await;
+            aboutMe = fetch_and_decrypt(api.as_str()).await.unwrap();
         }
         aboutMe
     });

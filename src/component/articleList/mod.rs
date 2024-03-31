@@ -73,7 +73,7 @@ async fn fetch_articles(configuration_api :String)-> Vec<Article>{
     if configuration_api.is_empty() {
         all_articles = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).expect("loading failed");
     } else {
-        all_articles = fetch_and_decrypt::<Vec<Article>>(&configuration_api).await;
+        all_articles = fetch_and_decrypt::<Vec<Article>>(&configuration_api).await.unwrap();
     }
     join_all(all_articles.iter_mut().map(|a| async {
         a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
