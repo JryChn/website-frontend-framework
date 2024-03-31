@@ -3,39 +3,6 @@ use dioxus::prelude::*;
 
 #[component]
 pub fn Quote(description_quote:String) ->Element{
-    // let typing_words = use_state(cx, || "".to_string());
-    // let configuration = use_shared_state::<ConfigurationTemplate>(cx).unwrap().read();
-    // let welcome = &configuration.welcome;
-    // // words blink type animation
-    // use_future(cx, (), |_| {
-    //     to_owned![typing_words];
-    //     let whole_str = welcome.subtitle.to_owned();
-    //     async move {
-    //         loop {
-    //             for i in whole_str.iter() {
-    //                 let whole_str = i;
-    //                 gloo::timers::future::sleep(Duration::from_millis(1000)).await;
-    //                 let mut init_string = "".to_string();
-    //                 for i in whole_str.chars() {
-    //                     if i != '_' {
-    //                         init_string.push(i);
-    //                     }
-    //                     gloo::timers::future::sleep(Duration::from_millis(300)).await;
-    //                     typing_words.set(init_string.to_string());
-    //                 }
-    //                 gloo::timers::future::sleep(Duration::from_millis(1500)).await;
-    //                 loop {
-    //                     if init_string.len() == 0 {
-    //                         break;
-    //                     }
-    //                     init_string.pop();
-    //                     gloo::timers::future::sleep(Duration::from_millis(200)).await;
-    //                     typing_words.set(init_string.to_string());
-    //                 }
-    //             }
-    //         }
-    //     }
-    // });
     let quote = check_and_generate_effect(description_quote);
     rsx!{
         div { class: "absolute w-full h-96 flex justify-center mx-auto bg-[rgb(249,248,248)] select-none cursor-default md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:translate-x-1/2 md:right-1/2 md:-translate-y-2/3 md:w-5/6 md:justify-normal",
