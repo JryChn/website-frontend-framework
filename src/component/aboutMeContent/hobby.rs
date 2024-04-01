@@ -1,6 +1,7 @@
 use std::collections::VecDeque;
 
 use dioxus::prelude::*;
+use gloo::console::console_dbg;
 
 use crate::component::aboutMeContent::HobbyContent;
 
@@ -9,15 +10,16 @@ pub fn Hobby(hobbys: Vec<HobbyContent>) -> Element {
     let mut render_block = Vec::new();
     let mut flag = 0;
     hobbys.iter().for_each(|h| {
+        console_dbg!(flag);
         match flag {
             0 => {
-                render_block.push(rsx! { LeftImageBlock { bg_color: "bg-[rgb(91,128,86)]", hobby: h.clone() } });
+                render_block.push(rsx! { RightImageBlock { bg_color: "bg-[rgb(91,128,86)]", hobby: h.clone() } });
             }
             1 => {
-                render_block.push(rsx! { RightImageBlock { bg_color: "bg-[rgb(108,131,175)", hobby: h.clone() } });
+                render_block.push(rsx! { LeftImageBlock { bg_color: "bg-[rgb(108,131,175)]", hobby: h.clone() } });
             }
             _ => {
-                render_block.push(rsx! { LeftImageBlock { bg_color: "bg-[rgb(173,178,131)]", hobby: h.clone() } });
+                render_block.push(rsx! { RightImageBlock { bg_color: "bg-[rgb(173,178,131)]", hobby: h.clone() } });
             }
         }
         flag = (flag + 1) % 3;
@@ -41,7 +43,7 @@ pub fn Hobby(hobbys: Vec<HobbyContent>) -> Element {
 }
 
 #[component]
-fn LeftImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
+fn RightImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
     rsx! {
         div { class: "w-full {bg_color} py-2 flex flex-col shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] md:relative md:h-[490px]",
             img {
@@ -62,7 +64,7 @@ fn LeftImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
     }
 }
 #[component]
-fn RightImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
+fn LeftImageBlock(bg_color: String, hobby: HobbyContent) -> Element {
     rsx! {
         div { class: "w-full {bg_color} py-2 flex flex-col shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] md:relative md:min-h-[490px]",
             img {

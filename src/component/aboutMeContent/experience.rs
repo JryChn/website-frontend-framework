@@ -16,7 +16,7 @@ pub fn Experience(experiences: Vec<ExperienceContent>) -> Element {
             .collect();
     rsx! {
         div { class: "bg-[rgb(195,201,195)] flex flex-col select-none cursor-default",
-            div { class: "w-screen h-[500px] md:h-56" }
+            div { class: "w-screen h-[600px] md:h-56" }
             div { class: "flex justify-around ",
                 div { class: "text-5xl font-medium md:absolute md:right-20", "Experience" }
             }
