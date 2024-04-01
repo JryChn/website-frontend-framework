@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-use gloo::console::console_dbg;
 
 #[component]
 pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
