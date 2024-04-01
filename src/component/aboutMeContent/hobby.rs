@@ -10,7 +10,6 @@ pub fn Hobby(hobbys: Vec<HobbyContent>) -> Element {
     let mut render_block = Vec::new();
     let mut flag = 0;
     hobbys.iter().for_each(|h| {
-        console_dbg!(flag);
         match flag {
             0 => {
                 render_block.push(rsx! { RightImageBlock { bg_color: "bg-[rgb(91,128,86)]", hobby: h.clone() } });
