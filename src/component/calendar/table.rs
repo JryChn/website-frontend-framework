@@ -24,23 +24,18 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
              {e}
          }
             div{
-                 class: "border-r {line_color} text-black font-light text-right pr-2",
+                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
              }
          for i in (0..10){
             div{
-                 class: "border-r {line_color} text-black font-light text-right pr-2",
+                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
                      "{date_schedule.get(i).unwrap().0}"
              }
          }
-         for _ in (0..1078){
+         for _ in (0..968){
             div{
-                 class:"border-b border-r {line_color}",
+                 class:"border-b border-r {line_color} h-8",
                  style:"border-style:dashed solid"
-             }
-         }
-         for _ in (0..11){
-            div{
-                 class:" border-r border-dashed {line_color}",
              }
          }
      }
@@ -51,21 +46,16 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
             {e}
             }
             div{
-                 class: "border-r {line_color}",
+                 class: "border-r {line_color} h-8",
              }
             div{
-                 class: "border-r {line_color} text-black font-light text-right pr-2",
+                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
                  "{date_schedule.first().unwrap().0}"
              }
-         for _ in (0..96){
+         for _ in (0..95){
             div{
-                 class:"border-b border-r {line_color}",
+                 class:"border-b border-r {line_color} h-8",
                  style:"border-style:dashed solid"
-             }
-         }
-         for _ in (0..2){
-            div{
-                 class:" border-r border-dashed {line_color}",
              }
          }
      }
@@ -82,9 +72,9 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
         + ";grid-column-end: "
         + (number + 2).to_string().as_str();
     let row_duration = "grid-row-start: ".to_string()
-        + (start_time+2).to_string().as_str()
+        + (start_time+3).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time+2).to_string().as_str();
+        + (end_time+3).to_string().as_str();
 
     let row_duration_small= "grid-row-start: ".to_string()
         + (start_time+3).to_string().as_str()
@@ -92,13 +82,13 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
         + (end_time+3).to_string().as_str();
     rsx! {
            div{
-                class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] row-star hidden md:flex",
+                class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] hidden md:flex",
                 style: "{col_duration};{row_duration}",
                 "busy"
             }
         if number == 1 {
            div{
-                class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl flex items-center justify-center font-medium text-gray-50 mx-16 my-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] row-star md:hidden",
+                class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl flex items-center justify-center font-medium text-gray-50 mx-16 my-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] md:hidden",
                 style: "grid-column-start: 1;grid-column-end: 2;{row_duration_small}",
                 "busy"
             }
