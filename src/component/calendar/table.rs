@@ -26,9 +26,6 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
     rsx! {
      div{
          class:"flex-1 -translate-x-12 grid-cols-11 hidden md:grid",
-         for e in all_events{
-             {e}
-         }
             div{
                  class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
              }
@@ -38,19 +35,23 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
                      "{date_schedule.get(i).unwrap().0}"
              }
          }
-         for _ in (0..968){
+         for _ in (0..1111){
             div{
                  class:"border-b border-r {line_color} h-8",
                  style:"border-style:dashed solid"
              }
          }
      }
+        //painting 
+     div{
+         class:"absolute w-3/4 translate-x-[15%] translate-y-16 grid-cols-10 grid-rows-[repeat(96,32px)] hidden md:grid",
+         for e in all_events{
+             {e}
+         }
+     }
              // below is for small screen
      div{
          class:"flex-1 grid -translate-x-12 grid-cols-1 md:hidden",
-            for e in first_event{
-            {e}
-            }
             div{
                  class: "border-r {line_color} h-8",
              }
@@ -58,12 +59,19 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
                  class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
                  "{date_schedule.first().unwrap().0}"
              }
-         for _ in (0..95){
+         for _ in (0..100){
             div{
                  class:"border-b border-r {line_color} h-8",
                  style:"border-style:dashed solid"
              }
          }
+     }
+        // paint events table
+     div{
+         class:"absolute w-1/2 grid translate-y-16 translate-x-1/2 grid-cols-1 grid-rows-[repeat(96,32px)] md:hidden",
+            for e in first_event{
+            {e}
+            }
      }
     }
 }
@@ -74,18 +82,18 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
         return rsx! {};
     }
     let col_duration = "grid-column-start: ".to_string()
-        + (number + 1).to_string().as_str()
+        + number.to_string().as_str()
         + ";grid-column-end: "
-        + (number + 2).to_string().as_str();
+        + (number+1).to_string().as_str();
     let row_duration = "grid-row-start: ".to_string()
-        + (start_time + 3).to_string().as_str()
+        + (start_time+1).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time + 3).to_string().as_str();
+        + (end_time+1).to_string().as_str();
 
     let row_duration_small = "grid-row-start: ".to_string()
-        + (start_time + 3).to_string().as_str()
+        + (start_time+1).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time + 3).to_string().as_str();
+        + (end_time+1).to_string().as_str();
     rsx! {
            div{
                 class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] hidden md:flex",
