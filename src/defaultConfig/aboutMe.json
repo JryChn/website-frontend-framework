@@ -108,6 +108,6 @@
       "image": "https://source.unsplash.com/random/"
     }
   ],
-  "music_art_1": "/static/test.mp4",
-  "music_art_2": "https://source.unsplash.com/random/"
+  "music_art_1": "",
+  "music_art_2": ""
 }

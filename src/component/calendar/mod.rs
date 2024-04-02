@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use manganis::mg;
 
 use crate::component::calendar::calendar::CalendarContent;
 use crate::component::loading::Loading;
@@ -84,7 +85,7 @@ fn WelcomeCalendar(started:Signal<bool>) -> Element {
 
 #[component]
 fn CalendarSVG() -> Element {
-    rsx! { img { class: "w-12 h-12 mx-auto", src: "/static/calendar_2.svg" } }
+    rsx! { img { class: "w-12 h-12 mx-auto", src: mg!(file("src/assets/svg/calendar_2.svg")) } }
 }
 #[component]
 fn CalendarMono() -> Element {

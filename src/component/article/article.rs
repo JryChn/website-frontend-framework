@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_router::prelude::GoBackButton;
+use manganis::mg;
 use web_sys::ScrollBehavior;
 use web_sys::ScrollToOptions;
 use web_sys::wasm_bindgen::UnwrapThrowExt;
@@ -68,7 +69,7 @@ fn RenderArticle(content: Article) -> Element {
                 id: "go_back_button",
                 class: "absolute my-20 mx-8 font-light text-lg text-center align-middle hidden md:block",
                 GoBackButton { 
-                    img { class: "inline-block", src: "/static/go_back.svg" }
+                    img { class: "inline-block", src: mg!(file("src/assets/svg/go_back.svg")) }
                     "Back to list"
                 }
             }
@@ -82,7 +83,7 @@ fn RenderArticle(content: Article) -> Element {
                             ScrollToOptions::new().behavior(ScrollBehavior::Smooth).top(0f64),
                         );
                 },
-                img { src: "/static/align_top.svg" }
+                img { src: mg!(file("src/assets/svg/align_top.svg")) }
             }
             div { id: "article_content", class: "w-full min-h-screen shadow-t",
                 div {

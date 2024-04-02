@@ -2,6 +2,7 @@ use std::collections::{HashMap, HashSet};
 
 use dioxus::dioxus_core::Element;
 use dioxus::prelude::*;
+use manganis::mg;
 
 use crate::model::Article::Article;
 
@@ -14,7 +15,7 @@ pub fn Tags(tags:Signal<HashMap<String, i32>>, tags_filter:Signal<HashSet<String
             div {
                 img {
                     class: "inline-block w-8 h-8 my-2.5 mr-[2%]",
-                    src: "/static/tag.svg"
+                    src: mg!(file("src/assets/svg/tag.svg"))
                 }
                 for t in tags_filter() {
                     div {
@@ -25,7 +26,7 @@ pub fn Tags(tags:Signal<HashMap<String, i32>>, tags_filter:Signal<HashSet<String
                         }
                         img {
                             class: "w-3.5 h-3.5 flex-1 pr-1 ",
-                            src: "/static/close_black.svg",
+                            src: mg!(file("src/assets/svg/close_black.svg")),
                             onclick: move |_| {
                                 tags_filter.write().remove(&t);
                             }

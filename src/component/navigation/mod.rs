@@ -3,6 +3,7 @@
 use std::cell::Ref;
 
 use dioxus::prelude::*;
+use manganis::mg;
 
 use crate::NAVIGATOR;
 
@@ -51,7 +52,7 @@ fn SideBar(nav_sidebar_switch: Signal<bool>) -> Element {
     if nav_sidebar_switch() {
         rsx! {
                     img {
-                        src: "/static/close.svg",
+                        src: mg!(file("src/assets/svg/close.svg")),
                         class: "fixed right-4 top-3 cursor-pointer z-30",
                         onclick: move |_| {
                             nav_sidebar_switch.set(false);
@@ -74,7 +75,7 @@ fn SideBar(nav_sidebar_switch: Signal<bool>) -> Element {
                                 },
                                 Link{to: "{url.1}", "{url.0}"}
                             }
-                img { src: "/static/straightLine.svg" }
+                img { src: mg!(file("src/assets/svg/straightLine.svg")) }
 
         }
                         }

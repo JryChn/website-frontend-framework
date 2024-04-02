@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use dioxus::core_macro::{component, rsx};
 use dioxus::dioxus_core::Element;
 use dioxus::prelude::*;
+use manganis::mg;
 
 use crate::utils::wordCloud::word_cloud_maker;
 
@@ -16,7 +17,7 @@ pub fn Keywords(keywords: Signal<HashMap<String,i32>>) -> Element{
             class: "w-11/12 h-[20vw] mx-auto my-10 flex-1",
             img {
                 class: "inline-block w-8 h-8 my-2 mr-[2%]",
-                src: "/static/keywords.svg"
+                src: mg!(file("src/assets/svg/keywords.svg"))
             }
             div { id: "article_list_keys", class: "w-11/12 h-[90%]" }
         }

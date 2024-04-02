@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use manganis::mg;
 
 use crate::model::{ConfigurationTemplate, Welcome};
 use crate::Route;
@@ -49,7 +50,7 @@ pub fn WelcomePage(welcome:Welcome) -> Element {
                         let dom = gloo::utils::document_element();
                         dom.class_list().toggle("dark").expect("Error when toggle dark");
                     },
-                    img { src: "/static/bulb.svg" }
+                    img { src: mg!(file("src/assets/svg/bulb.svg")) }
                 }
             }
             div {
@@ -57,7 +58,7 @@ pub fn WelcomePage(welcome:Welcome) -> Element {
                 class: "absolute bottom-5 left-1/2 -translate-x-1/2 w-8 h-8",
                 img {
                     class: "relative mx-auto w-full h-full top-1/2 animate-bounce cursor-pointer",
-                    src: "/static/down.svg"
+                    src: mg!(file("src/assets/svg/down.svg"))
                 }
             }
         }

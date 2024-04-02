@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_router::prelude::Link;
+use manganis::mg;
 
 use crate::model::{ConfigurationTemplate, Contact};
 use crate::Route;
@@ -16,25 +17,25 @@ pub fn Icons(contact :Contact) -> Element {
             div { class: "flex justify-center items-center ",
                 Link { class: "w-full h-full", to: email, img {
                     class: "w-full h-full p-2 cursor-pointer",
-                    src: "/static/email.svg"
+                    src: mg!(file("src/assets/svg/email.svg"))
                 } }
             }
             div { class: "flex justify-center items-center",
                 Link { class: "w-full h-full", to: github_url, img {
                     class: "w-full h-full p-2 cursor-pointer",
-                    src: "/static/github.svg"
+                    src: mg!(file("src/assets/svg/github.svg"))
                 } }
             }
             div { class: "flex justify-center items-center",
                 Link { to: telegram_url, class: "w-full h-full", img {
                     class: "w-full h-full p-2 cursor-pointer",
-                    src: "/static/telegram.svg"
+                    src: mg!(file("src/assets/svg/telegram.svg"))
                 } }
             }
             div { class: "flex justify-center items-center",
                 Link { class: "w-full h-full", to: Route::Calendar {}, img {
                     class: "w-full h-full p-2 cursor-pointer",
-                    src: "/static/calendar.svg"
+                    src: mg!(file("src/assets/svg/calendar.svg"))
                 } }
             }
         }

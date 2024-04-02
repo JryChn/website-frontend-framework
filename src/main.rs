@@ -14,14 +14,13 @@ use crate::component::header::header::Header;
 use crate::component::homepage::HomePage;
 use crate::component::loading::Loading;
 use crate::component::pageNotFound::pageNotFound::PageNotFound;
-use crate::model::ConfigurationTemplate;
 use crate::utils::encryptedUtils::fetch_configuration;
 
 mod component;
 mod model;
 mod utils;
 
-const _TAILWIND_CSS: &str = mg!(file("public/tailwind.css"));
+const _TAILWIND_CSS: &str = mg!(file("src/css/tailwind_output.css"));
 static NAVIGATOR: GlobalSignal<Vec<(String, Route)>> = Signal::global(|| {
     vec![
         ("Articles".to_string(), Route::ArticleList {}),
