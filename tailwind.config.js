@@ -2,11 +2,6 @@
 module.exports = {
   mode: "all",
   // this will generate all class
-  safelist: [
-    {
-      pattern: /./, // the "." means "everything"
-    },
-  ],
   darkMode:"class",
   content: ["./src/**/*.{rs,html,css}","./dist/**/*.html"],
   theme: {
