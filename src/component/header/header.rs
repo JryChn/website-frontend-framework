@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-use dioxus_router::prelude::*;
 
 use crate::{NAVIGATOR, Route};
 use crate::component::navigation::Navigate;
@@ -11,10 +10,10 @@ pub fn Header() -> Element {
     let title = &configuration().welcome.subtitle;
     let navigate = &*NAVIGATOR.read();
     let current_route = use_route::<Route>();
-    let underline_css = |r1:Route|{
-        if r1.eq(&current_route){
+    let underline_css = |r1: Route| {
+        if r1.eq(&current_route) {
             " border-b border-b-black "
-        }else{
+        } else {
             ""
         }
     };

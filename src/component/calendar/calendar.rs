@@ -3,13 +3,10 @@ use dioxus::prelude::*;
 use crate::component::calendar::{CalendarMono, CalendarSVG};
 use crate::component::calendar::table::Table;
 use crate::component::calendar::timeTable::TimeTable;
-use crate::model::AboutMe::AboutMePage;
-use crate::model::ConfigurationTemplate;
-use crate::utils::encryptedUtils::fetch_and_decrypt;
 
 #[component]
-pub fn CalendarContent(year:u32,days:Vec<(String,Vec<(u32,u32)>)>) -> Element {
-    rsx!{
+pub fn CalendarContent(year: u32, days: Vec<(String, Vec<(u32, u32)>)>) -> Element {
+    rsx! {
         div { class: "w-screen min-h[800px] select-none cursor-default",
             div { class: "relative hidden mt-28 mb-10 left-10 w-[400px] h-20 flex-row items-center justify-start md:flex",
                 CalendarSVG {}
@@ -44,4 +41,3 @@ pub fn CalendarContent(year:u32,days:Vec<(String,Vec<(u32,u32)>)>) -> Element {
         }
     }
 }
-

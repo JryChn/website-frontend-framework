@@ -1,6 +1,5 @@
 #![allow(non_snake_case)]
 
-use std::cell::Ref;
 
 use dioxus::prelude::*;
 use manganis::mg;
@@ -45,9 +44,9 @@ fn Hamburger(mut nav_sidebar_switch: Signal<bool>) -> Element {
 fn SideBar(nav_sidebar_switch: Signal<bool>) -> Element {
     let mut current_hover = use_signal(|| String::new());
     let current_template = match current_hover.read().as_str() {
-        "AboutMe" => { AboutMeTemplate()}
-        "Calendar" => {CalendarTemplate()}
-        _ => {ArticleTemplate()}
+        "AboutMe" => AboutMeTemplate(),
+        "Calendar" => CalendarTemplate(),
+        _ => ArticleTemplate(),
     };
     if nav_sidebar_switch() {
         rsx! {

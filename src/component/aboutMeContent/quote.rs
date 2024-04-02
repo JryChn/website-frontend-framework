@@ -1,10 +1,9 @@
-use dioxus::html::desc;
 use dioxus::prelude::*;
 
 #[component]
-pub fn Quote(description_quote:String) ->Element{
+pub fn Quote(description_quote: String) -> Element {
     let quote = check_and_generate_effect(description_quote);
-    rsx!{
+    rsx! {
         div { class: "absolute w-full h-[500px] flex justify-center mx-auto bg-[rgb(249,248,248)] select-none cursor-default overflow-hidden md:shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] md:h-96 md:translate-x-1/2 md:right-1/2 md:-translate-y-2/3 md:w-5/6 md:justify-normal ",
             div { class: "hidden w-1/3 items-center justify-center md:flex",
                 div { class: "w-36 h-36 bg-white rounded-full flex items-center justify-center",
@@ -31,7 +30,7 @@ pub fn Quote(description_quote:String) ->Element{
 
 fn check_and_generate_effect(quote: String) -> String {
     // use special decoration to replace /** test **/ in paragraph.
-    let special_content_wrapper_start =r##"<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-green-800 relative inline-block mx-3"><span class="relative text-white">"##;
+    let special_content_wrapper_start = r##"<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-green-800 relative inline-block mx-3"><span class="relative text-white">"##;
     let special_content_wrapper_end = r##"</span></span>"##;
     let quote = quote.replace(" **/", special_content_wrapper_end);
     let quote = quote.replace("/** ", &*special_content_wrapper_start);

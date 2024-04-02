@@ -6,10 +6,10 @@ pub enum ResourceType {
 }
 
 impl ResourceType {
-    pub fn get_reources_type(&self) -> String{
+    pub fn get_reources_type(&self) -> String {
         match self {
             MP4 => String::from("video/mp4"),
-            IMAGE=> String::from("image")
+            IMAGE => String::from("image"),
         }
     }
 }

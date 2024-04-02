@@ -23,10 +23,7 @@ pub fn Recommend(articles: Signal<Vec<ArticlesPage>>) -> Element {
         div {
             id: "article_list_sidebar_recommend",
             class: "w-11/12 mx-auto my-10 flex-1",
-            img {
-                class: "inline-block w-8 h-8 my-2 mr-[2%]",
-                src: mg!(file("src/assets/svg/editor.svg"))
-            }
+            img { class: "inline-block w-8 h-8 my-2 mr-[2%]", src: mg!(file("src/assets/svg/editor.svg")) }
             ul { class: "w-11/12 h-4/5 p-4 px-20", {articles_all} }
         }
     }

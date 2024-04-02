@@ -19,10 +19,9 @@ pub fn Calendar() -> Element {
         let api = configuration().calendar_api;
         let calendar;
         if api.is_empty() {
-            calendar = serde_json::from_str::<Calendar>(include_str!(
-                "../../defaultConfig/calendar.json"
-            ))
-            .unwrap();
+            calendar =
+                serde_json::from_str::<Calendar>(include_str!("../../defaultConfig/calendar.json"))
+                    .unwrap();
         } else {
             calendar = fetch_and_decrypt(api.as_str()).await.unwrap();
         }
@@ -30,7 +29,7 @@ pub fn Calendar() -> Element {
     });
     match &*result.value().read() {
         None => {
-            rsx! {Loading{}}
+            rsx! { Loading {} }
         }
         Some(result) => {
             rsx! {
@@ -49,7 +48,7 @@ pub fn Calendar() -> Element {
                             .collect()
                     }
                 } else {
-                    WelcomeCalendar {started}
+                    WelcomeCalendar { started }
                 }
             }
         }
@@ -57,7 +56,7 @@ pub fn Calendar() -> Element {
 }
 
 #[component]
-fn WelcomeCalendar(started:Signal<bool>) -> Element {
+fn WelcomeCalendar(started: Signal<bool>) -> Element {
     rsx! {
         div {
             id: "calendar",
@@ -70,13 +69,10 @@ fn WelcomeCalendar(started:Signal<bool>) -> Element {
                 div { class: "text-3xl font-light text-center w-full mx-auto my-5 md:w-2/3",
                     "你可以在这里查看我的行程，看看某一天我有时间可以请我吃饭，甚至可以book我的时间一起活动，当然，如果你没有恶意的话，我欣然赴约"
                 }
-                div { 
+                div {
                     class: "w-auto h-auto bg-gradient-to-b from-purple-950 to-pink-900 from-30% rounded-2xl mx-auto shadow-[inset_0_4px_1px_0_rgba(0,0,0,0.25),0_7px_8px_0_rgba(0,0,0,0.25)] flex items-center justify-center p-2 my-10 cursor-pointer hover:shadow-zinc-800",
-                    onclick: move |_| {
-                        started.set(!started())
-                    },
-                    span { class: "text-3xl font-medium text-[rgb(82,124,89)]", "查看我的行程"
-                    }
+                    onclick: move |_| { started.set(!started()) },
+                    span { class: "text-3xl font-medium text-[rgb(82,124,89)]", "查看我的行程" }
                 }
             }
         }
@@ -85,7 +81,7 @@ fn WelcomeCalendar(started:Signal<bool>) -> Element {
 
 #[component]
 fn CalendarSVG() -> Element {
-    rsx! { img { class: "w-12 h-12 mx-auto", src: mg!(file("src/assets/svg/calendar_2.svg")) } }
+    rsx! {img { class: "w-12 h-12 mx-auto", src: mg!(file("src/assets/svg/calendar_2.svg")) }}
 }
 #[component]
 fn CalendarMono() -> Element {

@@ -4,19 +4,14 @@ use dioxus::dioxus_core::Element;
 use dioxus::prelude::*;
 use manganis::mg;
 
-use crate::model::Article::Article;
-
 #[component]
-pub fn Tags(tags:Signal<HashMap<String, i32>>, tags_filter:Signal<HashSet<String>>) -> Element{
-    rsx!{
+pub fn Tags(tags: Signal<HashMap<String, i32>>, tags_filter: Signal<HashSet<String>>) -> Element {
+    rsx! {
         div {
             id: "article_list_sidebar_tag",
             class: "w-11/12 mx-auto my-10 flex-1",
             div {
-                img {
-                    class: "inline-block w-8 h-8 my-2.5 mr-[2%]",
-                    src: mg!(file("src/assets/svg/tag.svg"))
-                }
+                img { class: "inline-block w-8 h-8 my-2.5 mr-[2%]", src: mg!(file("src/assets/svg/tag.svg")) }
                 for t in tags_filter() {
                     div {
                         id: "tags_block",

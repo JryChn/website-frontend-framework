@@ -1,7 +1,4 @@
 use dioxus::prelude::*;
-use futures::future::join_all;
-use rand::prelude::SliceRandom;
-use rand::thread_rng;
 
 use crate::component::aboutMeContent::aboutme::AboutMe;
 use crate::component::aboutMeContent::experience::Experience;
@@ -9,14 +6,9 @@ use crate::component::aboutMeContent::hobby::Hobby;
 use crate::component::aboutMeContent::musicArt::MusicAndArt;
 use crate::component::aboutMeContent::quote::Quote;
 use crate::component::aboutMeContent::skill::Skill;
-use crate::component::loading::Loading;
-use crate::model;
-use crate::model::{AboutMe, ConfigurationTemplate};
 use crate::model::AboutMe::AboutMePage;
-use crate::model::Article::Article;
+use crate::model::ConfigurationTemplate;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
-use crate::utils::netUtils::parse_to_data_url;
-use crate::utils::resourceType::ResourceType::IMAGE;
 
 mod aboutme;
 mod experience;
@@ -56,8 +48,11 @@ pub fn AboutMeContent() -> Element {
         let api = configuration().about_me_api;
         let aboutMe;
         if api.is_empty() {
-            aboutMe = serde_json::from_str::<AboutMePage>(include_str!("../../defaultConfig/aboutMe.json")).unwrap();
-        }else{
+            aboutMe = serde_json::from_str::<AboutMePage>(include_str!(
+                "../../defaultConfig/aboutMe.json"
+            ))
+            .unwrap();
+        } else {
             aboutMe = fetch_and_decrypt(api.as_str()).await.unwrap();
         }
         aboutMe

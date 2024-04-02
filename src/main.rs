@@ -1,9 +1,7 @@
 #![allow(non_snake_case)]
 
-use charming::element::Padding::Single;
 use dioxus::prelude::*;
 use dioxus_router::prelude::{Routable, Router};
-use log::LevelFilter;
 use manganis::mg;
 
 use crate::component::aboutMeContent::AboutMeContent;
@@ -44,7 +42,7 @@ fn App() -> Element {
         Some(config) => {
             let configuration = Signal::new(config.clone());
             use_context_provider(|| configuration);
-            rsx!( Router::<Route> {} )
+            rsx!(Router::<Route> {})
         }
     }
 }

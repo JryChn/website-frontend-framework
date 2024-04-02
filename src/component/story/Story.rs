@@ -3,5 +3,5 @@
 use dioxus::prelude::*;
 
 pub fn Story() -> Element {
-    rsx!{ div { id: "story" } }
+    rsx! { div { id: "story" } }
 }

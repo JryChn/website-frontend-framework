@@ -9,7 +9,7 @@ pub struct Calendar {
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Event {
     pub day: String,
-    pub duration:Vec<Duration>,
+    pub duration: Vec<Duration>,
 }
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Duration {

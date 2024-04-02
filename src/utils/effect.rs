@@ -1,2 +1,1 @@
-pub fn window_reszie_event_listener() {
-}
+pub fn window_reszie_event_listener() {}

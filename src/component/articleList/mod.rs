@@ -18,15 +18,15 @@ use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
 
 mod articles;
-mod tags;
 mod keywords;
 mod recommend;
+mod tags;
 
-const MAX_ARTICLES_ONE_PAGE:usize = 7;
+const MAX_ARTICLES_ONE_PAGE: usize = 7;
 
-struct ArticlesPage{
+struct ArticlesPage {
     articles_in_page: Vec<Article>,
-    is_on_showing: bool
+    is_on_showing: bool,
 }
 
 #[component]
@@ -34,8 +34,7 @@ pub fn ArticleList() -> Element {
     let configuration = consume_context::<Signal<ConfigurationTemplate>>();
     let tags_filter = use_signal(|| HashSet::<String>::new());
     let mut articles = use_signal(|| Vec::<ArticlesPage>::new());
-    let mut tags =
-        use_signal(|| HashMap::<String, i32>::new());
+    let mut tags = use_signal(|| HashMap::<String, i32>::new());
     let mut keywords = use_signal(|| HashMap::<String, i32>::new());
     let content = use_resource(move || async move {
         let all_articles = fetch_articles(configuration().article_list_api).await;
@@ -43,7 +42,7 @@ pub fn ArticleList() -> Element {
         keywords.set(init_keywords(&all_articles));
         articles.set(construct_article_split_page(all_articles));
     });
-    rsx!{
+    rsx! {
         div {
             id: "article_list",
             class: "w-screen h-screen min-h-[400px] relative",
@@ -68,31 +67,36 @@ pub fn ArticleList() -> Element {
     }
 }
 
-async fn fetch_articles(configuration_api :String)-> Vec<Article>{
+async fn fetch_articles(configuration_api: String) -> Vec<Article> {
     let mut all_articles = Vec::<Article>::new();
     if configuration_api.is_empty() {
-        all_articles = serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json")).expect("loading failed");
+        all_articles =
+            serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json"))
+                .expect("loading failed");
     } else {
-        all_articles = fetch_and_decrypt::<Vec<Article>>(&configuration_api).await.unwrap();
+        all_articles = fetch_and_decrypt::<Vec<Article>>(&configuration_api)
+            .await
+            .unwrap();
     }
     join_all(all_articles.iter_mut().map(|a| async {
-        a.image = parse_to_data_url(a.image.clone(),IMAGE).await;
-    })).await;
+        a.image = parse_to_data_url(a.image.clone(), IMAGE).await;
+    }))
+    .await;
     all_articles
 }
 
-fn construct_article_split_page(mut articles:Vec<Article>) -> Vec<ArticlesPage>{
+fn construct_article_split_page(mut articles: Vec<Article>) -> Vec<ArticlesPage> {
     let mut article_vec = Vec::<ArticlesPage>::new();
     while articles.len() > MAX_ARTICLES_ONE_PAGE {
         let (a, b) = articles.split_at(MAX_ARTICLES_ONE_PAGE);
-        let new_articles_page = ArticlesPage{
+        let new_articles_page = ArticlesPage {
             articles_in_page: Vec::from(a),
-            is_on_showing:false
+            is_on_showing: false,
         };
         article_vec.push(new_articles_page);
         articles = Vec::from(b);
     }
-    let last_articles_page = ArticlesPage{
+    let last_articles_page = ArticlesPage {
         articles_in_page: articles,
         is_on_showing: false,
     };
@@ -101,23 +105,23 @@ fn construct_article_split_page(mut articles:Vec<Article>) -> Vec<ArticlesPage>{
     article_vec
 }
 
-fn init_tags(articles :&Vec<Article>) -> HashMap<String,i32>{
-    let mut tags = HashMap::<String,i32>::new();
-    
-articles.iter().for_each(|a| {
-a.tags.iter().for_each(|t| {
-if tags.contains_key(t) {
-let count = tags.get(t).unwrap().add(1);
-tags.insert(t.clone(), count);
-} else {
-tags.insert(t.clone(), 1);
-}
-})
-});
+fn init_tags(articles: &Vec<Article>) -> HashMap<String, i32> {
+    let mut tags = HashMap::<String, i32>::new();
+
+    articles.iter().for_each(|a| {
+        a.tags.iter().for_each(|t| {
+            if tags.contains_key(t) {
+                let count = tags.get(t).unwrap().add(1);
+                tags.insert(t.clone(), count);
+            } else {
+                tags.insert(t.clone(), 1);
+            }
+        })
+    });
     tags
 }
-fn init_keywords(articles :&Vec<Article>) -> HashMap<String,i32>{
-    let mut keywords = HashMap::<String,i32>::new();
+fn init_keywords(articles: &Vec<Article>) -> HashMap<String, i32> {
+    let mut keywords = HashMap::<String, i32>::new();
     articles.iter().for_each(|a| {
         a.keywords.iter().for_each(|k| {
             if keywords.contains_key(k) {

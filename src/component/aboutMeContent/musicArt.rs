@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn MusicAndArt(video_url:String,video2_url:String) ->Element{
+pub fn MusicAndArt(video_url: String, video2_url: String) -> Element {
     rsx! {
         div { class: "relative w-full flex flex-col bg-black top-14",
             div { class: "relative h-28 my-8 flex justify-evenly md:block",

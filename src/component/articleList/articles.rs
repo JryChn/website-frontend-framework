@@ -62,7 +62,7 @@ fn RenderArticles(article: Article) -> Element {
             span { class: "text-3xl block", "{article.title}" }
         span { class: "text-md block text-gray-300 flex-1 ", "{article.introduction}" }
 
-            } 
+            }
         }
     }
 }

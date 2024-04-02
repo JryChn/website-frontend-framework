@@ -7,7 +7,7 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
     for (i, (name, ele)) in date_time.iter().enumerate() {
         let mut element_vec = Vec::new();
         for (start, end) in ele {
-            element_vec.push(GenerateSchedule(i+1, *start, *end));
+            element_vec.push(GenerateSchedule(i + 1, *start, *end));
         }
         date_schedule.push((name, element_vec));
     }
@@ -16,7 +16,13 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
         .flat_map(|(_, event)| event)
         .map(|e| e.clone())
         .collect();
-    let first_event :Vec<Option<VNode>>= date_schedule.first().unwrap().1.iter().map(|e|e.clone()).collect();
+    let first_event: Vec<Option<VNode>> = date_schedule
+        .first()
+        .unwrap()
+        .1
+        .iter()
+        .map(|e| e.clone())
+        .collect();
     rsx! {
      div{
          class:"flex-1 -translate-x-12 grid-cols-11 hidden md:grid",
@@ -72,14 +78,14 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
         + ";grid-column-end: "
         + (number + 2).to_string().as_str();
     let row_duration = "grid-row-start: ".to_string()
-        + (start_time+3).to_string().as_str()
+        + (start_time + 3).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time+3).to_string().as_str();
+        + (end_time + 3).to_string().as_str();
 
-    let row_duration_small= "grid-row-start: ".to_string()
-        + (start_time+3).to_string().as_str()
+    let row_duration_small = "grid-row-start: ".to_string()
+        + (start_time + 3).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time+3).to_string().as_str();
+        + (end_time + 3).to_string().as_str();
     rsx! {
            div{
                 class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] hidden md:flex",

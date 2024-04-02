@@ -1,12 +1,11 @@
-use charming::{Chart, val, WasmRenderer};
+use charming::{Chart, WasmRenderer};
 use charming::component::{RadarCoordinate, RadarIndicator, Title};
-use charming::element::{Color, Emphasis};
+use charming::element::Color;
 use charming::series::Radar;
 use charming::theme::Theme;
 use dioxus::prelude::*;
-use gloo::console::console_dbg;
 use rand::prelude::SliceRandom;
-use uuid::{uuid, Uuid};
+use uuid::Uuid;
 
 use crate::component::aboutMeContent::SkillContent;
 
@@ -30,7 +29,7 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                 div { class: "flex flex-col item-center md:block md:w-full md:h-[400px] md:overflow-hidden",
                     for chart in charts {
                         div { class: "w-screen flex flex-col md:w-full md:h-full md:flex-row",
-                            {chart.chart}
+                            {chart.chart},
                             div { class: "flex flex-col my-8 items-center",
                                 div { class: "text-4xl font-normal text-white", "{chart.title}" }
                                 div { class: "w-96 text-lg text-white font-light my-4",
@@ -58,23 +57,21 @@ fn create_radar(skill: &SkillContent) -> Skills {
         }
         actual_values.push(value);
     }
-    let id =
-    Uuid::new_v4().as_u128().to_string();
-    let chart = Chart::new().background_color(Color::from("rgb(27,46,77)"))
+    let id = Uuid::new_v4().as_u128().to_string();
+    let chart = Chart::new()
+        .background_color(Color::from("rgb(27,46,77)"))
         .color(vec![get_random_color()])
         .radar(RadarCoordinate::new().indicator(indicators))
         .series(Radar::new().data(vec![(actual_values)]));
-    let chart = rsx! {div {
-        id: "{id}",
-        class: "w-96 h-96 mx-auto",
-        onmounted: move |_| {
-            WasmRenderer::new(400, 400)
-                .theme(Theme::Essos)
-                .render(&id, &chart)
-                .unwrap();
+    let chart = rsx! {
+        div {
+            id: "{id}",
+            class: "w-96 h-96 mx-auto",
+            onmounted: move |_| {
+                WasmRenderer::new(400, 400).theme(Theme::Essos).render(&id, &chart).unwrap();
+            }
         }
-    }
-        };
+    };
     Skills {
         title: skill.clone().skill_name,
         description: skill.clone().description,
@@ -82,22 +79,10 @@ fn create_radar(skill: &SkillContent) -> Skills {
     }
 }
 
-fn get_random_color() -> Color{
+fn get_random_color() -> Color {
     let color = vec![
-    "blue",
-    "yellow",
-    "#c23531",
-    "#2f4554",
-    "#61a0a8",
-    "#d48265",
-    "#91c7ae",
-    "#749f83",
-    "#ca8622",
-    "#bda29a",
-    "#6e7074",
-    "#546570",
-    "#c4ccd3"
+        "blue", "yellow", "#c23531", "#2f4554", "#61a0a8", "#d48265", "#91c7ae", "#749f83",
+        "#ca8622", "#bda29a", "#6e7074", "#546570", "#c4ccd3",
     ];
     Color::from(*color.choose(&mut rand::thread_rng()).unwrap_or(&"yellow"))
-
 }

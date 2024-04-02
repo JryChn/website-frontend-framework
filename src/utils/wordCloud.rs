@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 pub fn word_cloud_maker(keywords: &HashMap<String, i32>) -> String {
     let mut keywords_string = String::new();
-    keywords.iter().for_each(|kv|{
+    keywords.iter().for_each(|kv| {
         keywords_string.push_str("{name: '");
         keywords_string.push_str(kv.0);
         keywords_string.push_str("',value:");

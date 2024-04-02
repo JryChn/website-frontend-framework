@@ -1,11 +1,4 @@
-use std::cell::Ref;
-use std::convert::Into;
-use std::ops::Deref;
-use std::string::ToString;
-
 use dioxus::prelude::*;
-use futures::StreamExt;
-use gloo::dialogs::confirm;
 
 use crate::component::homepage::icons::Icons;
 use crate::component::homepage::single_welcome::WelcomePage;

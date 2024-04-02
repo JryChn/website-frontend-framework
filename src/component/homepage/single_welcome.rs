@@ -1,17 +1,20 @@
 use dioxus::prelude::*;
 use manganis::mg;
 
-use crate::model::{ConfigurationTemplate, Welcome};
+use crate::model::Welcome;
 use crate::Route;
 
 #[component]
-pub fn WelcomePage(welcome:Welcome) -> Element {
-    let animation_url = if gloo::utils::document_element().class_list().contains("dark") {
+pub fn WelcomePage(welcome: Welcome) -> Element {
+    let animation_url = if gloo::utils::document_element()
+        .class_list()
+        .contains("dark")
+    {
         &welcome.animation_url.dark
     } else {
         &welcome.animation_url.light
     };
-    rsx!{
+    rsx! {
         div {
             id: "welcome_page",
             class: "w-screen h-screen min-h-[800px] bg-gray-50",
