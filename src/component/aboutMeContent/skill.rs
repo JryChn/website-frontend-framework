@@ -4,20 +4,21 @@ use charming::element::{Color, Emphasis};
 use charming::series::Radar;
 use charming::theme::Theme;
 use dioxus::prelude::*;
+use gloo::console::console_dbg;
 use rand::prelude::SliceRandom;
 use uuid::{uuid, Uuid};
 
 use crate::component::aboutMeContent::SkillContent;
 
 struct Skills {
-    id: String,
     title: String,
     description: String,
-    chart: Chart,
+    chart: Option<VNode>,
 }
 
 #[component]
 pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
+    // todo: make skill can scroll
     let mut charts = Vec::new();
     for skill in skill_content {
         charts.push(create_radar(&skill));
@@ -28,18 +29,9 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
             div { class: "w-full bg-[rgb(27,46,77)] min-h-[400px] mx-auto flex md:w-3/4",
                 div { class: "flex flex-col item-center md:block md:w-full md:h-[400px] md:overflow-hidden",
                     for chart in charts {
-                        div { class: "w-screen my-16 flex flex-col md:w-full md:h-full md:flex-row",
-                            div {
-                                id: "{chart.id}",
-                                class: "w-72 h-72 mx-auto",
-                                onmounted: move |_| {
-                                    WasmRenderer::new(300, 300)
-                                        .theme(Theme::Essos)
-                                        .render(&chart.id, &chart.chart)
-                                        .unwrap();
-                                }
-                            }
-                            div { class: "flex flex-col my-8 items-center md:mx-6",
+                        div { class: "w-screen flex flex-col md:w-full md:h-full md:flex-row",
+                            {chart.chart}
+                            div { class: "flex flex-col my-8 items-center",
                                 div { class: "text-4xl font-normal text-white", "{chart.title}" }
                                 div { class: "w-96 text-lg text-white font-light my-4",
                                     "{chart.description}"
@@ -66,14 +58,27 @@ fn create_radar(skill: &SkillContent) -> Skills {
         }
         actual_values.push(value);
     }
+    let id =
+    Uuid::new_v4().as_u128().to_string();
+    let chart = Chart::new().background_color(Color::from("rgb(27,46,77)"))
+        .color(vec![get_random_color()])
+        .radar(RadarCoordinate::new().indicator(indicators))
+        .series(Radar::new().data(vec![(actual_values)]));
+    let chart = rsx! {div {
+        id: "{id}",
+        class: "w-96 h-96 mx-auto",
+        onmounted: move |_| {
+            WasmRenderer::new(400, 400)
+                .theme(Theme::Essos)
+                .render(&id, &chart)
+                .unwrap();
+        }
+    }
+        };
     Skills {
-        id: Uuid::new_v4().as_u128().to_string(),
         title: skill.clone().skill_name,
         description: skill.clone().description,
-        chart: Chart::new().background_color(Color::from("rgb(27,46,77)"))
-            .color(vec![get_random_color()])
-            .radar(RadarCoordinate::new().indicator(indicators))
-            .series(Radar::new().data(vec![(actual_values)])),
+        chart,
     }
 }
 

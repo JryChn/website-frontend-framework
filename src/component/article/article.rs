@@ -14,6 +14,7 @@ use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[component]
 pub fn Article(id: String, article: Option<Article>) -> Element {
+    //todo: make article can click from outside
     if article.is_some() {
         let content = article.unwrap();
         return rsx! { RenderArticle { content } };
