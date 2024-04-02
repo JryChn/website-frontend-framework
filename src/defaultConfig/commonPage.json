@@ -8,7 +8,7 @@
     "title": "Test.   domainthis    /com",
     "subtitle": "djeremy",
     "animation_url": {
-      "light": "static/test.mp4",
+      "light": "https://www.hellomonday.com/assets/video/animations/hm-hero-desktop.mp4",
       "dark": ""
     }
   },

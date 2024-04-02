@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "all",
+  // this will generate all class
+  safelist: [
+    {
+      pattern: /./, // the "." means "everything"
+    },
+  ],
   darkMode:"class",
   content: ["./src/**/*.{rs,html,css}","./dist/**/*.html"],
   theme: {
@@ -28,7 +34,7 @@ module.exports = {
       animation:{
         'wordBlink': 'blink 0.75s infinite step-end',
         'irregularShaking': 'irregularShaking 1s linear infinite alternate-reverse',
-        'slideFromR2L': 'slideRL 1s linear'
+        'slideFromR2L': 'slideRL 900ms linear'
       }
     },
   },
