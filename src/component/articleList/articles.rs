@@ -14,6 +14,12 @@ pub fn Articles(
     let articles_after_filter = calculate_filtered_articles(articles, tags_filter);
     rsx! {ul {id: "article_list_content",
         class: "absolute h-[1600px] w-[90%]  md:w-[65%] left-4 top-12 p-5 flex flex-col justify-start gap-5",
+        if articles_after_filter.is_empty() {
+            RenderArticles{}
+            RenderArticles{}
+            RenderArticles{}
+            
+        }
         for article in articles_after_filter{
             RenderArticles{article}
         }
@@ -48,8 +54,17 @@ fn calculate_filtered_articles(
 }
 
 #[component]
-fn RenderArticles(article: Article) -> Element {
-    rsx! {
+fn RenderArticles(article: Option<Article>) -> Element {
+    match article{
+        None => {
+            rsx!{
+            div{
+            class: "relative w-full h-44 border border-black/10 rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] animate-wait",
+            }
+            }
+        }
+        Some(article) => {
+            rsx! {
         Link {
             to: Route::Article { id: article.id.clone() },
             class: "relative w-full h-44 border border-black/10 rounded-2xl shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]",
@@ -63,6 +78,9 @@ fn RenderArticles(article: Article) -> Element {
         span { class: "text-md block text-gray-300 flex-1 ", "{article.introduction}" }
 
             }
+        }
+    }
+            
         }
     }
 }

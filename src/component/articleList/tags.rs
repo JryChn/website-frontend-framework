@@ -30,6 +30,13 @@ pub fn Tags(tags: Signal<HashMap<String, i32>>, tags_filter: Signal<HashSet<Stri
                 }
             }
             ul { class: "w-11/12 h-4/5 p-8",
+                if tags().is_empty() {
+                    for _ in(0..5){
+                    li{
+                        class: "w-16 h-5 m-3 inline-block animate-wait",
+                    }
+                    }
+                }
                 for t in tags() {
                     li {
                         class: "m-3 inline-block hover:underline cursor-pointer",
