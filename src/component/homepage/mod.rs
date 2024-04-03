@@ -24,16 +24,18 @@ pub fn HomePage() -> Element {
     });
     match &*config.value().read() {
         None => {
-            rsx! { Loading {} }
+            rsx! { Loading { black_bg: true } }
         }
         Some(config) => {
             let welcome = config.welcome.to_owned();
             let contact = config.contact.to_owned();
             rsx! {
-                main { id: "welcome",
-                    WelcomePage { welcome }
-                    Navigate {}
-                    Icons { contact }
+                div { class: "bg-black overflow-hidden",
+                    main { id: "welcome", class: "animate-none md:animate-down",
+                        WelcomePage { welcome }
+                        Navigate {}
+                        Icons { contact }
+                    }
                 }
             }
         }

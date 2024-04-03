@@ -69,7 +69,7 @@ fn RenderArticle(content: Article) -> Element {
             div {
                 id: "go_back_button",
                 class: "absolute my-20 mx-8 font-light text-lg text-center align-middle hidden md:block",
-                GoBackButton {
+                GoBackButton { 
                     img { class: "inline-block", src: mg!(file("src/assets/svg/go_back.svg")) }
                     "Back to list"
                 }

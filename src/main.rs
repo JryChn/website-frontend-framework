@@ -42,7 +42,7 @@ fn App() -> Element {
         Some(config) => {
             let configuration = Signal::new(config.clone());
             use_context_provider(|| configuration);
-            rsx!(Router::<Route> {})
+            rsx!( Router::<Route> {} )
         }
     }
 }

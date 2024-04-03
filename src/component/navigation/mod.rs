@@ -1,6 +1,5 @@
 #![allow(non_snake_case)]
 
-
 use dioxus::prelude::*;
 use manganis::mg;
 
@@ -74,7 +73,22 @@ fn SideBar(nav_sidebar_switch: Signal<bool>) -> Element {
                                 },
                                 Link{to: "{url.1}", "{url.0}"}
                             }
-                img { src: mg!(file("src/assets/svg/straightLine.svg")) }
+                div{
+                    class:"w-44 h-2.5 bg-black text-white flex justify-center items-center whitespace-nowrap",
+                    span{
+                       class:"text-xl",
+                        "●"
+                    }
+                    span{
+                       class:"text-sm",
+                        "------------------"
+                    }
+                    span{
+                       class:"text-xl",
+                        "●"
+                    }
+                }
+                // img { src: mg!(file("src/assets/svg/straightLine.svg")) }
 
         }
                         }

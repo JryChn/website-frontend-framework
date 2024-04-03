@@ -42,7 +42,7 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
              }
          }
      }
-        //painting 
+        //painting
      div{
          class:"absolute w-3/4 translate-x-[15%] translate-y-16 grid-cols-10 grid-rows-[repeat(96,32px)] hidden md:grid",
          for e in all_events{
@@ -84,16 +84,16 @@ fn GenerateSchedule(number: usize, start_time: u32, end_time: u32) -> Option<VNo
     let col_duration = "grid-column-start: ".to_string()
         + number.to_string().as_str()
         + ";grid-column-end: "
-        + (number+1).to_string().as_str();
+        + (number + 1).to_string().as_str();
     let row_duration = "grid-row-start: ".to_string()
-        + (start_time+1).to_string().as_str()
+        + (start_time + 1).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time+1).to_string().as_str();
+        + (end_time + 1).to_string().as_str();
 
     let row_duration_small = "grid-row-start: ".to_string()
-        + (start_time+1).to_string().as_str()
+        + (start_time + 1).to_string().as_str()
         + ";grid-row-end: "
-        + (end_time+1).to_string().as_str();
+        + (end_time + 1).to_string().as_str();
     rsx! {
            div{
                 class: "bg-red-900 shadow-[4px_4px_14px_0_rgba(0,0,0,0.25)] rounded-2xl items-center justify-center font-medium text-gray-50 m-2 hover:bg-red-800 hover:shadow-[4px_4px_14px_0_rgba(0,0,0,0.5)] hidden md:flex",
