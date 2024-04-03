@@ -3,26 +3,20 @@ use dioxus::prelude::*;
 #[component]
 pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
     let line_color = "border-gray-200";
-    let mut date_schedule = Vec::new();
+    let mut date_schedule = Signal::new(Vec::new());
+    let mut all_events: Signal<Vec<Option<VNode>>> = Signal::new(Vec::new());
     for (i, (name, ele)) in date_time.iter().enumerate() {
         let mut element_vec = Vec::new();
         for (start, end) in ele {
             element_vec.push(GenerateSchedule(i + 1, *start, *end));
         }
-        date_schedule.push((name, element_vec));
+        date_schedule.write().push((name.clone(), element_vec));
     }
-    let all_events: Vec<Option<VNode>> = date_schedule
+    all_events.set(date_schedule.read()
         .iter()
         .flat_map(|(_, event)| event)
         .map(|e| e.clone())
-        .collect();
-    let first_event: Vec<Option<VNode>> = date_schedule
-        .first()
-        .unwrap()
-        .1
-        .iter()
-        .map(|e| e.clone())
-        .collect();
+        .collect());
     rsx! {
      div{
          class:"flex-1 -translate-x-12 grid-cols-11 hidden md:grid",
@@ -40,13 +34,6 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
                  class:"border-b border-r {line_color} h-8",
                  style:"border-style:dashed solid"
              }
-         }
-     }
-        //painting
-     div{
-         class:"absolute w-3/4 translate-x-[15%] translate-y-16 grid-cols-10 grid-rows-[repeat(96,32px)] hidden md:grid",
-         for e in all_events{
-             {e}
          }
      }
              // below is for small screen
@@ -67,11 +54,12 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
          }
      }
         // paint events table
+        //painting
      div{
-         class:"absolute w-1/2 grid translate-y-16 translate-x-1/2 grid-cols-1 grid-rows-[repeat(96,32px)] md:hidden",
-            for e in first_event{
-            {e}
-            }
+         class:"absolute w-1/2 translate-x-1/2 translate-y-16 grid-cols-1 grid-rows-[repeat(96,32px)] grid md:w-3/4 md:translate-x-[15%] md:grid-cols-10",
+         for e in all_events(){
+             {e}
+         }
      }
     }
 }

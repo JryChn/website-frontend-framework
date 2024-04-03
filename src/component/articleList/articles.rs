@@ -74,7 +74,7 @@ fn ArticlePages(articles: Signal<Vec<ArticlesPage>>) -> Element {
         div {
             id: "article_list_table",
             class: "relative w-full h-8 my-16 flex rounded-[30px] shadow-[0_-4px_4px_0_rgba(0,0,0,0.25)] justify-center text-lg",
-            for (i , mut t) in articles.iter().enumerate() {
+            for (i , t) in articles.iter().enumerate() {
             if t.is_on_showing {
             div { class: "mx-2 text-gray-500 select-none cursor-default", "{i+1}" }
             } else {
