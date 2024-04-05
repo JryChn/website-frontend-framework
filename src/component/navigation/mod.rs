@@ -58,7 +58,7 @@ fn SideBar(nav_sidebar_switch: Signal<bool>) -> Element {
                     }
                 nav {
                     id: "navigator_sidebar",
-                    class: "fixed right-0 top-0 w-screen bg-black shadow-zinc-700 shadow-2xl h-screen z-20 md:nimate-slideFromR2L",
+                    class: "fixed right-0 top-0 w-screen bg-black shadow-zinc-700 shadow-2xl h-screen z-20 md:animate-slideFromR2L",
                     div { class: "fixed right-1/2 top-1/2 w-44 h-80 -translate-y-1/2 translate-x-1/2 md:right-1/4 md:translate-x-0",
                         ul { class: "text-neutral-200 text-2xl flex flex-col justify-evenly",
                 for url in NAVIGATOR(){
