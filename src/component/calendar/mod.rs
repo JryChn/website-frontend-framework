@@ -86,7 +86,7 @@ fn CalendarSVG() -> Element {
 #[component]
 fn CalendarMono() -> Element {
     rsx! {
-        div { class: "h-12 mx-auto text-3xl font-medium my-5",
+        div { class: "h-12 mx-auto text-3xl font-medium my-5 whitespace-nowrap",
             span { "Never Miss " }
             span { class: "bg-gradient-to-r from-pink-600 to-green-600 bg-clip-text text-transparent mx-1",
                 "One"

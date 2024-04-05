@@ -11,7 +11,7 @@ pub fn Navigate() -> Element {
     rsx! {
         nav {
             id: "navigator",
-            class: "fixed top-0 right-0 w-48 h-48 rounded-full translate-x-1/2 -translate-y-1/2 bg-gray-50 cursor-pointer md:bg-black",
+            class: "fixed -top-24 -right-24 w-48 h-48 rounded-full bg-gray-50 cursor-pointer md:bg-black md:animate-showFromRight md:delay-1000",
             onclick: move |_| {
                 nav_sidebar_switch.set(true);
             }
@@ -26,7 +26,7 @@ fn Hamburger(mut nav_sidebar_switch: Signal<bool>) -> Element {
     rsx! {
             div {
                 id: "hamburger",
-                class: "fixed top-3 right-4 w-10 h-8 flex flex-col justify-evenly cursor-pointer",
+                class: "absolute top-3 right-4 w-10 h-8 flex flex-col justify-evenly cursor-pointer md:animate-showFromUp md:delay-1000",
                 onclick: move |_| {
                     nav_sidebar_switch.set(true);
                 },
@@ -134,10 +134,14 @@ fn ArticleTemplate() -> Element {
                 class:"w-full h-full flex animate-pulse",
                 div{
                     class:"w-2/3 flex flex-col items-center translate-y-[15%]",
-                    for _ in (0..3){
                     div{
-                        class:"w-3/4 h-[10%] rounded-2xl bg-gray-200 my-2"
+                        class:"w-3/4 h-[10%] rounded-2xl bg-pink-100 my-2"
                     }
+                    div{
+                        class:"w-3/4 h-[10%] rounded-2xl bg-blue-100 my-2"
+                    }
+                    div{
+                        class:"w-3/4 h-[10%] rounded-2xl bg-yellow-100 my-2"
                     }
                 }
                 div{
@@ -198,7 +202,7 @@ fn AboutMeTemplate() -> Element {
                     class:"relative w-full h-full animate-pulse",
 
                 div{
-                    class:"absolute top-[10%] left-[10%] w-1/5 h-1/5 bg-gray-100"
+                    class:"absolute top-[10%] left-[10%] w-1/5 h-1/5 bg-yellow-50"
                 }
                 div{
                     class:"absolute top-[5%] right-[10%] -translate-x-1/2 w-[10%] h-1/4 bg-gray-100 rounded-tl-[80px]"

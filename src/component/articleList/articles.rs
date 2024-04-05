@@ -18,7 +18,6 @@ pub fn Articles(
             RenderArticles{}
             RenderArticles{}
             RenderArticles{}
-            
         }
         for article in articles_after_filter{
             RenderArticles{article}
@@ -80,7 +79,6 @@ fn RenderArticles(article: Option<Article>) -> Element {
             }
         }
     }
-            
         }
     }
 }

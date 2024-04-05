@@ -21,7 +21,7 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
             Link { to: Route::HomePage {},
                 h1 {
                     id: "title_logo",
-                    class: "relative top-4 left-7 text-[2vw] leading-none w-[7em] h-auto uppercase font-bold break-words",
+                    class: "relative top-4 left-7 text-[2vw] leading-none w-[7em] h-auto uppercase font-bold break-words md:animate-showFromUp md:delay-1000",
                     style: "font-family: JetBrains Mono",
                     "{welcome.title}"
                 }
@@ -41,7 +41,7 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
             }
             div {
                 id: "light_line_box",
-                class: "absolute h-[15vw] top-0 right-[30vw]",
+                class: "absolute h-[15vw] top-0 right-[30vw] md:animate-showFromUp md:delay-1000",
                 div {
                     id: "light_line",
                     class: "relative left-1/2 w-0 h-4/5 border-[1.5px] border-black md:cursor-pointer"

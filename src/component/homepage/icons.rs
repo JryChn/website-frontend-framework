@@ -15,7 +15,7 @@ pub fn Icons(contact: Contact) -> Element {
     rsx!(
         div {
             id: "icons",
-            class: "fixed bottom-[15vh] right-5 h-[10vw] w-9 flex-col justify-evenly hidden md:flex",
+            class: "fixed bottom-[15vh] right-5 h-[10vw] w-9 flex-col justify-evenly hidden md:flex md:animate-showFromRight md:delay-1000",
             div { class: "flex justify-center items-center ",
                 Link { class: "w-full h-full", to: email, img { class: "w-full h-full p-2 cursor-pointer", src: mg!(file("src/assets/svg/email.svg")) } }
             }

@@ -45,7 +45,7 @@ script = [
 # Same as [web.resource], but for development servers
 
 # CSS style file
-style = ["tailwind.css"]
+style = []
 
 
 # Javascript code file

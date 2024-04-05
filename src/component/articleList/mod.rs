@@ -54,13 +54,23 @@ pub fn ArticleList() -> Element {
             div {
                 id: "article_list_box",
                 class: "w-[90%] h-auto mx-auto relative top-48",
-                div {
-                    id: "article_list_sidebar",
-                    class: "absolute h-auto w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col",
-                    Tags { tags, tags_filter }
-                    Keywords { keywords }
-                    Recommend { articles }
-                }
+                match &*content.value().read(){
+                    Some(_)=>{
+                        rsx!{
+                    div {
+                        id: "article_list_sidebar",
+                        class: "absolute h-auto w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col md:animate-showFromRight md:delay-1000",
+                        Tags { tags, tags_filter }
+                        Keywords { keywords }
+                        Recommend { articles }
+                    }
+                        }
+                        
+                    },
+                    None=>{
+                        rsx!{}
+                    }
+                    },
                 Articles { articles, tags_filter }
             }
         }
