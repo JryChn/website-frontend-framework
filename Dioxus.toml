@@ -38,7 +38,8 @@ style = []
 script = [
     "https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js",
     "https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js",
-    "https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"
+    "https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js",
+    "https://cdn.jsdelivr.net/npm/matter-js@0.19.0"
 ]
 [web.resource.dev]
 
@@ -53,4 +54,5 @@ script = [
     "https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js",
     "https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js",
     "https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js",
+    "https://cdn.jsdelivr.net/npm/matter-js@0.19.0"
 ]

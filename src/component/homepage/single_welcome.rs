@@ -3,6 +3,7 @@ use manganis::mg;
 
 use crate::model::Welcome;
 use crate::Route;
+use crate::utils::wireLaneWithSvg::wireLaneWithSvg;
 
 #[component]
 pub fn WelcomePage(welcome: Welcome) -> Element {
@@ -14,6 +15,7 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
     } else {
         &welcome.animation_url.light
     };
+    let bulb =mg!(file("src/assets/svg/bulb.svg"));
     rsx! {
         div {
             id: "welcome_page",
@@ -41,19 +43,26 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
             }
             div {
                 id: "light_line_box",
-                class: "absolute h-[15vw] top-0 right-[30vw] md:animate-showFromUp md:delay-1000",
+                class: "absolute h-[15vw] top-0 right-[30vw] md:right-[10vw]",
+                div{
+                    id:"md_light",
+                    class:"hidden md:block",
+                    onmounted:move |_|{
+                        eval(&wireLaneWithSvg(bulb,"md_light"));
+                    }
+                }
                 div {
                     id: "light_line",
-                    class: "relative left-1/2 w-0 h-4/5 border-[1.5px] border-black md:cursor-pointer"
+                    class: "relative left-1/2 w-0 h-4/5 border-[1.5px] border-black md:hidden"
                 }
                 button {
                     id: "light_bold",
-                    class: "relative w-11 h-11 translate-x-2.5 -translate-y-1",
+                    class: "relative w-11 h-11 translate-x-2.5 -translate-y-1 md:hidden",
                     onclick: |_e| {
                         let dom = gloo::utils::document_element();
                         dom.class_list().toggle("dark").expect("Error when toggle dark");
                     },
-                    img { src: mg!(file("src/assets/svg/bulb.svg")) }
+                    img { src: bulb}
                 }
             }
             div {
