@@ -30,7 +30,7 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                     for chart in charts {
                         div { class: "w-screen flex flex-col md:w-full md:h-full md:flex-row",
                             {chart.chart},
-                            div { class: "flex flex-col my-8 items-center",
+                            div { class: "flex flex-col my-8 mx-16 items-center",
                                 div { class: "text-4xl font-normal text-white", "{chart.title}" }
                                 div { class: "w-96 text-lg text-white font-light my-4",
                                     "{chart.description}"
