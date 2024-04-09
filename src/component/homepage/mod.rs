@@ -30,12 +30,10 @@ pub fn HomePage() -> Element {
             let welcome = config.welcome.to_owned();
             let contact = config.contact.to_owned();
             rsx! {
-                div { class: "bg-black overflow-hidden",
-                    main { id: "welcome", class: "",
+                    main { id: "welcome", class: "overflow-hidden",
                         WelcomePage { welcome }
                         Navigate {}
                         Icons { contact }
-                    }
                 }
             }
         }

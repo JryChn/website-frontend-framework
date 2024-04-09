@@ -59,7 +59,7 @@ fn create_radar(skill: &SkillContent) -> Skills {
     }
     let id = Uuid::new_v4().as_u128().to_string();
     let chart = Chart::new()
-        .background_color(Color::from("rgb(27,46,77)"))
+        .background_color(Color::from("rgb(0,0,0,0)"))
         .color(vec![get_random_color()])
         .radar(RadarCoordinate::new().indicator(indicators))
         .series(Radar::new().data(vec![(actual_values)]));
