@@ -18,9 +18,10 @@ pub fn word_cloud_maker(keywords: &HashMap<String, i32>) -> String {
             sizeRange: [12, 150],
             rotationRange: [-90, 90],
             shape: 'cardioid',
-            drawOutOfBound: true,
+            drawOutOfBound: false,
             textStyle: {
             fontFamily: 'outfit',
+            fontSize: '12vw',
             fontWeight: 'bold',
                 color: function () {
                     return 'rgb(' + [

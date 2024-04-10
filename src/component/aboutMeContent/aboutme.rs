@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 #[component]
 pub fn AboutMe(title: String, subtitle: String, image1: String, image2: String) -> Element {
     rsx! {
-        div { class: "relative w-screen min-h-[1000px] top-18 select-none cursor-default",
+        div { class: "relative w-screen min-h-[1000px] top-18 select-none cursor-default bg-gray-100",
             AboutMeTitle { title, subtitle, image: &image2 }
             Circle {}
             AboutMeImages { image_url: image1, image2_url: &image2 }
@@ -46,7 +46,7 @@ fn AboutMeTitle(title: String, subtitle: String, image: String) -> Element {
         }
     });
     rsx! {
-        div { class: "absolute w-full h-64 top-44 md:w-96 md:left-24",
+        div { class: "absolute w-full h-64 top-44 md:w-96 md:left-[12vw] md:animate-showFromLeft",
             div { class: "h-1/3 flex flex-row items-center justify-center text-center font-semibold text-3xl ",
                 "{title}"
             }
@@ -103,7 +103,7 @@ fn Circle() -> Element {
 #[component]
 fn AboutMeImages(image_url: String, image2_url: String) -> Element {
     rsx! {
-        div { class: "hidden md:flex absolute top-52 right-14",
+        div { class: "hidden md:flex absolute top-52 right-[10vw] animate-showFromRight",
             img {
                 id: "image_1",
                 class: "w-56 h-96 rounded-tl-[110px] shadow-[-9px_8px_25px_3px_rgba(0,0,0,0.25)] mx-6 my-2 object-cover",

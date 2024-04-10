@@ -59,11 +59,17 @@ module.exports = {
           '0%':{'transform':'translateX(50%)','opacity':'0'},
           '100%':{'transform':'translate(0%)','opacity':'1'}
         },
+        rotate:{
+          '0%':{'transform':'rotate(0)'},
+          '50%':{'transform':'rotate(180deg)'},
+          '100%':{'transform':'rotate(360deg)'},
+        }
       },
       animation:{
         'wordBlink': 'blink 0.75s infinite step-end',
         'down': 'down 1s 1 linear',
         'wait': 'wait 3s infinite',
+        'rotated': 'rotate 60s linear infinite',
         'slideFromR2L': 'slideRL 1s linear',
         'showFromUp': 'showFromUp 1s linear',
         'showFromDown': 'showFromDown 1s linear',
