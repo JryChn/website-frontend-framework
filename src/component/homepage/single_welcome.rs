@@ -19,18 +19,18 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
     rsx! {
         div {
             id: "welcome_page",
-            class: "w-screen h-screen min-h-[800px] bg-gray-50",
+            class: "w-screen h-screen min-h-[800px] bg-gray-50 dark:bg-black",
             Link { to: Route::HomePage {},
                 h1 {
                     id: "title_logo",
-                    class: "relative top-4 left-7 text-[2vw] leading-none w-[7em] h-auto uppercase font-bold break-words md:animate-showFromUp md:delay-1000",
+                    class: "relative top-4 left-7 text-[2vw] leading-none w-[7em] h-auto uppercase font-bold break-words dark:text-white md:animate-showFromUp md:delay-1000",
                     style: "font-family: JetBrains Mono",
                     "{welcome.title}"
                 }
             }
             div {
                 id: "welcome_video",
-                class: "relative -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 w-[55vw] h-[21vw] border-b-2 border-b-black pb-6 px-20",
+                class: "relative -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 w-[55vw] h-[21vw] border-b-2 border-b-black pb-6 px-20 dark:border-b-white",
                 mix_blend_mode: "multiply",
                 video {
                     class: "w-full h-full object-fill",
@@ -46,30 +46,32 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
                 class: "absolute h-[15vw] top-0 right-[30vw] md:right-[10vw]",
                 div{
                     id:"md_light",
-                    class:"hidden md:block",
+                    class:"hidden md:block dark:invert",
                     onmounted:move |_|{
                         eval(&wireLaneWithSvg(bulb,"md_light"));
                     }
                 }
                 div {
                     id: "light_line",
-                    class: "relative left-1/2 w-0 h-4/5 border-[1.5px] border-black md:hidden"
+                    class: "relative left-1/2 w-0 h-4/5 border-[1.5px] border-black md:hidden dark:border-white"
                 }
                 button {
                     id: "light_bold",
-                    class: "relative w-11 h-11 translate-x-2.5 -translate-y-1 md:hidden",
+                    class: "relative h-11 translate-x-0.5 -translate-y-1 cursor-pointer md:hidden dark:after:block dark:after:w-24 dark:after:h-24 dark:after:absolute dark:after:bg-yellow-400 dark:after:round-full dark:after:-translate-x-1/3 dark:after:-translate-y-1/4 dark:after:blur-3xl",
                     onclick: |_e| {
                         let dom = gloo::utils::document_element();
                         dom.class_list().toggle("dark").expect("Error when toggle dark");
                     },
-                    img { src: bulb}
+                    img {
+                        class:"dark:invert",
+                        src: bulb}
                 }
             }
             div {
                 id: "down_scroll_pointer",
-                class: "absolute bottom-5 left-1/2 -translate-x-1/2 w-8 h-8",
+                class: "absolute bottom-5 left-1/2 -translate-x-1/2 w-8 h-8 cursor-pointer",
                 img {
-                    class: "relative mx-auto w-full h-full top-1/2 animate-bounce cursor-pointer",
+                    class: "relative mx-auto w-full h-full animate-bounce dark:invert",
                     src: mg!(file("src/assets/svg/down.svg"))
                 }
             }

@@ -19,7 +19,6 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
     // create a renderer
     var render = Render.create({
         element: document.getElementById(""#.to_owned() +id+ &*r#""),
-
         engine: engine,
         options:{
             width: 700,
@@ -35,10 +34,17 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
     var head = Bodies.circle(150, 0, 17, {
         render: {
             sprite: {
-                texture: '"#.to_owned() +svg_path+r#"'
+                texture: '"#.to_owned() +svg_path+r##"'
             }
         }}
     );
+    Events.on(engine,"afterUpdate",(_e)=>{
+        var yellow_light = document.getElementById("yellow_light");
+        if (yellow_light != null){
+            yellow_light.style.top = (head.position.x *0.3).toString()+"px";
+            yellow_light.style.left = (head.position.y *2.3 ).toString()+"px";
+        }
+    });
     Composite.add(boxA,head);
     Composites.chain(boxA, 0, 0.5, 0, -0.5, { stiffness: 1, length: 0, render: { type: 'line',strokeStyle: 'black' , lineWidth:3} });
     Composite.add(boxA, Constraint.create({
@@ -76,6 +82,17 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
         if (x_range<17 && y_range <17)
         {
             document.documentElement.classList.toggle("dark")
+            var yellow_light = document.createElement("div");
+            yellow_light.style.position = "absolute";
+            yellow_light.style.width = "100px";
+            yellow_light.style.height = "100px";
+            yellow_light.style.filter = "blur(64px)";
+            yellow_light.style.background = "#0533EA";
+            yellow_light.style.zIndex = "-50";
+            yellow_light.id = "yellow_light";
+            if(document.getElementById("yellow_light") == null){
+                document.getElementById(""## +id+ &*r#"").appendChild(yellow_light);
+            }
         }
     })
 

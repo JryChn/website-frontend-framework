@@ -29,17 +29,17 @@ pub fn Header() -> Element {
     rsx! {
         header {
             id: "header",
-            class: "bg-transparent w-screen h-14 fixed top-0 shadow-none z-50 md:bg-white md:shadow-[0_4px_20px_0_rgba(0,0,0,0.25)] ",
+            class: "bg-transparent w-screen h-14 fixed top-0 shadow-none z-50 md:bg-white md:shadow-[0_4px_20px_0_rgba(0,0,0,0.25)] dark:md:bg-black",
             Link {
                 to: Route::HomePage {},
-                class: "absolute w-auto h-11 top-1/2 -translate-y-1/2 flex uppercase font-bold text-lg items-center text-center p-3",
+                class: "absolute w-auto h-11 top-1/2 -translate-y-1/2 flex uppercase font-bold text-lg items-center text-center p-3 dark:text-white",
                 id: "header_title",
                 "{title}"
             }
             div {
                 id: "header_content",
                 class: "absolute top-4 left-1/3 w-1/2 hidden md:inline-block",
-                ul { class: "flex flex-row flex-nowrap justify-around uppercase font-medium",
+                ul { class: "flex flex-row flex-nowrap justify-around uppercase font-medium dark:text-white",
                     {header_list}
                 }
             }
