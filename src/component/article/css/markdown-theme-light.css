@@ -7,6 +7,12 @@
 #article_content {
     margin: 0 auto !important;
     padding: 1em;
+    font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif !important;
+    color: #34495e;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6rem;
+    letter-spacing: 0;
+    overflow-x: hidden;
 }
 
 #article_content .task-list-item {
@@ -49,20 +55,6 @@
     padding: 0.7em 1em;
 }
 
-/* cyrillic-ext */
-#article_content {
-    font-size: 16px;
-}
-
-#article_content  {
-    font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif !important;
-    color: #34495e;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.6rem;
-    letter-spacing: 0;
-    margin: 0;
-    overflow-x: hidden;
-}
 
 #article_content body > *:first-child {
     margin-top: 0 !important;

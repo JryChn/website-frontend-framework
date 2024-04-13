@@ -5,7 +5,9 @@
     color: #fdfae0;
     line-height: 1.6em;
     -webkit-text-size-adjust: 100%;
-    margin: 0px auto;
+    margin: 0 auto;
+    padding: 1em;
+    overflow-x: hidden;
 }
 #article_content code[class*=language-],
 #article_content pre[class*=language-] {
