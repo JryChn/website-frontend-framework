@@ -15,15 +15,15 @@ pub fn Experience(experiences: Vec<ExperienceContent>) -> Element {
             })
             .collect();
     rsx! {
-        div { class: "bg-[rgb(195,201,195)] flex flex-col select-none cursor-default",
+        div { class: "bg-[rgb(195,201,195)] flex flex-col select-none cursor-default dark:bg-[rgb(40,39,39)]",
             div { class: "w-screen h-[600px] md:h-56" }
             div { class: "flex justify-around ",
-                div { class: "text-5xl font-medium md:absolute md:right-20", "Experience" }
+                div { class: "text-5xl font-medium md:absolute md:right-20 dark:text-gray-100", "Experience" }
             }
-            div { class: "w-[90%] mx-auto border-b border-black mt-16 md:w-5/6 md:mt-32 " }
+            div { class: "w-[90%] mx-auto border-b border-black mt-16 md:w-5/6 md:mt-32 dark:border-gray-100" }
             div { class: "w-3/4 mx-auto mb-64",
                 for mut exp in local_experience {
-                    li { class: "border-gray-600 border-b w-full py-10 flex flex-col my-16",
+                    li { class: "border-gray-600 border-b w-full py-10 flex flex-col my-16 dark:text-gray-200",
                         div { class: "h-1/5 flex flex-row font-normal text-sm",
                             div { class: "w-1/4 flex items-center justify-start", "{exp.0.start_time}" }
                             div { class: "w-1/4 flex items-center justify-center",

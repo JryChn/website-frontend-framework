@@ -15,7 +15,7 @@ pub fn TimeTable() -> Element {
         "22:30", "22:45", "23:00", "23:15", "23:30", "23:45", "24:00", "24:15", "24:30", "24:45",
     ];
     rsx! {
-        div { class: "w-24 bg-white flex flex-col items-center",
+        div { class: "w-24 bg-white flex flex-col items-center dark:bg-[rgb(43,45,66)] dark:text-gray-100",
             for time in time_table {
                 span { class: "text-xs font-extralight w-4/5 h-8 flex justify-center items-center",
                     "{time}"

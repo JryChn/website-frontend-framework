@@ -24,7 +24,7 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
     }
     rsx! {
         div { class: "relative bg-transparent -top-48 select-none cursor-default",
-            div { class: "hidden text-5xl font-medium m-12 md:inline-block", "技能和技巧" }
+            div { class: "hidden text-5xl font-medium m-12 md:inline-block dark:text-white", "技能和技巧" }
             div { class: "w-full bg-[rgb(27,46,77)] min-h-[400px] mx-auto flex md:w-3/4",
                 div { class: "flex flex-col item-center md:block md:w-full md:h-[400px] md:overflow-hidden",
                     for chart in charts {

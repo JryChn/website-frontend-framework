@@ -60,6 +60,8 @@ pub fn AboutMeContent() -> Element {
     match &*result.value().read() {
         Some(ab) => {
             rsx! {
+                div{
+                    class:"dark:bg-gray-950",
                 AboutMe {
                     title: ab.about_me_title.as_str(),
                     subtitle: ab.about_me_motto.as_str(),
@@ -79,6 +81,8 @@ pub fn AboutMeContent() -> Element {
                 ).collect() }
                 MusicAndArt { video_url: ab.music_art_1.clone(), video2_url: ab.music_art_2.clone() }
             }
+                    
+                }
         }
         _ => {
             rsx! {}

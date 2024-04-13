@@ -19,13 +19,13 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
         .collect());
     rsx! {
      div{
-         class:"flex-1 -translate-x-12 grid-cols-11 hidden md:grid",
+         class:"flex-1 -translate-x-12 grid-cols-11 hidden md:grid dark:text-gray-100",
             div{
-                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
+                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8 dark:text-gray-100",
              }
          for i in (0..10){
             div{
-                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
+                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8 dark:text-gray-100",
                      "{date_schedule.get(i).unwrap().0}"
              }
          }
@@ -43,7 +43,7 @@ pub fn Table(date_time: Vec<(String, Vec<(u32, u32)>)>) -> Element {
                  class: "border-r {line_color} h-8",
              }
             div{
-                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8",
+                 class: "border-r {line_color} text-black font-light text-right pr-2 h-8 dark:text-gray-100",
                  "{date_schedule.first().unwrap().0}"
              }
          for _ in (0..100){

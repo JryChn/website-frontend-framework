@@ -45,10 +45,10 @@ pub fn ArticleList() -> Element {
     rsx! {
         div {
             id: "article_list",
-            class: "w-screen h-screen min-h-[400px] relative",
+            class: "w-screen min-h-screen relative dark:bg-gray-950",
             div {
                 id: "article_title",
-                class: "relative top-48 mx-auto w-1/2 text-4xl font-semibold capitalize text-center md:hidden",
+                class: "relative top-48 mx-auto w-1/2 text-4xl font-semibold capitalize text-center md:hidden dark:text-gray-100",
                 "article"
             }
             div {
@@ -59,7 +59,7 @@ pub fn ArticleList() -> Element {
                         rsx!{
                     div {
                         id: "article_list_sidebar",
-                        class: "absolute h-auto w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col md:animate-showFromRight md:delay-1000",
+                        class: "absolute h-auto w-[30%] bg-white right-4 top-12 shadow-[-2px_4px_4px_2px_rgba(0,0,0,0.25)] hidden md:flex md:flex-col md:animate-showFromRight md:delay-1000 dark:bg-[rgb(27,38,59)]",
                         Tags { tags, tags_filter }
                         Keywords { keywords }
                         Recommend { articles }

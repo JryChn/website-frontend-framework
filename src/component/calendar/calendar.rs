@@ -7,15 +7,15 @@ use crate::component::calendar::timeTable::TimeTable;
 #[component]
 pub fn CalendarContent(year: u32, days: Vec<(String, Vec<(u32, u32)>)>) -> Element {
     rsx! {
-        div { class: "w-screen min-h[800px] select-none cursor-default",
-            div { class: "relative hidden mt-28 mb-10 left-10 w-[400px] h-20 flex-row items-center justify-start md:flex",
+        div { class: "w-screen min-h[800px] select-none cursor-default translate-y-28 dark:bg-gray-950",
+            div { class: "relative hidden mb-10 left-10 w-[400px] h-20 flex-row items-center justify-start md:flex",
                 CalendarSVG {}
                 CalendarMono {}
             }
             div { class: "flex w-[90%] mx-auto flex-col translate-y-44 md:translate-y-0",
                 div { class: "h-11 my-5 flex justify-end",
                     input {
-                        class: "w-80 bg-white rounded-3xl shadow-[inset_0_4px_4px_0_rgba(0,0,0,0.25)] pl-10 invalid:border-2 invalid:border-red-800 invalid:animate-pulse peer",
+                        class: "w-80 bg-white rounded-3xl shadow-[inset_0_4px_4px_0_rgba(0,0,0,0.25)] pl-10 invalid:border-2 invalid:border-red-800 invalid:animate-pulse peer dark:bg-gray-800",
                         "type": "email",
                         placeholder: "What is your Email?"
                     }
@@ -26,9 +26,9 @@ pub fn CalendarContent(year: u32, days: Vec<(String, Vec<(u32, u32)>)>) -> Eleme
                         }
                     }
                 }
-                div { class: "w-full rounded-xl bg-gray-100 flex flex-col",
+                div { class: "w-full rounded-xl bg-gray-100 flex flex-col dark:bg-[rgb(13,27,42)] dark:text-gray-100",
                     div { class: " h-14 mt-8 mb-4",
-                        div { class: "w-[90%] h-full mx-auto flex items-center px-3 border-b-2 border-black text-3xl font-medium",
+                        div { class: "w-[90%] h-full mx-auto flex items-center px-3 border-b-2 border-black text-3xl font-medium dark:border-gray-100",
                             "{year}"
                         }
                     }

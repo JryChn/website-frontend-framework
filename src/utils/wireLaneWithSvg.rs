@@ -81,7 +81,8 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
         var y_range =Math.abs(mouse.position.y - head.position.y);
         if (x_range<17 && y_range <17)
         {
-            document.documentElement.classList.toggle("dark")
+            document.documentElement.classList.toggle("dark");
+            document.body.classList.toggle("dark:bg-gray-950");
             var yellow_light = document.createElement("div");
             yellow_light.style.position = "absolute";
             yellow_light.style.width = "100px";

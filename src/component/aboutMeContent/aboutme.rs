@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 #[component]
 pub fn AboutMe(title: String, subtitle: String, image1: String, image2: String) -> Element {
     rsx! {
-        div { class: "relative w-screen min-h-[1000px] top-18 select-none cursor-default bg-gray-100",
+        div { class: "relative w-screen min-h-[1000px] top-18 select-none cursor-default bg-gray-100 dark:bg-gray-950",
             AboutMeTitle { title, subtitle, image: &image2 }
             Circle {}
             AboutMeImages { image_url: image1, image2_url: &image2 }
@@ -46,7 +46,7 @@ fn AboutMeTitle(title: String, subtitle: String, image: String) -> Element {
         }
     });
     rsx! {
-        div { class: "absolute w-full h-64 top-44 md:w-96 md:left-[12vw] md:animate-showFromLeft",
+        div { class: "absolute w-full h-64 top-44 md:w-96 md:left-[12vw] md:animate-showFromLeft dark:text-white",
             div { class: "h-1/3 flex flex-row items-center justify-center text-center font-semibold text-3xl ",
                 "{title}"
             }
@@ -54,7 +54,7 @@ fn AboutMeTitle(title: String, subtitle: String, image: String) -> Element {
                 class: "w-72 h-96 rounded-tl-[149px] shadow-[6px_1px_8px_3px_rgba(0,0,0,0.25)] mx-auto my-20 scale-125 object-cover md:hidden",
                 src: "{image}"
             }
-            div { class: "w-5/6 mx-auto border-t border-black md:left-0 md:w-12 md:absolute" }
+            div { class: "w-5/6 mx-auto border-t border-black md:left-0 md:w-12 md:absolute dark:border-white" }
             div { class: "w-5/6 mx-auto h-full my-8 text-sm font-normal text-left tracking-normal md:my-4 md:w-full md:left-0 md:absolute",
                 span { "/*" }
                 span { class: "border-r border-black px-2 animate-wordBlink", "{typing_words}" }

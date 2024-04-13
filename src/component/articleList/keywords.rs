@@ -13,7 +13,7 @@ pub fn Keywords(keywords: Signal<HashMap<String, i32>>) -> Element {
     rsx! {
         div {
             id: "article_list_sidebar_key_words",
-            class: "w-11/12 h-[20vw] mx-auto my-10 flex-1",
+            class: "w-11/12 h-[20vw] mx-auto my-10 flex-1 dark:invert",
             img { class: "inline-block w-8 h-8 my-2 mr-[2%]", src: mg!(file("src/assets/svg/keywords.svg")) }
             div { id: "article_list_keys",
                 onmounted:move|_|{

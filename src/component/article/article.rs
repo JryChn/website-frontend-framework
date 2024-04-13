@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_router::prelude::GoBackButton;
+use gloo::console::console_dbg;
 use manganis::mg;
 use web_sys::ScrollBehavior;
 use web_sys::ScrollToOptions;
@@ -54,7 +55,13 @@ pub fn Article(id: String, article: Option<Article>) -> Element {
 
 #[component]
 fn RenderArticle(content: Article) -> Element {
-    let css_themes: &str = include_str!("css/markdown-theme-light.css");
+    console_dbg!(gloo::utils::document_element().class_name());
+    let css_themes: &str = if gloo::utils::document_element().class_name().contains("dark")
+    {
+        include_str!("css/markdown-theme-dark.css")
+    }else{
+        include_str!("css/markdown-theme-light.css")
+    };
     rsx! {
         div {
             id: "article",
@@ -70,14 +77,14 @@ fn RenderArticle(content: Article) -> Element {
                 id: "go_back_button",
                 class: "absolute my-20 mx-8 font-light text-lg text-center align-middle hidden md:block",
                 GoBackButton { 
-                    img { class: "inline-block", src: mg!(file("src/assets/svg/go_back.svg")) }
+                    img { class: "inline-block dark:invert", src: mg!(file("src/assets/svg/go_back.svg")) }
                     "Back to list"
                 }
             }
             //todo: show when scroll to proper location later
             div {
                 id: "align_top_button",
-                class: "fixed right-8 bottom-5 cursor-pointer",
+                class: "fixed right-8 bottom-5 cursor-pointer dark:invert",
                 onclick: |_e| {
                     gloo::utils::window()
                         .scroll_to_with_scroll_to_options(

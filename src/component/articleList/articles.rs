@@ -13,7 +13,7 @@ pub fn Articles(
 ) -> Element {
     let articles_after_filter = calculate_filtered_articles(articles, tags_filter);
     rsx! {ul {id: "article_list_content",
-        class: "absolute h-[1600px] w-[90%]  md:w-[65%] left-4 top-12 p-5 flex flex-col justify-start gap-5",
+        class: "relative min-h-screen w-[90%]  md:w-[65%] left-4 top-12 p-5 flex flex-col justify-start gap-5",
         if articles_after_filter.is_empty() {
             RenderArticles{}
             RenderArticles{}
@@ -92,10 +92,10 @@ fn ArticlePages(articles: Signal<Vec<ArticlesPage>>) -> Element {
             class: "relative w-full h-8 my-16 flex rounded-[30px] shadow-[0_-4px_4px_0_rgba(0,0,0,0.25)] justify-center text-lg",
             for (i , t) in articles.iter().enumerate() {
             if t.is_on_showing {
-            div { class: "mx-2 text-gray-500 select-none cursor-default", "{i+1}" }
+            div { class: "mx-2 text-gray-500 select-none cursor-default dark:text-white", "{i+1}" }
             } else {
             div {
-            class: "mx-2 text-black cursor-pointer",
+            class: "mx-2 text-black cursor-pointer dark:text-gray-300",
             onclick: move |_| {
             let mut articles = articles.write();
             articles.iter_mut().for_each(|t| { t.is_on_showing = false });
