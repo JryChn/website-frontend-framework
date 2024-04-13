@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-use gloo::console::console_dbg;
 use manganis::mg;
 
 use crate::model::Welcome;
