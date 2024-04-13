@@ -7,14 +7,6 @@ use crate::utils::wireLaneWithSvg::wireLaneWithSvg;
 
 #[component]
 pub fn WelcomePage(welcome: Welcome) -> Element {
-    let animation_url = if gloo::utils::document_element()
-        .class_list()
-        .contains("dark")
-    {
-        &welcome.animation_url.dark
-    } else {
-        &welcome.animation_url.light
-    };
     let bulb =mg!(file("src/assets/svg/bulb.svg"));
     rsx! {
         div {
@@ -30,11 +22,23 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
             }
             div {
                 id: "welcome_video",
-                class: "relative -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 w-[55vw] h-[21vw] border-b-2 border-b-black pb-6 px-20 dark:border-b-white",
+                class: "relative -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 w-[55vw] h-[21vw] border-b-2 border-b-black pb-6 px-20 dark:border-b-white dark:hidden",
                 mix_blend_mode: "multiply",
                 video {
                     class: "w-full h-full object-fill",
-                    src: "{animation_url}",
+                    src: "{&welcome.animation_url.light}",
+                    autoplay: "true",
+                    muted: "true",
+                    "loop": "true",
+                    playsinline: "true"
+                }
+            }
+            div {
+                id: "welcome_video_dark",
+                class: "hidden relative -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 w-[55vw] h-[21vw] border-b-2 border-b-black pb-6 px-20 dark:border-b-white dark:block",
+                video {
+                    class: "w-full h-full object-fill",
+                    src: "{&welcome.animation_url.dark}",
                     autoplay: "true",
                     muted: "true",
                     "loop": "true",
