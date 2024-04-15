@@ -5,6 +5,7 @@ use crate::component::calendar::calendar::CalendarContent;
 use crate::component::loading::Loading;
 use crate::model::Calendar::Calendar;
 use crate::model::ConfigurationTemplate;
+use crate::utils::cache::Cache;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 
 mod calendar;
@@ -17,14 +18,21 @@ pub fn Calendar() -> Element {
     let configuration = use_context::<Signal<ConfigurationTemplate>>();
     let result = use_resource(move || async move {
         let api = configuration().calendar_api;
-        let calendar;
-        if api.is_empty() {
-            calendar =
-                serde_json::from_str::<Calendar>(include_str!("../../defaultConfig/calendar.json"))
-                    .unwrap();
-        } else {
-            calendar = fetch_and_decrypt(api.as_str()).await.unwrap();
-        }
+
+        let calendar: Calendar = Cache::fetch_or_cache(api.as_str(), || async {
+            let mut calendar;
+            if api.is_empty() {
+                calendar = serde_json::from_str::<Calendar>(include_str!(
+                    "../../defaultConfig/calendar.json"
+                ))
+                .unwrap();
+            } else {
+                calendar = fetch_and_decrypt(api.as_str()).await.unwrap();
+            }
+            serde_json::to_vec(&calendar).unwrap()
+        })
+        .await
+        .unwrap();
         calendar
     });
     match &*result.value().read() {

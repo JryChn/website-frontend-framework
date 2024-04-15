@@ -4,6 +4,9 @@ use lazy_static::lazy_static;
 use serde::de::DeserializeOwned;
 
 use crate::model::{CommonConfig, ConfigurationTemplate};
+use crate::utils::cache::Cache;
+use crate::utils::netUtils::parse_to_data_url;
+use crate::utils::resourceType::ResourceType::MP4;
 
 lazy_static! {
     static ref CONFIG: CommonConfig = serde_json::from_str(include_str!("../config.json"))
@@ -24,7 +27,6 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url: &str) -> serde_json::Re
         .binary()
         .await
         .expect("Failed, remote json file parsing error");
-
     if !key.is_empty() {
         response = aes_wasm::aes256ctr::decrypt(
             response,
@@ -39,9 +41,16 @@ pub async fn fetch_and_decrypt<T: DeserializeOwned>(url: &str) -> serde_json::Re
 
 pub async fn fetch_configuration() -> ConfigurationTemplate {
     if !CONFIG.configuration_fetching_url.is_empty() {
-        return fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url)
-            .await
-            .expect("fetch configuration error");
+        return Cache::fetch_or_cache(CONFIG.configuration_fetching_url,|| async {
+            let mut configuration =  fetch_and_decrypt::<ConfigurationTemplate>(CONFIG.configuration_fetching_url)
+                .await
+                .expect("fetch configuration error");
+            configuration.welcome.animation_url.dark =
+                parse_to_data_url(configuration.welcome.animation_url.dark, MP4).await;
+            configuration.welcome.animation_url.light =
+                parse_to_data_url(configuration.welcome.animation_url.light, MP4).await;
+            serde_json::to_vec(&configuration).unwrap()
+        }).await.unwrap();
     }
     CONFIGURATION.lock().unwrap()[0].clone()
 }

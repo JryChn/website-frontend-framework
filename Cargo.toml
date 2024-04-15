@@ -22,3 +22,4 @@ aes-wasm = "0.1.6"
 lazy_static = "1.4.0"
 futures = "0.3.28"
 uuid = { version = "1.8.0", features = ["v4"] }
+chrono = "0.4.37"

@@ -4,6 +4,7 @@ use std::ops::Add;
 use dioxus::core_macro::{component, rsx};
 use dioxus::dioxus_core::Element;
 use dioxus::hooks::{use_resource, use_signal};
+use dioxus::html::set;
 use dioxus::prelude::*;
 use futures::future::join_all;
 
@@ -13,6 +14,7 @@ use crate::component::articleList::recommend::Recommend;
 use crate::component::articleList::tags::Tags;
 use crate::model::Article::Article;
 use crate::model::ConfigurationTemplate;
+use crate::utils::cache::Cache;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
@@ -78,21 +80,24 @@ pub fn ArticleList() -> Element {
 }
 
 async fn fetch_articles(configuration_api: String) -> Vec<Article> {
-    let mut all_articles = Vec::<Article>::new();
-    if configuration_api.is_empty() {
-        all_articles =
-            serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json"))
-                .expect("loading failed");
-    } else {
-        all_articles = fetch_and_decrypt::<Vec<Article>>(&configuration_api)
-            .await
-            .unwrap();
-    }
-    join_all(all_articles.iter_mut().map(|a| async {
-        a.image = parse_to_data_url(a.image.clone(), IMAGE).await;
-    }))
-    .await;
-    all_articles
+    Cache::fetch_or_cache(configuration_api.as_str(),||async{
+        let mut all_articles = Vec::<Article>::new();
+        if configuration_api.is_empty() {
+            all_articles =
+                serde_json::from_str::<Vec<Article>>(include_str!("../../defaultConfig/article.json"))
+                    .expect("loading failed");
+        } else {
+            all_articles = fetch_and_decrypt::<Vec<Article>>(&configuration_api)
+                .await
+                .unwrap();
+        }
+        join_all(all_articles.iter_mut().map(|a| async {
+            a.image = parse_to_data_url(a.image.clone(), IMAGE).await;
+        }))
+            .await;
+        serde_json::to_vec(&all_articles).unwrap()
+        
+    }).await.unwrap()
 }
 
 fn construct_article_split_page(mut articles: Vec<Article>) -> Vec<ArticlesPage> {

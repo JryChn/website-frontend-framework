@@ -1,3 +1,4 @@
+use dioxus::html::article;
 use dioxus::prelude::*;
 use dioxus_router::prelude::GoBackButton;
 use gloo::console::console_dbg;
@@ -7,40 +8,45 @@ use web_sys::ScrollToOptions;
 
 use crate::model::Article::Article;
 use crate::model::ConfigurationTemplate;
+use crate::utils::cache::Cache;
 use crate::utils::encryptedUtils::fetch_and_decrypt;
 use crate::utils::netUtils::parse_to_data_url;
 use crate::utils::resourceType::ResourceType::IMAGE;
 
 #[component]
-pub fn Article(id: String, article: Option<Article>) -> Element {
+pub fn Article(id: String, article_one: Option<Article>) -> Element {
     //todo: make article can click from outside
-    if article.is_some() {
-        let content = article.unwrap();
+    if article_one.is_some() {
+        let content = article_one.unwrap();
         return rsx! { RenderArticle { content } };
     }
     let configuration = consume_context::<Signal<ConfigurationTemplate>>();
     let id = use_signal(|| id);
     let content = use_resource(move || async move {
-        let mut article;
         let api = configuration().article_api;
-        if api.is_empty() {
-            article = serde_json::from_str::<Vec<Article>>(include_str!(
-                "../../defaultConfig/article.json"
-            ))
-            .unwrap()
-            .iter()
-            .filter(|a| a.id == id())
-            .last()
-            .unwrap_or(&DefaultArticle())
-            .clone();
-        } else {
-            let api_with_id = api + "/" + id().as_str() + ".json";
-            article = fetch_and_decrypt::<Article>(&api_with_id)
-                .await
-                .unwrap_or(DefaultArticle());
-        }
-        article.image = parse_to_data_url(article.image.clone(), IMAGE).await;
-        article
+        let article_page:Article = Cache::fetch_or_cache(api.as_str(),||async{
+            let api = api.clone();
+            let mut article_page;
+            if api.is_empty() {
+                article_page = serde_json::from_str::<Vec<Article>>(include_str!(
+                    "../../defaultConfig/article.json"
+                ))
+                    .unwrap()
+                    .iter()
+                    .filter(|a| a.id == id())
+                    .last()
+                    .unwrap_or(&DefaultArticle())
+                    .clone();
+            } else {
+                let api_with_id = api + "/" + id().as_str() + ".json";
+                article_page = fetch_and_decrypt::<Article>(&api_with_id)
+                    .await
+                    .unwrap_or(DefaultArticle());
+            }
+            article_page.image = parse_to_data_url(article_page.image.clone(), IMAGE).await;
+            serde_json::to_vec(&article_page).unwrap()
+        }).await.unwrap();
+        article_page
     });
     let enable_align_top_button = use_signal(|| false);
     match &*content.value().read() {
@@ -55,7 +61,6 @@ pub fn Article(id: String, article: Option<Article>) -> Element {
 
 #[component]
 fn RenderArticle(content: Article) -> Element {
-    console_dbg!(gloo::utils::document_element().class_name());
     let css_themes: &str = if gloo::utils::document_element().class_name().contains("dark")
     {
         include_str!("css/markdown-theme-dark.css")

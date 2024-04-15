@@ -12,6 +12,7 @@ use crate::component::header::header::Header;
 use crate::component::homepage::HomePage;
 use crate::component::loading::Loading;
 use crate::component::pageNotFound::pageNotFound::PageNotFound;
+use crate::utils::cache::Cache;
 use crate::utils::encryptedUtils::fetch_configuration;
 
 mod component;
@@ -33,7 +34,7 @@ fn main() {
 }
 
 fn App() -> Element {
-    // Init debug
+    // Init CACHE
     let config = use_resource(|| fetch_configuration());
     match &*config.value().read() {
         None => {
