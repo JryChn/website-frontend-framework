@@ -18,7 +18,9 @@ pub fn Experience(experiences: Vec<ExperienceContent>) -> Element {
         div { class: "bg-[rgb(195,201,195)] flex flex-col select-none cursor-default dark:bg-[rgb(40,39,39)]",
             div { class: "w-screen h-[600px] md:h-56" }
             div { class: "flex justify-around ",
-                div { class: "text-5xl font-medium md:absolute md:right-20 dark:text-gray-100", "Experience" }
+                div { class: "text-5xl font-medium md:absolute md:right-20 dark:text-gray-100",
+                    "Experience"
+                }
             }
             div { class: "w-[90%] mx-auto border-b border-black mt-16 md:w-5/6 md:mt-32 dark:border-gray-100" }
             div { class: "w-3/4 mx-auto mb-64",

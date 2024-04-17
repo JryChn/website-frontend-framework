@@ -14,10 +14,10 @@ pub fn HomePage() -> Element {
             let welcome = config().welcome.to_owned();
             let contact = config().contact.to_owned();
             rsx! {
-                    main { id: "welcome", class: "overflow-hidden",
-                        WelcomePage { welcome }
-                        Navigate {}
-                        Icons { contact }
+                main { id: "welcome", class: "overflow-hidden",
+                    WelcomePage { welcome }
+                    Navigate {}
+                    Icons { contact }
                 }
             }
 }

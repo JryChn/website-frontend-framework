@@ -13,7 +13,7 @@ const LONGEST_REMAIN_TIME: i64 = 1800;
 // longest cache time unit is second
 lazy_static! {
     static ref CACHE: Mutex<Cache> ={
-       let mut cache = Cache::init();
+       let cache = Cache::init();
         Mutex::new(cache)
     };
 }

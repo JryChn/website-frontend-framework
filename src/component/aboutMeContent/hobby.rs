@@ -9,13 +9,13 @@ pub fn Hobby(hobbys: Vec<HobbyContent>) -> Element {
     hobbys.iter().for_each(|h| {
         match flag {
             0 => {
-                render_block.push(rsx! { RightImageBlock { bg_color: "bg-[rgb(91,128,86)] dark:bg-[rgb(41,49,50)]", hobby: h.clone() } });
+                render_block.push(rsx! {RightImageBlock { bg_color: "bg-[rgb(91,128,86)] dark:bg-[rgb(41,49,50)]", hobby: h.clone() }});
             }
             1 => {
-                render_block.push(rsx! { LeftImageBlock { bg_color: "bg-[rgb(108,131,175)] dark:bg-[rgb(18,20,32)]", hobby: h.clone() } });
+                render_block.push(rsx! {LeftImageBlock { bg_color: "bg-[rgb(108,131,175)] dark:bg-[rgb(18,20,32)]", hobby: h.clone() }});
             }
             _ => {
-                render_block.push(rsx! { RightImageBlock { bg_color: "bg-[rgb(173,178,131)] dark:bg-[rgb(40,54,24)]", hobby: h.clone() } });
+                render_block.push(rsx! {RightImageBlock { bg_color: "bg-[rgb(173,178,131)] dark:bg-[rgb(40,54,24)]", hobby: h.clone() }});
             }
         }
         flag = (flag + 1) % 3;

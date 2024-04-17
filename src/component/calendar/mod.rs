@@ -80,7 +80,9 @@ fn WelcomeCalendar(started: Signal<bool>) -> Element {
                 div {
                     class: "w-auto h-auto bg-gradient-to-b from-purple-950 to-pink-900 from-30% rounded-2xl mx-auto shadow-[inset_0_4px_1px_0_rgba(0,0,0,0.25),0_7px_8px_0_rgba(0,0,0,0.25)] flex items-center justify-center p-2 my-10 cursor-pointer hover:shadow-zinc-800",
                     onclick: move |_| { started.set(!started()) },
-                    span { class: "text-3xl font-medium text-[rgb(82,124,89)] dark:text-gray-100", "查看我的行程" }
+                    span { class: "text-3xl font-medium text-[rgb(82,124,89)] dark:text-gray-100",
+                        "查看我的行程"
+                    }
                 }
             }
         }

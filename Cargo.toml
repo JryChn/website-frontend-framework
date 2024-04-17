@@ -9,10 +9,10 @@ edition = "2021"
 dioxus = {version =  "0.5.0",features = ["web","router"] }
 manganis = "0.2.2"
 log = "0.4.21"
-dioxus-logger = "0.4.1"
+dioxus-logger = "0.5.0"
 console_error_panic_hook = "0.1.7"
 gloo = {version = "0.11.0",features = ["futures"]}
-web-sys = {version = "0.3.67", features = ["DomTokenList", "ScrollToOptions" ,"ScrollBehavior"] }
+web-sys = {version = "0.3.69", features = ["DomTokenList", "ScrollToOptions", "ScrollBehavior", "CssStyleDeclaration"] }
 charming = { version = "0.3.1", features = ["wasm"] }
 rand = "0.8.5"
 getrandom = { version = "0.2.10", features = ["js"] }

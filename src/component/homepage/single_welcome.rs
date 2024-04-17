@@ -15,7 +15,7 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
             Link { to: Route::HomePage {},
                 h1 {
                     id: "title_logo",
-                    class: "relative top-4 left-7 text-[2vw] leading-none w-[7em] h-auto uppercase font-bold break-words dark:text-white md:animate-showFromUp md:delay-1000",
+                    class: "relative top-4 left-7 text-[2vw] leading-none w-[7.5em] h-auto uppercase font-bold break-words dark:text-white md:animate-showFromUp md:delay-1000",
                     style: "font-family: JetBrains Mono",
                     "{welcome.title}"
                 }
@@ -48,11 +48,11 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
             div {
                 id: "light_line_box",
                 class: "absolute h-[15vw] top-0 right-[30vw] md:right-[10vw]",
-                div{
-                    id:"md_light",
-                    class:"hidden md:block dark:invert",
-                    onmounted:move |_|{
-                        eval(&wireLaneWithSvg(bulb,"md_light"));
+                div {
+                    id: "md_light",
+                    class: "hidden md:block dark:invert",
+                    onmounted: move |_| {
+                        eval(&wireLaneWithSvg(bulb, "md_light"));
                     }
                 }
                 div {
@@ -65,13 +65,12 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
                     onclick: |_e| {
                         let dom = gloo::utils::document_element();
                         dom.class_list().toggle("dark").expect("Error when toggle dark");
-                        // change background color for dark
-                        let body =gloo::utils::body();
-                        body.class_list().toggle("dark:bg-gray-950").expect("Error when change background");
+                        let body = gloo::utils::body();
+                        body.class_list()
+                            .toggle("dark:bg-gray-950")
+                            .expect("Error when change background");
                     },
-                    img {
-                        class:"dark:invert",
-                        src: bulb}
+                    img { class: "dark:invert", src: bulb }
                 }
             }
             div {

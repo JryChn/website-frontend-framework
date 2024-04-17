@@ -17,16 +17,28 @@ pub fn Icons(contact: Contact) -> Element {
             id: "icons",
             class: "fixed bottom-[15vh] right-5 h-[10vw] w-9 flex-col justify-evenly hidden md:flex md:animate-showFromRight md:delay-1000",
             div { class: "flex justify-center items-center ",
-                Link { class: "w-full h-full", to: email, img { class: "w-full h-full p-2 cursor-pointer dark:invert", src: mg!(file("src/assets/svg/email.svg")) } }
+                Link { class: "w-full h-full", to: email, img {
+                    class: "w-full h-full p-2 cursor-pointer dark:invert",
+                    src: mg!(file("src/assets/svg/email.svg"))
+                } }
             }
             div { class: "flex justify-center items-center",
-                Link { class: "w-full h-full", to: github_url, img { class: "w-full h-full p-2 cursor-pointer dark:invert", src: mg!(file("src/assets/svg/github.svg")) } }
+                Link { class: "w-full h-full", to: github_url, img {
+                    class: "w-full h-full p-2 cursor-pointer dark:invert",
+                    src: mg!(file("src/assets/svg/github.svg"))
+                } }
             }
             div { class: "flex justify-center items-center",
-                Link { to: telegram_url, class: "w-full h-full", img { class: "w-full h-full p-2 cursor-pointer dark:invert", src: mg!(file("src/assets/svg/telegram.svg")) } }
+                Link { to: telegram_url, class: "w-full h-full", img {
+                    class: "w-full h-full p-2 cursor-pointer dark:invert",
+                    src: mg!(file("src/assets/svg/telegram.svg"))
+                } }
             }
             div { class: "flex justify-center items-center",
-                Link { class: "w-full h-full", to: Route::Calendar {}, img { class: "w-full h-full p-2 cursor-pointer dark:invert", src: mg!(file("src/assets/svg/calendar.svg")) } }
+                Link { class: "w-full h-full", to: Route::Calendar {}, img {
+                    class: "w-full h-full p-2 cursor-pointer dark:invert",
+                    src: mg!(file("src/assets/svg/calendar.svg"))
+                } }
             }
         }
     )
