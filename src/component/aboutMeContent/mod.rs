@@ -67,8 +67,9 @@ pub fn AboutMeContent() -> Element {
                 join_all(aboutMe.hobby.iter_mut().map(|a|async{
                     a.image = parse_to_data_url(a.image.clone(),IMAGE).await
                 })).await;
-                aboutMe.music_art_1 = parse_to_data_url(aboutMe.music_art_1.clone(),MP4).await;
-                aboutMe.music_art_2 = parse_to_data_url(aboutMe.music_art_2.clone(),MP4).await;
+                // mp4 is very large make page slow loading 
+                // aboutMe.music_art_1 = parse_to_data_url(aboutMe.music_art_1.clone(),MP4).await;
+                // aboutMe.music_art_2 = parse_to_data_url(aboutMe.music_art_2.clone(),MP4).await;
             }
             serde_json::to_vec(&aboutMe).unwrap()
         }).await.unwrap();
