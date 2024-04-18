@@ -107,7 +107,7 @@ fn get_random_color() -> Color {
 fn MdScreenRadarRender(md_charts: Vec<Skills>) -> Element {
     let mut current_radar_index = use_signal(|| 0);
     let radars = use_signal(|| md_charts);
-    let mut start = use_resource(move || async move {
+    let _ = use_resource(move || async move {
         loop {
             let current = current_radar_index();
             let new = (current + 1) % radars().len();
@@ -118,7 +118,7 @@ fn MdScreenRadarRender(md_charts: Vec<Skills>) -> Element {
             let all_radars = gloo::utils::document_element().query_selector_all("#md_radar");
             match all_radars {
                 Ok(radars) => {
-                    for i in (0..radars.length()) {
+                    for i in 0..radars.length() {
                         let radar = radars.get(i).unwrap().dyn_into::<HtmlElement>().unwrap();
                         radar.style().set_property("display", "hidden").unwrap();
                         radar.style().remove_property("transform").unwrap();
