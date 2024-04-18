@@ -22,11 +22,12 @@ struct Skills {
 
 #[component]
 pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
-    let mut charts = Vec::new();
-    // let mut md_charts = Vec::new();
-    for skill in skill_content {
+    let skill_content = use_signal(|| skill_content);
+    let mut charts = use_signal(|| Vec::new());
+    let mut md_charts = use_signal(|| Vec::new());
+    for skill in skill_content() {
         charts.push(create_radar(&skill));
-        // md_charts.push(create_radar(&skill));
+        md_charts.push(create_radar(&skill));
     }
     rsx! {
         div { class: "relative bg-transparent -top-48 select-none cursor-default",
@@ -35,7 +36,7 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
             }
             div { class: "w-full bg-[rgb(27,46,77)] min-h-[400px] mx-auto flex md:w-3/4",
                 div { class: "flex flex-col item-center md:hidden",
-                    for chart in charts {
+                    for chart in charts() {
                         div { class: "w-screen flex flex-col",
                             {chart.chart},
                             div { class: "flex flex-col my-8 mx-16 items-center",
@@ -47,11 +48,11 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                         }
                     }
                 }
-                // div { class: "hidden item-center w-full h-[400px] overflow-hidden md:block",
-                //     div { class: "relative flex w-full h-full flex-row justify-around",
-                //         MdScreenRadarRender { md_charts }
-                //     }
-                // }
+                div { class: "hidden item-center w-full h-[400px] overflow-hidden md:block",
+                    div { class: "relative flex w-full h-full flex-row justify-around",
+                        MdScreenRadarRender { md_charts }
+                    }
+                }
             }
         }
     }
@@ -101,68 +102,71 @@ fn get_random_color() -> Color {
 }
 
 #[component]
-fn MdScreenRadarRender(md_charts: Vec<Skills>) -> Element {
+fn MdScreenRadarRender(md_charts: Signal<Vec<Skills>>) -> Element {
     let mut current_radar_index = use_signal(|| 0);
-    let radars = use_signal(|| md_charts);
+    let radars = md_charts;
     let _ = use_resource(move || async move {
+        let md_radars;
+        while !gloo::utils::document_element()
+            .query_selector_all("#md_radar")
+            .is_ok()
+        {
+            gloo::timers::future::sleep(Duration::from_secs(1)).await;
+        }
+        md_radars = gloo::utils::document_element()
+            .query_selector_all("#md_radar")
+            .unwrap();
         loop {
+            gloo::timers::future::sleep(Duration::from_secs(5)).await;
             let current = current_radar_index();
             let new = (current + 1) % radars().len();
             current_radar_index.set(new);
             let current_index = current_radar_index() as u32;
             let left_index = ((current_index as i32 - 1).rem_euclid(radars().len() as i32)) as u32;
             let right_index = (((current_index + 1) as i32) % radars().len() as i32) as u32;
-            let all_radars = gloo::utils::document_element().query_selector_all("#md_radar");
-            match all_radars {
-                Ok(radars) => {
-                    for i in 0..radars.length() {
-                        let radar = radars.get(i).unwrap().dyn_into::<HtmlElement>().unwrap();
-                        radar.style().set_property("display", "hidden").unwrap();
-                        radar.style().remove_property("transform").unwrap();
-                        radar.style().remove_property("opacity").unwrap();
-                    }
-                    let current_radar = radars.get(current_index);
-                    let left_radar = radars.get(left_index);
-                    let right_radar = radars.get(right_index);
-                    if current_radar.is_some() {
-                        let current_radar =
-                            current_radar.unwrap().dyn_into::<HtmlElement>().unwrap();
-                        current_radar
-                            .style()
-                            .set_property("display", "block")
-                            .unwrap();
-                    }
-                    if left_radar.is_some() {
-                        let left_radar = left_radar.unwrap().dyn_into::<HtmlElement>().unwrap();
-                        left_radar.style().set_property("display", "block").unwrap();
-                        left_radar
-                            .style()
-                            .set_property(
-                                "transform",
-                                "rotateY(30deg) translateX(-140px) translateZ(-300px)",
-                            )
-                            .unwrap();
-                        left_radar.style().set_property("opacity", "0.2").unwrap();
-                    }
-                    if right_radar.is_some() {
-                        let right_radar = right_radar.unwrap().dyn_into::<HtmlElement>().unwrap();
-                        right_radar
-                            .style()
-                            .set_property("display", "block")
-                            .unwrap();
-                        right_radar
-                            .style()
-                            .set_property(
-                                "transform",
-                                "rotateY(-30deg) translateX(140px) translateZ(-300px)",
-                            )
-                            .unwrap();
-                        right_radar.style().set_property("opacity", "0.2").unwrap();
-                    }
-                }
-                Err(_) => {}
+            for i in 0..md_radars.length() {
+                let radar = md_radars.get(i).unwrap().dyn_into::<HtmlElement>().unwrap();
+                radar.style().set_property("display", "hidden").unwrap();
+                radar.style().remove_property("transform").unwrap();
+                radar.style().remove_property("opacity").unwrap();
             }
-            gloo::timers::future::sleep(Duration::from_secs(5)).await;
+            let current_radar = md_radars.get(current_index);
+            let left_radar = md_radars.get(left_index);
+            let right_radar = md_radars.get(right_index);
+            if current_radar.is_some() {
+                let current_radar = current_radar.unwrap().dyn_into::<HtmlElement>().unwrap();
+                current_radar
+                    .style()
+                    .set_property("display", "block")
+                    .unwrap();
+            }
+            if left_radar.is_some() {
+                let left_radar = left_radar.unwrap().dyn_into::<HtmlElement>().unwrap();
+                left_radar.style().set_property("display", "block").unwrap();
+                left_radar
+                    .style()
+                    .set_property(
+                        "transform",
+                        "rotateY(30deg) translateX(-140px) translateZ(-300px)",
+                    )
+                    .unwrap();
+                left_radar.style().set_property("opacity", "0.2").unwrap();
+            }
+            if right_radar.is_some() {
+                let right_radar = right_radar.unwrap().dyn_into::<HtmlElement>().unwrap();
+                right_radar
+                    .style()
+                    .set_property("display", "block")
+                    .unwrap();
+                right_radar
+                    .style()
+                    .set_property(
+                        "transform",
+                        "rotateY(-30deg) translateX(140px) translateZ(-300px)",
+                    )
+                    .unwrap();
+                right_radar.style().set_property("opacity", "0.2").unwrap();
+            }
         }
     });
     rsx! {
