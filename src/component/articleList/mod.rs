@@ -50,7 +50,7 @@ pub fn ArticleList() -> Element {
             class: "w-screen min-h-screen relative dark:bg-gray-950",
             div {
                 id: "article_title",
-                class: "relative top-48 mx-auto w-1/2 text-4xl font-semibold capitalize text-center md:hidden dark:text-gray-100",
+                class: "relative top-48 mx-auto w-1/2 text-4xl font-semibold capitalize text-center md:hidden dark:md:text-gray-100",
                 "article"
             }
             div {

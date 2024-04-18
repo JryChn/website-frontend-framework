@@ -53,10 +53,10 @@ pub fn AboutMeContent() -> Element {
     let result = use_resource(move || async move {
         let api = configuration().about_me_api;
         let aboutMe: AboutMePage
-        = Cache::fetch_or_cache(api.as_str(),|| async{
+            = Cache::fetch_or_cache(api.as_str(),|| async{
             let mut aboutMe;
             if api.is_empty() {
-                 aboutMe = serde_json::from_str::<AboutMePage>(include_str!(
+                aboutMe = serde_json::from_str::<AboutMePage>(include_str!(
                     "../../defaultConfig/aboutMe.json"
                 ))
                     .unwrap()
@@ -67,7 +67,7 @@ pub fn AboutMeContent() -> Element {
                 join_all(aboutMe.hobby.iter_mut().map(|a|async{
                     a.image = parse_to_data_url(a.image.clone(),IMAGE).await
                 })).await;
-                // mp4 is very large make page slow loading 
+                // hint: this will waste a lot of time, so no need to parse it to save time 
                 // aboutMe.music_art_1 = parse_to_data_url(aboutMe.music_art_1.clone(),MP4).await;
                 // aboutMe.music_art_2 = parse_to_data_url(aboutMe.music_art_2.clone(),MP4).await;
             }

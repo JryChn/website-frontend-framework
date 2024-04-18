@@ -1,4 +1,3 @@
-use std::ops::Sub;
 use std::time::Duration;
 
 use charming::{Chart, WasmRenderer};
@@ -7,11 +6,9 @@ use charming::element::Color;
 use charming::series::Radar;
 use charming::theme::Theme;
 use dioxus::prelude::*;
-use gloo::console::__macro::JsValue;
-use gloo::console::console_dbg;
 use rand::prelude::SliceRandom;
 use uuid::Uuid;
-use web_sys::{HtmlElement, NodeList};
+use web_sys::HtmlElement;
 use web_sys::wasm_bindgen::JsCast;
 
 use crate::component::aboutMeContent::SkillContent;
@@ -26,15 +23,15 @@ struct Skills {
 #[component]
 pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
     let mut charts = Vec::new();
-    let mut md_charts = Vec::new();
+    // let mut md_charts = Vec::new();
     for skill in skill_content {
         charts.push(create_radar(&skill));
-        md_charts.push(create_radar(&skill));
+        // md_charts.push(create_radar(&skill));
     }
     rsx! {
         div { class: "relative bg-transparent -top-48 select-none cursor-default",
             div { class: "hidden text-5xl font-medium m-12 md:inline-block dark:text-white",
-                "技能和技巧"
+                "Skills and Techniques"
             }
             div { class: "w-full bg-[rgb(27,46,77)] min-h-[400px] mx-auto flex md:w-3/4",
                 div { class: "flex flex-col item-center md:hidden",
@@ -50,11 +47,11 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                         }
                     }
                 }
-                div { class: "hidden item-center w-full h-[400px] overflow-hidden md:block",
-                    div { class: "relative flex w-full h-full flex-row justify-around",
-                        MdScreenRadarRender { md_charts }
-                    }
-                }
+                // div { class: "hidden item-center w-full h-[400px] overflow-hidden md:block",
+                //     div { class: "relative flex w-full h-full flex-row justify-around",
+                //         MdScreenRadarRender { md_charts }
+                //     }
+                // }
             }
         }
     }
