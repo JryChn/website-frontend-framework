@@ -6,8 +6,8 @@ module.exports = {
   content: ["./src/**/*.{rs,html,css}","./dist/**/*.html"],
   theme: {
     fontFamily:{
-      sans: ["outfit"],
-      serif: ["outfit"]
+      sans: ["outfit","Emoji One Color"],
+      serif: ["outfit","Emoji One Color"]
     },
     extend: {
       keyframes: {

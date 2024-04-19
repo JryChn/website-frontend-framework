@@ -10,3 +10,11 @@
     font-family: "JetBrains Mono";
     src: url('/fonts/JetBrainsMono_wght.ttf');
 }
+@font-face {
+    font-family: "Emoji One Color";
+    src: url('/fonts/EmojiOneColor.otf');
+         local('BlinkMacSystemFont');
+         local('Segoe UI');
+         local('Apple Color Emoji');
+         local('Segoe UI Emoji');
+}
