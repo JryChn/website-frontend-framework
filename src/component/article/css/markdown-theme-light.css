@@ -412,7 +412,7 @@ footer {
     line-height: 1.375;
     direction: ltr;
     text-align: left;
-    white-space: pre;
+    white-space: pre-wrap;
     word-spacing: normal;
     word-break: normal;
     -moz-tab-size: 4;

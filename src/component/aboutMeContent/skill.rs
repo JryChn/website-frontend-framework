@@ -49,7 +49,7 @@ pub fn Skill(skill_content: Vec<SkillContent>) -> Element {
                     }
                 }
                 div { class: "hidden item-center w-full h-[400px] overflow-hidden md:block",
-                    div { class: "relative flex w-full h-full flex-row justify-around",
+                    div { class: "relative flex w-full h-full flex-row justify-between",
                         MdScreenRadarRender { md_charts }
                     }
                 }
@@ -171,7 +171,7 @@ fn MdScreenRadarRender(md_charts: Signal<Vec<Skills>>) -> Element {
     });
     rsx! {
         div {
-            class: "relative w-[600px] h-[400px] flex justify-around",
+            class: "relative w-[600px] h-[400px] flex justify-around mx-auto",
             style: "perspective: 500px;transform-style:preserve-3d",
             for chart in radars() {
                 div { id: "md_radar", class: "absolute hidden duration-1000", {chart.chart} }
