@@ -70,7 +70,7 @@ fn RenderArticle(content: Article) -> Element {
     rsx! {
         div {
             id: "article",
-            class: "w-screen min-h-[800px] relative scroll-smooth",
+            class: "w-screen min-h-[800px] relative scroll-smooth dark:bg-gray-950",
             style { "{css_themes}" }
             img {
                 id: "article_image",
