@@ -2,7 +2,10 @@
 
 use dioxus::prelude::*;
 use dioxus_router::prelude::{Routable, Router};
+use gloo::console::console_dbg;
+use gloo::utils::{document, document_element, window};
 use manganis::mg;
+use web_sys::MediaQueryList;
 
 use crate::component::aboutMeContent::AboutMeContent;
 use crate::component::article::article::Article;
@@ -34,6 +37,8 @@ fn main() {
 }
 
 fn App() -> Element {
+    enable_dark_mode();
+
     // Init CACHE
     let config = use_resource(|| fetch_configuration());
     match &*config.value().read() {
@@ -47,6 +52,20 @@ fn App() -> Element {
         }
     }
 }
+
+fn enable_dark_mode() {
+    // enable dark mode for system preference
+    match window().match_media("(prefers-color-scheme: dark)").unwrap() {
+        None => {
+            document_element().class_list().remove_1("dark").expect("disable dark mode failed");
+        }
+        Some(_) => {
+            document_element().class_list().add_1("dark").expect("enable dark mode failed");
+        }
+    };
+
+}
+
 #[derive(Routable, Clone, PartialEq)]
 enum Route {
     #[route("/")]

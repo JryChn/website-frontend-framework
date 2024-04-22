@@ -61,7 +61,7 @@ pub fn WelcomePage(welcome: Welcome) -> Element {
                 }
                 button {
                     id: "light_bold",
-                    class: "relative h-11 translate-x-0.5 -translate-y-1 cursor-pointer md:hidden dark:after:block dark:after:w-24 dark:after:h-24 dark:after:absolute dark:after:bg-yellow-400 dark:after:round-full dark:after:-translate-x-1/3 dark:after:-translate-y-1/4 dark:after:blur-3xl",
+                    class: "relative h-11 translate-x-0.5 -translate-y-1 cursor-pointer md:hidden dark:after:block dark:after:w-24 dark:after:h-24 dark:after:absolute dark:after:bg-yellow-400 dark:after:round-full dark:after:-translate-x-1/3 dark:after:-translate-y-1/4 dark:after:blur-3xl dark:after:animate-infiniteShowing",
                     onclick: |_e| {
                         let dom = gloo::utils::document_element();
                         dom.class_list().toggle("dark").expect("Error when toggle dark");

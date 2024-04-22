@@ -43,6 +43,10 @@ module.exports = {
           '90%':{'background-image':'linear-gradient(to right top,white 20%,rgb(243 244 246) 40%,rgb(249 250 251))', 'opacity': '1'},
           '100%':{'background-image':'linear-gradient(to right top,rgb(249 250 251) 20%,white 40%,rgb(243 244 246))', 'opacity': '1'},
         },
+        showing:{
+          '0%':{'opacity': '0.2'},
+          '100%':{'opacity': '1'},
+        },
         showFromUp:{
           '0%':{'transform':'translateY(-50%)','opacity':'0'},
           '100%':{'transform':'translate(0%)','opacity':'1'}
@@ -75,6 +79,7 @@ module.exports = {
         'showFromDown': 'showFromDown 1s linear',
         'showFromLeft': 'showFromLeft 1s linear',
         'showFromRight': 'showFromRight 1s linear',
+        'infiniteShowing': 'showing 5s linear infinite alternate',
       },
     },
   },

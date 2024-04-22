@@ -54,8 +54,21 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
         stiffness: 1,
     }));
     // add all of the bodies to the world
-    Composite.add(world,[boxA])
+    Composite.add(world,[boxA]);
 
+    var yellow_light = document.createElement("div");
+    yellow_light.classList.add("dark:w-24");
+    yellow_light.classList.add("dark:h-24");
+    yellow_light.classList.add("dark:absolute");
+    yellow_light.classList.add("dark:bg-[#0533EA]");
+    yellow_light.classList.add("dark:round-full");
+    yellow_light.classList.add("dark:blur-3xl");
+    yellow_light.classList.add("dark:animate-infiniteShowing");
+    yellow_light.style.zIndex = "-50";
+    yellow_light.id = "yellow_light";
+    if(document.getElementById("yellow_light") == null){
+        document.getElementById(""## +id+ &*r#"").appendChild(yellow_light);
+    }
     var mouse = Mouse.create(render.canvas),
         mouseConstraint = MouseConstraint.create(engine, {
             mouse: mouse,
@@ -75,7 +88,7 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
         }else{
             render.canvas.style.cursor = "default";
         }
-    })
+    });
     Events.on(mouseConstraint,"mouseup",()=>{
         var x_range =Math.abs(mouse.position.x - head.position.x);
         var y_range =Math.abs(mouse.position.y - head.position.y);
@@ -83,17 +96,6 @@ pub fn wireLaneWithSvg(svg_path: &str, id:&str) ->String{
         {
             document.documentElement.classList.toggle("dark");
             document.body.classList.toggle("dark:bg-gray-950");
-            var yellow_light = document.createElement("div");
-            yellow_light.style.position = "absolute";
-            yellow_light.style.width = "100px";
-            yellow_light.style.height = "100px";
-            yellow_light.style.filter = "blur(64px)";
-            yellow_light.style.background = "#0533EA";
-            yellow_light.style.zIndex = "-50";
-            yellow_light.id = "yellow_light";
-            if(document.getElementById("yellow_light") == null){
-                document.getElementById(""## +id+ &*r#"").appendChild(yellow_light);
-            }
         }
     })
 
