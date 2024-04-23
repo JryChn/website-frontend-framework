@@ -59,8 +59,10 @@ fn enable_dark_mode() {
         None => {
             document_element().class_list().remove_1("dark").expect("disable dark mode failed");
         }
-        Some(_) => {
-            document_element().class_list().add_1("dark").expect("enable dark mode failed");
+        Some(m) => {
+           if m.matches(){
+               document_element().class_list().add_1("dark").expect("enable dark mode failed");
+           }
         }
     };
 
