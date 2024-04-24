@@ -5,10 +5,12 @@
 @font-face {
     font-family: "outfit";
     src: url('/fonts/Outfit-VariableFont_wght.ttf');
+    font-display: block;
 }
 @font-face {
     font-family: "JetBrains Mono";
     src: url('/fonts/JetBrainsMono_wght.ttf');
+    font-display: block;
 }
 @font-face {
     font-family: "Emoji One Color";
@@ -17,4 +19,5 @@
          local('Segoe UI'),
          local('Apple Color Emoji'),
          local('Segoe UI Emoji');
+    font-display: block;
 }
